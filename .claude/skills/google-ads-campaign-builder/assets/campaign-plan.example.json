@@ -1,0 +1,222 @@
+{
+  "meta": {
+    "website": "https://beispiel-rohrreinigung.de",
+    "language": "de",
+    "country": "DE",
+    "currency": "EUR",
+    "brand": "Beispiel Rohrreinigung",
+    "goal": "Leads über Anrufe und Formular"
+  },
+  "campaigns": [
+    {
+      "name": "Rohrreinigung | Suche | DE",
+      "type": "Search",
+      "status": "Paused",
+      "budget": 40.0,
+      "budget_type": "Daily",
+      "bid_strategy": "Maximize clicks",
+      "conversion_tracking": false,
+      "networks": "Google search",
+      "languages": ["de"],
+      "locations": ["München", "Landkreis München"],
+      "excluded_locations": [],
+      "start_date": "2026-09-01",
+      "end_date": null,
+      "negative_keywords": [
+        {"text": "kostenlos", "match": "Phrase"},
+        {"text": "gratis", "match": "Phrase"},
+        {"text": "selber machen", "match": "Phrase"},
+        {"text": "anleitung", "match": "Phrase"},
+        {"text": "hausmittel", "match": "Phrase"},
+        {"text": "job", "match": "Phrase"},
+        {"text": "ausbildung", "match": "Phrase"},
+        {"text": "gehalt", "match": "Phrase"}
+      ],
+      "ad_groups": [
+        {
+          "name": "Rohrreinigung Notdienst",
+          "status": "Enabled",
+          "max_cpc": 2.5,
+          "final_url": "https://beispiel-rohrreinigung.de/notdienst",
+          "keywords": [
+            {"text": "rohrreinigung notdienst", "match": "Phrase"},
+            {"text": "rohrreinigung notdienst münchen", "match": "Exact"},
+            {"text": "notdienst abfluss verstopft", "match": "Phrase"},
+            {"text": "rohrreinigung 24 stunden", "match": "Phrase"},
+            {"text": "rohrreinigung sofort", "match": "Phrase"},
+            {"text": "rohrreinigung wochenende", "match": "Phrase"}
+          ],
+          "negative_keywords": [
+            {"text": "mieten", "match": "Phrase"}
+          ],
+          "ads": [
+            {
+              "headlines": [
+                {"text": "Rohrreinigung Notdienst"},
+                {"text": "Rohrreinigung München"},
+                {"text": "Abfluss verstopft?"},
+                {"text": "In 60 Minuten vor Ort"},
+                {"text": "24 Stunden erreichbar"},
+                {"text": "Auch am Wochenende da"},
+                {"text": "Festpreis ohne Aufschlag"},
+                {"text": "Keine versteckten Kosten"},
+                {"text": "Ab 89 € inkl. Anfahrt"},
+                {"text": "Kostenlose Anfahrt"},
+                {"text": "Meisterbetrieb seit 1998"},
+                {"text": "Über 12.000 Einsätze"},
+                {"text": "4,8 von 5 Sternen"},
+                {"text": "Jetzt Termin sichern"},
+                {"text": "Direkt Hilfe anfordern"}
+              ],
+              "descriptions": [
+                {"text": "Verstopfter Abfluss? Wir sind in 60 Minuten bei Ihnen – rund um die Uhr, ohne Aufpreis."},
+                {"text": "Festpreis vorab, keine versteckten Kosten. Meisterbetrieb aus München seit 1998."},
+                {"text": "Moderne Kamerainspektion findet die Ursache. Sie zahlen erst nach erfolgreicher Arbeit."},
+                {"text": "Über 12.000 Einsätze im Raum München. Jetzt anrufen und Termin am selben Tag sichern."}
+              ],
+              "path1": "Notdienst",
+              "path2": "Muenchen",
+              "final_url": "https://beispiel-rohrreinigung.de/notdienst",
+              "status": "Enabled"
+            }
+          ]
+        },
+        {
+          "name": "Kanalreinigung",
+          "status": "Enabled",
+          "max_cpc": 2.0,
+          "final_url": "https://beispiel-rohrreinigung.de/kanalreinigung",
+          "keywords": [
+            {"text": "kanalreinigung münchen", "match": "Phrase"},
+            {"text": "kanalreinigung firma", "match": "Phrase"},
+            {"text": "kanalsanierung", "match": "Phrase"},
+            {"text": "kanal spülen lassen", "match": "Phrase"},
+            {"text": "kanalreinigung kosten", "match": "Phrase"}
+          ],
+          "negative_keywords": [],
+          "ads": [
+            {
+              "headlines": [
+                {"text": "Kanalreinigung München"},
+                {"text": "Kanal professionell spülen"},
+                {"text": "Kanalsanierung vom Profi"},
+                {"text": "Hochdruckspülung"},
+                {"text": "Kamerainspektion inklusive"},
+                {"text": "Schäden früh erkennen"},
+                {"text": "Festpreis nach Besichtigung"},
+                {"text": "Transparente Abrechnung"},
+                {"text": "Ab 149 € pro Einsatz"},
+                {"text": "Kostenlose Erstberatung"},
+                {"text": "Meisterbetrieb seit 1998"},
+                {"text": "Für Haus und Gewerbe"},
+                {"text": "4,8 von 5 Sternen"},
+                {"text": "Jetzt Angebot anfordern"},
+                {"text": "Termin online buchen"}
+              ],
+              "descriptions": [
+                {"text": "Kanalreinigung mit Hochdruck und Kamera. Wir finden die Ursache, nicht nur das Symptom."},
+                {"text": "Festpreis nach Besichtigung, klare Abrechnung. Meisterbetrieb aus München seit 1998."},
+                {"text": "Für Privathaushalte, Hausverwaltungen und Gewerbe im gesamten Raum München."},
+                {"text": "Kostenlose Erstberatung am Telefon. Jetzt unverbindlich Angebot anfordern."}
+              ],
+              "path1": "Kanalreinigung",
+              "path2": "Muenchen",
+              "final_url": "https://beispiel-rohrreinigung.de/kanalreinigung",
+              "status": "Enabled"
+            }
+          ]
+        }
+      ],
+      "assets": {
+        "sitelinks": [
+          {"text": "Notdienst 24/7", "desc1": "Rund um die Uhr erreichbar", "desc2": "In 60 Minuten vor Ort", "final_url": "https://beispiel-rohrreinigung.de/notdienst"},
+          {"text": "Preise ansehen", "desc1": "Festpreise ohne Aufschlag", "desc2": "Keine versteckten Kosten", "final_url": "https://beispiel-rohrreinigung.de/preise"},
+          {"text": "Kanalreinigung", "desc1": "Hochdruck und Kamera", "desc2": "Für Haus und Gewerbe", "final_url": "https://beispiel-rohrreinigung.de/kanalreinigung"},
+          {"text": "Über uns", "desc1": "Meisterbetrieb seit 1998", "desc2": "Über 12.000 Einsätze", "final_url": "https://beispiel-rohrreinigung.de/ueber-uns"},
+          {"text": "Kontakt", "desc1": "Direkt Termin vereinbaren", "desc2": "Antwort in 15 Minuten", "final_url": "https://beispiel-rohrreinigung.de/kontakt"}
+        ],
+        "callouts": [
+          "24 Stunden Notdienst",
+          "Festpreisgarantie",
+          "Meisterbetrieb",
+          "Kostenlose Anfahrt",
+          "Kamerainspektion",
+          "Seit 1998 in München"
+        ],
+        "structured_snippets": [
+          {"header": "Dienstleistungen", "values": ["Rohrreinigung", "Kanalreinigung", "Kamerainspektion", "Kanalsanierung", "Fettabscheider"]},
+          {"header": "Serviceleistungen", "values": ["Notdienst 24/7", "Festpreisangebot", "Kostenlose Beratung", "Wochenendservice"]}
+        ],
+        "prices": [
+          {
+            "type": "Services",
+            "qualifier": "From",
+            "language": "de",
+            "currency": "EUR",
+            "items": [
+              {"header": "Rohrreinigung", "description": "Inkl. Anfahrt", "price": 89, "unit": "", "final_url": "https://beispiel-rohrreinigung.de/preise"},
+              {"header": "Kanalreinigung", "description": "Hochdruckspülung", "price": 149, "unit": "", "final_url": "https://beispiel-rohrreinigung.de/kanalreinigung"},
+              {"header": "Kamerainspektion", "description": "Mit Videoprotokoll", "price": 129, "unit": "", "final_url": "https://beispiel-rohrreinigung.de/preise"},
+              {"header": "Notdienst nachts", "description": "Zuschlag ab 22 Uhr", "price": 139, "unit": "", "final_url": "https://beispiel-rohrreinigung.de/notdienst"}
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Rohrreinigung | PMax | DE",
+      "type": "Performance Max",
+      "status": "Paused",
+      "budget": 30.0,
+      "budget_type": "Daily",
+      "bid_strategy": "Maximize conversions",
+      "conversion_tracking": true,
+      "languages": ["de"],
+      "locations": ["München", "Landkreis München"],
+      "start_date": "2026-09-01",
+      "negative_keywords": [
+        {"text": "kostenlos", "match": "Phrase"},
+        {"text": "job", "match": "Phrase"}
+      ],
+      "asset_groups": [
+        {
+          "name": "Notdienst und Kanalreinigung",
+          "status": "Paused",
+          "final_url": "https://beispiel-rohrreinigung.de",
+          "business_name": "Beispiel Rohrreinigung",
+          "call_to_action": "Jetzt buchen",
+          "headlines": [
+            "Rohrreinigung München",
+            "Notdienst rund um die Uhr",
+            "In 60 Minuten vor Ort",
+            "Festpreis ohne Aufschlag",
+            "Meisterbetrieb seit 1998",
+            "Ab 89 € inkl. Anfahrt",
+            "Über 12.000 Einsätze",
+            "Auch am Wochenende da",
+            "Jetzt Termin sichern",
+            "Kanalreinigung vom Profi"
+          ],
+          "long_headlines": [
+            "Rohrreinigung in München – rund um die Uhr, zum Festpreis und ohne versteckte Kosten",
+            "Verstopfter Abfluss? Meisterbetrieb aus München ist in 60 Minuten bei Ihnen vor Ort",
+            "Kanalreinigung mit Kamerainspektion: Ursache finden statt nur Symptome beseitigen"
+          ],
+          "short_description": "Rohrreinigung München, 24/7 zum Festpreis.",
+          "descriptions": [
+            "Verstopfter Abfluss? Wir sind in 60 Minuten bei Ihnen – rund um die Uhr, auch sonntags.",
+            "Festpreis vorab, keine versteckten Kosten. Meisterbetrieb mit über 12.000 Einsätzen.",
+            "Kanalreinigung mit Hochdruck und Kamerainspektion für Privathaushalte und Gewerbe.",
+            "Kostenlose Beratung am Telefon. Jetzt Termin sichern und noch heute Hilfe bekommen."
+          ]
+        }
+      ],
+      "assets": {
+        "sitelinks": [],
+        "callouts": [],
+        "structured_snippets": [],
+        "prices": []
+      }
+    }
+  ]
+}

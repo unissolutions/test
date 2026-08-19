@@ -1,0 +1,194 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Google Ads Campaign Plan",
+  "description": "Zwischenformat zwischen Recherche und CSV-Export. validate_plan.py prueft es, build_csv.py rendert daraus die Editor-CSVs.",
+  "type": "object",
+  "required": ["campaigns"],
+  "properties": {
+    "meta": {
+      "type": "object",
+      "properties": {
+        "website": {"type": "string"},
+        "language": {"type": "string", "description": "Sprachcode, steuert u.a. die erlaubten Structured-Snippet-Header", "default": "de"},
+        "country": {"type": "string"},
+        "currency": {"type": "string", "default": "EUR"},
+        "brand": {"type": "string"},
+        "goal": {"type": "string"}
+      }
+    },
+    "campaigns": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["name", "type", "budget", "bid_strategy"],
+        "properties": {
+          "name": {"type": "string"},
+          "type": {"enum": ["Search", "Performance Max"]},
+          "status": {"enum": ["Enabled", "Paused"], "default": "Paused"},
+          "budget": {"type": "number", "exclusiveMinimum": 0, "description": "Tagesbudget"},
+          "budget_type": {"enum": ["Daily"], "default": "Daily"},
+          "bid_strategy": {"enum": ["Manual CPC", "Maximize clicks", "Maximize conversions", "Maximize conversion value", "Target CPA", "Target ROAS"]},
+          "target_cpa": {"type": ["number", "null"]},
+          "target_roas": {"type": ["number", "null"], "description": "Faktor, 4.0 entspricht 400 Prozent"},
+          "conversion_tracking": {"type": "boolean", "default": true, "description": "false blockiert Strategien, die Conversion-Daten brauchen"},
+          "networks": {"type": "string"},
+          "languages": {"type": "array", "items": {"type": "string"}},
+          "locations": {"type": "array", "items": {"type": "string"}},
+          "excluded_locations": {"type": "array", "items": {"type": "string"}},
+          "start_date": {"type": ["string", "null"], "pattern": "^\\d{4}-\\d{2}-\\d{2}$"},
+          "end_date": {"type": ["string", "null"]},
+          "negative_keywords": {"$ref": "#/$defs/keywordList"},
+          "ad_groups": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["name", "keywords", "ads"],
+              "properties": {
+                "name": {"type": "string"},
+                "status": {"enum": ["Enabled", "Paused"], "default": "Enabled"},
+                "max_cpc": {"type": ["number", "null"]},
+                "ad_group_type": {"type": "string", "default": "Standard"},
+                "target_cpa": {"type": ["number", "null"]},
+                "final_url": {"type": "string"},
+                "keywords": {"$ref": "#/$defs/keywordList"},
+                "negative_keywords": {"$ref": "#/$defs/keywordList"},
+                "ads": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "type": "object",
+                    "required": ["headlines", "descriptions", "final_url"],
+                    "properties": {
+                      "headlines": {
+                        "type": "array", "minItems": 3, "maxItems": 15,
+                        "items": {
+                          "type": "object",
+                          "required": ["text"],
+                          "properties": {
+                            "text": {"type": "string", "maxLength": 30},
+                            "position": {"type": ["integer", "null"], "enum": [1, 2, 3, null], "description": "Pinning. Nur setzen, wenn es einen zwingenden Grund gibt"}
+                          }
+                        }
+                      },
+                      "descriptions": {
+                        "type": "array", "minItems": 2, "maxItems": 4,
+                        "items": {
+                          "type": "object",
+                          "required": ["text"],
+                          "properties": {
+                            "text": {"type": "string", "maxLength": 90},
+                            "position": {"type": ["integer", "null"], "enum": [1, 2, null]}
+                          }
+                        }
+                      },
+                      "path1": {"type": "string", "maxLength": 15},
+                      "path2": {"type": "string", "maxLength": 15},
+                      "final_url": {"type": "string", "pattern": "^https?://"},
+                      "status": {"enum": ["Enabled", "Paused"], "default": "Enabled"}
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "asset_groups": {
+            "type": "array",
+            "description": "Nur bei Performance Max",
+            "items": {
+              "type": "object",
+              "required": ["name", "final_url", "headlines", "long_headlines", "short_description", "descriptions", "business_name"],
+              "properties": {
+                "name": {"type": "string"},
+                "status": {"enum": ["Enabled", "Paused"], "default": "Paused"},
+                "final_url": {"type": "string", "pattern": "^https?://"},
+                "headlines": {"type": "array", "minItems": 3, "maxItems": 15, "items": {"type": "string", "maxLength": 30}},
+                "long_headlines": {"type": "array", "minItems": 1, "maxItems": 5, "items": {"type": "string", "maxLength": 90}},
+                "short_description": {"type": "string", "maxLength": 60, "description": "Pflicht. Wird an platzarmen Platzierungen ausgespielt"},
+                "descriptions": {"type": "array", "minItems": 1, "maxItems": 4, "items": {"type": "string", "maxLength": 90}},
+                "business_name": {"type": "string", "maxLength": 25},
+                "call_to_action": {"type": "string"},
+                "path1": {"type": "string", "maxLength": 15},
+                "path2": {"type": "string", "maxLength": 15}
+              }
+            }
+          },
+          "assets": {
+            "type": "object",
+            "properties": {
+              "sitelinks": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": ["text", "final_url"],
+                  "properties": {
+                    "text": {"type": "string", "maxLength": 25},
+                    "desc1": {"type": "string", "maxLength": 35},
+                    "desc2": {"type": "string", "maxLength": 35},
+                    "final_url": {"type": "string", "pattern": "^https?://"},
+                    "ad_group": {"type": "string", "description": "Leer lassen fuer Kampagnenebene"}
+                  }
+                }
+              },
+              "callouts": {"type": "array", "items": {"type": "string", "maxLength": 25}},
+              "structured_snippets": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": ["header", "values"],
+                  "properties": {
+                    "header": {"type": "string", "description": "Muss aus Googles Vorgabeliste der jeweiligen Sprache stammen"},
+                    "values": {"type": "array", "minItems": 3, "maxItems": 10, "items": {"type": "string", "maxLength": 25}}
+                  }
+                }
+              },
+              "prices": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": ["type", "items"],
+                  "properties": {
+                    "type": {"enum": ["Brands", "Events", "Locations", "Neighborhoods", "Product categories", "Product tiers", "Services", "Service categories", "Service tiers"]},
+                    "qualifier": {"enum": ["From", "Up to", "Average"]},
+                    "language": {"type": "string"},
+                    "currency": {"type": "string"},
+                    "items": {
+                      "type": "array", "minItems": 3, "maxItems": 8,
+                      "items": {
+                        "type": "object",
+                        "required": ["header", "description", "price", "final_url"],
+                        "properties": {
+                          "header": {"type": "string", "maxLength": 25},
+                          "description": {"type": "string", "maxLength": 25},
+                          "price": {"type": "number"},
+                          "unit": {"type": "string", "enum": ["", "per hour", "per day", "per week", "per month", "per year", "per night"]},
+                          "final_url": {"type": "string", "pattern": "^https?://"}
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "keywordList": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["text"],
+        "properties": {
+          "text": {"type": "string", "maxLength": 80, "description": "Ohne Anfuehrungszeichen oder Klammern - der Match Type steht im eigenen Feld"},
+          "match": {"enum": ["Broad", "Phrase", "Exact"], "default": "Phrase"},
+          "status": {"enum": ["Enabled", "Paused"], "default": "Enabled"},
+          "max_cpc": {"type": ["number", "null"]},
+          "final_url": {"type": ["string", "null"]}
+        }
+      }
+    }
+  }
+}
