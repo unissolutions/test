@@ -1,0 +1,32 @@
+{%- comment -%}e-Stegplatten Topbar (global) – 36px, Tinte #1B1F1D, Archivo 13px. Desktop: 4 USPs links (grüne Haken), Telefon + Servicezeiten rechts. Mobil: USPs wechseln alle 3 s (sanftes Überblenden) links, Telefon kompakt rechts. Kein Rabattcode.{%- endcomment -%}
+{%- capture chk -%}<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>{%- endcapture -%}
+<div class="es-topbar"><div class="es-topbar__in">
+<div class="es-topbar__usps" aria-label="Vorteile"><span>{{ chk }}10 Jahre Garantie</span><span>{{ chk }}Zuschnitt nach Wunschmaß</span><span>{{ chk }}Zahlen bei Lieferung</span><span>{{ chk }}Klarna & PayPal</span></div>
+<a class="es-topbar__tel" href="tel:020951307834" aria-label="Anrufen: 0209 513 078 34"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg><b>0209 513 078 34</b><span class="es-topbar__hours">Mo–Fr 8–17 Uhr</span></a>
+</div></div>
+<style>
+html body .es-topbar:not(#_){background:#1B1F1D!important;color:#fff!important;font-family:var(--es-font,Archivo,system-ui,sans-serif)!important;font-size:13px!important;line-height:1!important;border:0!important;margin:0!important;padding:0!important;width:100%}
+html body .es-topbar__in:not(#_){max-width:var(--es-wrap,1280px);margin:0 auto!important;height:36px;padding:0 24px!important;display:flex!important;align-items:center;justify-content:space-between!important;gap:16px}
+html body .es-topbar__usps:not(#_){display:flex!important;align-items:center;gap:24px;min-width:0;margin:0!important}
+html body .es-topbar__usps span:not(#_){display:inline-flex!important;align-items:center;gap:6px;white-space:nowrap;color:#fff!important;font-weight:500;opacity:1}
+html body .es-topbar__usps svg:not(#_){color:#78BB98;flex:none}
+html body .es-topbar__tel:not(#_){display:inline-flex!important;align-items:center;gap:8px;color:#fff!important;text-decoration:none!important;white-space:nowrap;flex:none;height:36px}
+html body .es-topbar__tel svg:not(#_){color:#78BB98}
+html body .es-topbar__tel b:not(#_){font-weight:700;letter-spacing:.01em;color:#fff!important}
+html body .es-topbar__hours:not(#_){color:#B9C2BD!important;padding-left:8px;border-left:1px solid #3A423E;margin-left:2px}
+html body .es-topbar__tel:not(#_):hover b{text-decoration:underline;text-underline-offset:3px}
+html body .es-topbar__code:not(#_){display:none!important}
+@media(max-width:999px){html body .es-topbar__usps span:nth-child(n+3):not(#_){display:none!important}}
+@media(max-width:749px){
+html body .es-topbar__in:not(#_){height:34px;padding:0 16px!important;gap:12px}
+html body .es-topbar__usps:not(#_){position:relative;flex:1;height:34px;display:block!important}
+html body .es-topbar__usps span:not(#_),html body .es-topbar__usps span:nth-child(n+3):not(#_){display:inline-flex!important;position:absolute;left:0;top:0;height:34px;opacity:0;animation:esTopRot 12s infinite;font-size:12.5px}
+html body .es-topbar__usps span:nth-child(2):not(#_){animation-delay:3s}
+html body .es-topbar__usps span:nth-child(3):not(#_){animation-delay:6s}
+html body .es-topbar__usps span:nth-child(4):not(#_){animation-delay:9s}
+html body .es-topbar__hours:not(#_){display:none!important}
+html body .es-topbar__tel:not(#_){height:34px;font-size:12.5px;gap:6px}
+}
+@media(max-width:749px) and (prefers-reduced-motion:reduce){html body .es-topbar__usps span:not(#_){animation:none!important}html body .es-topbar__usps span:first-child:not(#_){opacity:1}}
+@keyframes esTopRot{0%{opacity:0;transform:translateY(4px)}3%,22%{opacity:1;transform:none}25%,100%{opacity:0;transform:translateY(-4px)}}
+</style>

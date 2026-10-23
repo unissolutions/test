@@ -1,0 +1,48 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-blog-post",
+      "blocks": {
+        "newsletter": {
+          "type": "newsletter",
+          "settings": {}
+        },
+        "social-media": {
+          "type": "social_media",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "newsletter",
+        "social-media"
+      ],
+      "settings": {}
+    },
+    "es_faq": {
+      "type": "es-article-faq",
+      "settings": {
+        "show_faq": true,
+        "kicker": "Kurz beantwortet",
+        "title": "Häufige Fragen",
+        "show_box": true,
+        "box_title": "Fragen zu Ihrem Projekt?",
+        "box_text": "Wir prüfen Maße, Stärke und Zubehör kostenlos – Mo–Fr 8–17 Uhr.",
+        "phone": "0209 513 078 34",
+        "whatsapp": "491781199805"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "es_faq"
+  ]
+}

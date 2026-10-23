@@ -1,0 +1,138 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "es_chips": {
+      "type": "es-collection-chips",
+      "blocks": {
+        "g_steg_mm": {
+          "type": "group",
+          "settings": {
+            "label": "Stärke",
+            "scope": "doppelstegplatten,hohlkammer,polycarbonatplatten",
+            "exclude": "komplettset",
+            "chips": "4,5 mm|collection:doppelstegplatten-4mm\n6 mm|collection:doppelstegplatten-6mm\n8 mm|collection:doppelstegplatten-8mm\n10 mm|collection:doppelstegplatten-10mm\n16 mm|collection:doppelstegplatten-16mm"
+          }
+        },
+        "g_steg_farbe": {
+          "type": "group",
+          "settings": {
+            "label": "Plattenfarbe",
+            "scope": "doppelstegplatten,hohlkammer,gewachshausplatten,polycarbonatplatten",
+            "exclude": "",
+            "chips": "Klar|tag:Klar/Transparent\nOpal / Weiß|tag:Opal/Weiß\nAnthrazit / Graphit|tag:Anthrazit/Graphit\nBronze|tag:Bronze"
+          }
+        },
+        "g_terr_farbe": {
+          "type": "group",
+          "settings": {
+            "label": "Alu-Farbe",
+            "scope": "terrassenuberdachung",
+            "exclude": "",
+            "chips": "Anthrazit|tag:Anthrazit\nWeiß|tag:Weiß"
+          }
+        },
+        "g_terr_dach": {
+          "type": "group",
+          "settings": {
+            "label": "Dach",
+            "scope": "terrassenuberdachung",
+            "exclude": "",
+            "chips": "Stegplatten|collection:terrassenuberdachung-alu-mit-stegplatten\nVSG-Glas|collection:terrassenuberdachung-alu-mit-vsg-glas"
+          }
+        },
+        "g_set_farbe": {
+          "type": "group",
+          "settings": {
+            "label": "Plattenfarbe",
+            "scope": "komplettset",
+            "exclude": "gewachshaus",
+            "chips": "Klar|tag:Klar/Transparent\nOpal / Weiß|tag:Opal/Weiß\nAnthrazit / Graphit|tag:Anthrazit/Graphit\nBronze|tag:Bronze"
+          }
+        },
+        "g_zub_mm": {
+          "type": "group",
+          "settings": {
+            "label": "Für Stärke",
+            "scope": "profile-zubehor,stegplatten-aluprofile,profile-mit-meterpreis",
+            "exclude": "",
+            "chips": "4,5 mm|collection:profile-zubehor-fur-4mm\n6 mm|collection:profile-zubehor-fur-6mm\n8 mm|collection:profile-zubehor-fur-8mm\n10 mm|collection:profile-zubehor-fur-10mm\n16 mm|collection:profile-zubehor-fur-16mm\n25 mm|collection:profile-zubehor-fur-25mm"
+          }
+        },
+        "g_well": {
+          "type": "group",
+          "settings": {
+            "label": "Profil",
+            "scope": "wellplatten,sinuswelle",
+            "exclude": "",
+            "chips": "76/18|collection:sinuswelle-76-18\n130/30|collection:sinuswelle-130-30\n177/51|collection:sinuswelle-177-51\nAcrylglas|collection:acrylglas-wellplatten\nPolycarbonat|collection:polycarbonat-wellplatten"
+          }
+        },
+        "g_trapez": {
+          "type": "group",
+          "settings": {
+            "label": "Profil",
+            "scope": "trapez",
+            "exclude": "",
+            "chips": "70/18|collection:trapezplatten-70-18\n76/18|collection:trapezplatten-76-18\nZubehör|collection:trapez-zubehor"
+          }
+        }
+      },
+      "block_order": [
+        "g_steg_mm",
+        "g_steg_farbe",
+        "g_terr_farbe",
+        "g_terr_dach",
+        "g_set_farbe",
+        "g_zub_mm",
+        "g_well",
+        "g_trapez"
+      ],
+      "settings": {}
+    },
+    "es_grid": {
+      "type": "es-collection-grid",
+      "settings": {
+        "per_page": 24,
+        "lieferzeit": "5–8 Werktage",
+        "show_consult": true,
+        "consult_heading": "Unsicher bei der Auswahl?",
+        "consult_text": "Wir prüfen Maße, Stärke und Zubehör kostenlos – telefonisch oder per WhatsApp.",
+        "phone": "0209 513 078 34",
+        "whatsapp": "491781199805",
+        "whatsapp_text": "Hallo, ich habe eine Frage zu Ihren Produkten."
+      }
+    },
+    "recently-viewed-products": {
+      "type": "recently-viewed-products",
+      "settings": {
+        "title": "Zuletzt angesehen",
+        "show_quick_buy": true
+      }
+    },
+    "es_seo": {
+      "type": "es-collection-seo",
+      "settings": {
+        "fallback_desc": true,
+        "clamp": true,
+        "show_faq": true,
+        "faq_kicker": "Häufige Fragen",
+        "faq_title": "Fragen zu [title]",
+        "help_text": "<p>Noch Fragen? <a href=\"tel:+4920951307834\">0209 513 078 34</a> · Mo–Fr 8–17 Uhr</p>"
+      }
+    }
+  },
+  "order": [
+    "es_chips",
+    "es_grid",
+    "recently-viewed-products",
+    "es_seo"
+  ]
+}

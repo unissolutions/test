@@ -1,0 +1,206 @@
+[
+ {
+  "path": "assets/es-design-system.css",
+  "orig_size": 15111,
+  "orig_md5": "98aee51028ffcb0812ca1d1b16d5a5a3",
+  "new_size": 14200,
+  "new_md5": "6e19f9bad89d010256cb2a959261c4ce",
+  "summary": "Paket 3: Token-:root (Farben, --es-mute #5E6863, Linien, Höhen 56/48/40, Typo-Skala H1/H1p/H2/H2b/H3/Card, --es-wrap 1280); Radius/999px/Deko-Schatten/translateY-Hover entfernt; Inputs/Qty Rahmen --es-ui, min 44px; Chips/Buttons auf Skala; Ausverkauft-Kontrast."
+ },
+ {
+  "path": "assets/es-mobile.css",
+  "orig_size": 7026,
+  "orig_md5": "5807506a94aeeac0c63c6f15c4f4d3f9",
+  "new_size": 6906,
+  "new_md5": "19fdef617c2a9301e8b2d8341f2afd6a",
+  "summary": "Paket 1/3: Universal-Radius raus, Hex -> Tokens; Swatches/Qty 44px; Menü-CTA-Untertitel kontraststark; Chips mobil 44px; Produktseite padding-bottom inkl. safe-area für Sticky-Bar; tote Titelregel entfernt."
+ },
+ {
+  "path": "layout/theme.liquid",
+  "orig_size": 9406,
+  "orig_md5": "1666577678a419623460034cb1f1d5a7",
+  "new_size": 9442,
+  "new_md5": "b5fe0f3d6a0ae2f02c282bc68158f811",
+  "summary": "Paket 2/1: Archivo selbst gehostet (Preload nur latin, 2x @font-face swap, unicode-range), Preconnect fonts.shopifycdn.com entfernt; es-flat entschlackt (wirkungslose Radius-Regeln + Trust-Bar-Dublette raus), einheitlicher :focus-visible-Ring 2px Tinte (weiß auf dunklen Flächen)."
+ },
+ {
+  "path": "sections/es-collection-chips.liquid",
+  "orig_size": 12657,
+  "orig_md5": "a3512da910f8eb9ea9ac1b7f3cf8a9f2",
+  "new_size": 12739,
+  "new_md5": "d0772acc6821eb9b63a391ecd7387f91",
+  "summary": "Paket 1/2: Google-Fonts-Link raus; Rabatt-Badge wird beim Größenwechsel mitberechnet bzw. ausgeblendet (vorher falscher %-Wert)."
+ },
+ {
+  "path": "sections/es-collection-grid.liquid",
+  "orig_size": 14547,
+  "orig_md5": "03e2c0d2086d17bd90dcbe269d164aa8",
+  "new_size": 16567,
+  "new_md5": "bc982e4846d45bc5b255f20623eaa1f1",
+  "summary": "Paket 1/3: Inline-CSS auf Skala (Selects 44, Karten-Button 48/44, Pagination 44, Beratungsbox, WA-Text dunkel); Fakten für Terrassendächer \"Farbe · Rahmen · Material\"; Kurztitel in Terrassen-Kollektionen (title-Attribut mit Volltitel); Lieferzeit für Nicht-Dach-Produkte aus Section-Setting."
+ },
+ {
+  "path": "sections/es-eindeckung.liquid",
+  "orig_size": 7183,
+  "orig_md5": "2bb53dad7839381d100e8f1a4fadaac2",
+  "new_size": 5278,
+  "new_md5": "0dca1725727fa8822995ceb15e41e5d9",
+  "summary": "Paket 2/3: Google-Fonts-Link raus; CSS auf Skala (H2-Token, H3 18, Hintergrund --es-bg2, Ziel 44px); doppelte Startseiten-Mobilregeln entfernt. Move-JS und Schema unverändert."
+ },
+ {
+  "path": "sections/es-landing.liquid",
+  "orig_size": 13656,
+  "orig_md5": "465d912e2d15eec35ec14326706d0386",
+  "new_size": 17177,
+  "new_md5": "cce76a0a542018f8a34076cb8a64e031",
+  "summary": "Hero beides: neuer hero_mode \"both\" mit role=tablist/tab/tabpanel, aria-selected/-controls, Pfeil/Pos1/Ende, roving tabindex; Standard-Tab per Setting hero_default_tab; Lieferzeit je Panel (lz); Modi konfig/finder bleiben. Trust-Markup b/span, Kategorie-Bildrahmen, Silbentrennung (&shy;), Bestseller-Farbe aus Titel. Schema: Option both + hero_default_tab, tab1/2_label/_sub."
+ },
+ {
+  "path": "sections/es-pdp-terrasse.liquid",
+  "orig_size": 15351,
+  "orig_md5": "7afdf94e865c97b5fb9b4c422d02149c",
+  "new_size": 14521,
+  "new_md5": "77c6f2478e863ee1e5cbfa0d176eca0c",
+  "summary": "Paket 1/2: Google-Fonts-Link + Inline-Style raus; Klarna-Box serverseitig (kein Nachladen-Sprung), Lagerzeile nach oben, Plan-Block nach Trust; Aufpreise einheitlich \"+ x,xx €\"; r10/r14-Radiusklassen raus. Liquid-Logik, data-*-Hooks und Cart-Properties unverändert."
+ },
+ {
+  "path": "sections/header.liquid",
+  "orig_size": 25724,
+  "orig_md5": "efdfaf91045d1da47d3b6d84afacee07",
+  "new_size": 25696,
+  "new_md5": "8c67eb78b50d1c0e1a6dfc983ef180c0",
+  "summary": "Paket 1: Logo immer <div> statt <h1> auf der Startseite (genau eine H1 pro Seite)."
+ },
+ {
+  "path": "snippets/css-variables.liquid",
+  "orig_size": 8614,
+  "orig_md5": "d7d296528fbd1971701b8829ce5ac2de",
+  "new_size": 7040,
+  "new_md5": "b0dcf3a7fc47f46bdfb00f9563154c6c",
+  "summary": "Paket 2: Barlow wird nicht mehr geladen (font_face/preload/font_modify entfernt); --heading/--text-font-family = Archivo + Systemstack, Gewichte 700/400/600; Gutter 16/24."
+ },
+ {
+  "path": "snippets/es-col-css.liquid",
+  "orig_size": 6718,
+  "orig_md5": "167716bdf7b67ecd64a7860abbd42205",
+  "new_size": 6859,
+  "new_md5": "db12ee4cdb537d00f8c644b935f47e54",
+  "summary": "Paket 3: Kollektions-H1 = H1-Token; Größenwähler --es-bg2, Select 48; Filter-Labels 44; Filter-Button 44 (auch Desktop); Karten: Fakten 2 Zeilen, Titel feste Mindesthöhe (mobil 4 Zeilen), Button 48/44, Badges 24px; Toolbar mobil 44."
+ },
+ {
+  "path": "snippets/es-header-m.liquid",
+  "orig_size": 6113,
+  "orig_md5": "c0db2bf9329c71161037375cfbc48ed4",
+  "new_size": 6288,
+  "new_md5": "df8922295784d3b5af540c68edc88b56",
+  "summary": "Paket 1: Header-Icons 44x44 (Tippflächen), Menü-Button 44, Platzhalter/Titel #5E6863 (Kontrast)."
+ },
+ {
+  "path": "snippets/es-hero-br.liquid",
+  "orig_size": 4683,
+  "orig_md5": "10747046a511e5b2133dd73283a39ece",
+  "new_size": 364,
+  "new_md5": "1aa1250a27606f624de8e13da7b27d4e",
+  "summary": "Paket 1: alter Hero-Breakpoint-Patch durch Kommentar-Stub ersetzt (wird von es-promo-bar weiter gerendert, Regeln jetzt in es-landing-css/es-hero-konfig)."
+ },
+ {
+  "path": "snippets/es-hero-konfig.liquid",
+  "orig_size": 11471,
+  "orig_md5": "40c688c4873d8309dd9c24a83112401f",
+  "new_size": 11187,
+  "new_md5": "f7aa4f4dcdd381e5372d9121360b04e0",
+  "summary": "Hero/Paket 3: Google-Fonts-Link raus; neue CSS (Container-Query, gleich breite Pills 48/44, LED-Spots kompakt erhalten, Go-Button 56, Kontrast); Lieferzeit-Zeile (lz, Default ca. 10–40 Werktage). JS und alle data-*-Hooks (LED, data-cents, ?led=) unverändert."
+ },
+ {
+  "path": "snippets/es-landing-css.liquid",
+  "orig_size": 8756,
+  "orig_md5": "865a182d73ba7f20b87619ecddfb0be1",
+  "new_size": 12759,
+  "new_md5": "3c73ca9f8f5f1bcd3226eb31a418961d",
+  "summary": "Hero beides + Paket 1/3: komplette Startseiten-CSS konsolidiert auf Tokens; Kicker-Fix; Buttons L56/M48; Tabs-Styles (.ehx, aria-selected); Trust-Bar mit sichtbarer Unterzeile (2x2 mobil); Kategorien als Kacheln; Bestseller-Karten/Steps/FAQ/Hilfe auf Skala; mobil: Tabs+aktives Panel+CTA im ersten Screen, Bild danach."
+ },
+ {
+  "path": "snippets/es-landing-finder.liquid",
+  "orig_size": 4721,
+  "orig_md5": "c6b81cb20506f2fc606ffe85ae76fdc6",
+  "new_size": 5177,
+  "new_md5": "e5f5dd65da835b67f12e56a10e3ba968",
+  "summary": "Hero: CSS auf Skala (Optionen 2-spaltig 56px, L-Button volle Breite), mobil kompakt; Lieferzeit-Zeile (lz, Default 5–8 Werktage). JS unverändert. | Nachtrag: Farbhinweise umbrechen statt abschneiden."
+ },
+ {
+  "path": "snippets/es-overrides-pdp.liquid",
+  "orig_size": 9532,
+  "orig_md5": "a5a3fd6f8eca3e9c7c1845e2288dcae6",
+  "new_size": 9567,
+  "new_md5": "8077e00f5a3e303aa9d0392d1cd0c357",
+  "summary": "Paket 1/3: Produkttitel H1p 800; Klarna neutral (weiß, 1px Rahmen, kleines Logo-Badge, 44px); Beschreibung/Specs auf Wrap/H2b/H3; Farben #5E6863; JS nutzt vorhandene [data-es-kl]-Box, sonst Fallback wie bisher, null-sicher."
+ },
+ {
+  "path": "snippets/es-overrides.liquid",
+  "orig_size": 10561,
+  "orig_md5": "d4c157dcb97fe09c8d071247c5145aa7",
+  "new_size": 10363,
+  "new_md5": "f0f14c404e683777ac47886a69bce248",
+  "summary": "Paket 3: eine Radius-0-Regel mit Ausnahmeliste (Radio, Sterne, Farbswatches, Punkte); Container max-width 1280; Sektionstitel = H2b; Produktkarten (Titel 3 Zeilen fix, Preis 20/18, Button 48/44, Hover-Rahmen); Judge.me-Farben #5E6863; WA-Text dunkel. Scripts/Renders unverändert."
+ },
+ {
+  "path": "snippets/es-pdp-css.liquid",
+  "orig_size": 10349,
+  "orig_md5": "18bb892419ea24a0ae260078ea6ac699",
+  "new_size": 11243,
+  "new_md5": "022899827b9b98d5e1b216a79859f75a",
+  "summary": "Paket 1/3: K1-Fix (Grid-Überlauf 360px), H1 = H1p-Token, Preis 125% Stretch, gleich breite Pills, LED/Zubehör-Zeilen 64px mit :has(checked), Summenzeile reserviert (kein Layout-Shift), Kauf-Grid 144/136, Qty 56/48, ATC 56, Sticky-Bar bis 999px, Plan-Block-Styles; Inline-Styles aus der Section hierher verschoben."
+ },
+ {
+  "path": "snippets/es-pdp-js.liquid",
+  "orig_size": 8395,
+  "orig_md5": "d725eab43c4d7d017695b62f064c4aaf",
+  "new_size": 8657,
+  "new_md5": "82801b80be558deb35ec21e1c1c509c7",
+  "summary": "Paket 1: Sticky-Bar erscheint nur noch, wenn Preisblock oberhalb des Viewports UND ATC nicht sichtbar ist (zweiter IntersectionObserver). LED-Logik unverändert (led_test 26/26)."
+ },
+ {
+  "path": "snippets/es-reviews.liquid",
+  "orig_size": 6728,
+  "orig_md5": "773a9297796b16ca0fc01256a159632b",
+  "new_size": 6641,
+  "new_md5": "502c085163a2f623550592776f188c7a",
+  "summary": "Paket 1/3: Bewertungs-H2 = H2b ohne 115%-Stretch, Grautexte #5E6863, Produktlink 44px, Linien vereinheitlicht, explizite font-family-Deklarationen entfernt."
+ },
+ {
+  "path": "snippets/es-topbar.liquid",
+  "orig_size": 4036,
+  "orig_md5": "3b7666c76139b26849fe558bec151ac0",
+  "new_size": 4066,
+  "new_md5": "58ca0506414b76e571c8a8b588b1aab8",
+  "summary": "Paket 3: max-width = --es-wrap (1280) statt 1320, Schrift über Token."
+ },
+ {
+  "path": "snippets/es-wa.liquid",
+  "orig_size": 3698,
+  "orig_md5": "720068f74b5c3d4db35425fe2732f296",
+  "new_size": 3754,
+  "new_md5": "f1b07cf8971ceb786208a17f5b913b78",
+  "summary": "Paket 1: WhatsApp-Buttons dunkler Text auf #25D366 (8,4:1 statt 2:1)."
+ },
+ {
+  "path": "snippets/mobile-menu.liquid",
+  "orig_size": 12314,
+  "orig_md5": "de47b7f0c11a1672faf54c709de65f29",
+  "new_size": 12301,
+  "new_md5": "4b32be94e5c0bbc5bf40e319e6c89f72",
+  "summary": "Paket 1: Trust-Zeilen im Mobilmenü an Topbar-USPs angeglichen (10 Jahre Garantie, Zuschnitt nach Wunschmaß, Zahlen bei Lieferung, Klarna & PayPal)."
+ },
+ {
+  "path": "templates/index.json",
+  "orig_size": 9643,
+  "orig_md5": "2d69f64aa182675062be934d9ebda092",
+  "new_size": 9759,
+  "new_md5": "d6582f80838982b0c1ae749420c149bb",
+  "summary": "Hero beides: hero_mode both, hero_default_tab konfig, Tab-Labels; H1 \"Stegplatten & Terrassendächer nach Maß\", Kicker/Lead neu; Trust-Texte (Lieferzeiten Platten/Dächer getrennt, Zahlung, Beratung). Kommentar-Header erhalten, gültiges JSON. Hinweis: Shopify-checksumMd5 bezieht sich auf den Inhalt OHNE Header.",
+  "orig_body_md5_ohne_header": "89d6ae7acdb03d8e23c175140b955e6b",
+  "orig_body_size_ohne_header": 9280,
+  "new_body_md5_ohne_header": "6fa542f39f5f1798d4c05e4c9e8c5df0",
+  "new_body_size_ohne_header": 9396
+ }
+]

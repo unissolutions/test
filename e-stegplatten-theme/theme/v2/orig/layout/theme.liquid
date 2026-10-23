@@ -1,0 +1,156 @@
+<!doctype html>
+
+<html class="no-js" lang="{{ request.locale.iso_code }}">
+  <head>
+{% include 'booster-seo' %}
+    <meta name="google-site-verification" content="5InIFJJbKmHuBE9_mZ7MxogyHFwfz4oMuxqPy_MXMoI" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="{{ settings.accent_color }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ 'fav.png' | asset_url }}">
+
+
+    {% comment %}<title>{% if page_title == blank %}{{ shop.name }}{% else %}{{ page_title }}{% if current_page != 1 %} &ndash; {{ 'general.meta.page' | t: page: current_page }}{% endif %}{% endif %}</title>{% endcomment %}
+
+    {%- if page_description -%}
+      {% comment %}<meta name="description" content="{{ page_description | escape }}">{% endcomment %}
+    {%- endif -%}
+
+    <link rel="canonical" href="{{ canonical_url }}">
+
+    {%- if settings.favicon -%}
+      <link rel="shortcut icon" href="{{ settings.favicon | img_url: '96x96' }}" type="image/png">
+    {%- endif -%}
+
+    
+
+    {%- comment -%}Few prefech to increase performance on commonly used third-parties{%- endcomment -%}
+    <link rel="preload" as="style" href="{{ 'theme.css' | asset_url }}">
+    <link rel="preload" as="script" href="{{ 'theme.js' | asset_url }}">
+    <link rel="preconnect" href="https://cdn.shopify.com">
+    <link rel="preconnect" href="https://fonts.shopifycdn.com">
+    <link rel="dns-prefetch" href="https://productreviews.shopifycdn.com">
+    <link rel="dns-prefetch" href="https://ajax.googleapis.com">
+    <link rel="dns-prefetch" href="https://maps.googleapis.com">
+    <link rel="dns-prefetch" href="https://maps.gstatic.com">
+
+    {% render 'social-meta-tags' %}
+    {% render 'css-variables' %}
+
+    {{ content_for_header }}
+
+    <link rel="stylesheet" href="{{ 'theme.css' | asset_url }}">
+    {%- comment -%}e-Stegplatten Design System (#338258) – globale Überschreibung + Mobile{%- endcomment -%}
+    <link rel="stylesheet" href="{{ 'es-design-system.css' | asset_url }}">
+    <link rel="stylesheet" href="{{ 'es-mobile.css' | asset_url }}">
+
+    {% render 'microdata-schema' %}
+
+    <script>
+      // This allows to expose several variables to the global scope, to be used in scripts
+      window.theme = {
+        pageType: {{ request.page_type | json }},
+        cartCount: {{ cart.item_count | json }},
+        moneyFormat: {{ shop.money_format | json }},
+        moneyWithCurrencyFormat: {{ shop.money_with_currency_format | json }},
+        currencyCodeEnabled: {{ settings.currency_code_enabled | json }},
+        showDiscount: {{ settings.show_discount | json }},
+        discountMode: {{ settings.discount_mode | json }},
+        cartType: {{ settings.cart_type | json }}
+      };
+
+      window.routes = {
+        rootUrl: {{ routes.root_url | json }},
+        rootUrlWithoutSlash: {% if routes.root_url == '/' %}''{% else %}{{ routes.root_url | json }}{% endif %},
+        cartUrl: {{ routes.cart_url | json }},
+        cartAddUrl: {{ routes.cart_add_url | json }},
+        cartChangeUrl: {{ routes.cart_change_url | json }},
+        searchUrl: {{ routes.search_url | json }},
+        productRecommendationsUrl: {{ routes.product_recommendations_url | json }}
+      };
+
+      window.languages = {
+        productRegularPrice: {{ 'product.general.regular_price' | t | json }},
+        productSalePrice: {{ 'product.general.sale_price' | t | json }},
+        collectionOnSaleLabel: {{ 'collection.product.discount_html' | t | json }},
+        productFormUnavailable: {{ 'product.form.unavailable' | t | json }},
+        productFormAddToCart: {{ 'product.form.add_to_cart' | t | json }},
+        productFormPreOrder: {{ 'product.form.pre_order' | t | json }},
+        productFormSoldOut: {{ 'product.form.sold_out' | t | json }},
+        productAdded: {{ 'product.form.added' | t | json }},
+        productAddedShort: {{ 'product.form.added_short' | t | json }},
+        shippingEstimatorNoResults: {{ 'cart.shipping_estimator.no_results_title' | t | json }},
+        shippingEstimatorOneResult: {{ 'cart.shipping_estimator.one_result_title' | t | json }},
+        shippingEstimatorMultipleResults: {{ 'cart.shipping_estimator.multiple_results_title' | t | json }},
+        shippingEstimatorErrors: {{ 'cart.shipping_estimator.errors' | t | json }}
+      };
+
+      document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+    </script>
+
+    {%- if request.page_type == 'customers/addresses' -%}
+      <script src="{{ 'shopify_common.js' | shopify_asset_url }}" defer></script>
+      <script src="{{ 'customer_area.js' | shopify_asset_url }}" defer></script>
+    {%- endif -%}
+
+    <script src="{{ 'theme.js' | asset_url }}" defer></script>
+    <script src="{{ 'custom.js' | asset_url }}" defer></script>
+
+    {%- if request.page_type != 'cart' -%}
+      <script>
+        (function () {
+          window.onpageshow = function() {
+            // We force re-freshing the cart content onpageshow, as most browsers will serve a cache copy when hitting the
+            // back button, which cause staled data
+            document.documentElement.dispatchEvent(new CustomEvent('cart:refresh', {
+              bubbles: true,
+              detail: {scrollToTop: false}
+            }));
+          };
+        })();
+      </script>
+    {%- endif -%}
+
+    {%- comment -%}e-Stegplatten: flaches Design – inline, damit es nach ALLEN Stylesheets (auch App-CSS) greift und nicht am CDN-Cache hängt. Neue Bausteine (PDP, Hero-Konfigurator, Kollektions-Kopf, Eindeckung) ebenfalls kantig; nur Farbpunkte bleiben rund. Footer ohne Akkordeon. Startseite: Vertrauens-Leiste mobil 2×2. Weitere kleine Overrides: snippets/es-overrides.liquid{%- endcomment -%}
+    <style id="es-flat">*,*::before,*::after{border-radius:0!important}input[type=radio],.jdgm-star,.block-swatch__item--color,.rating__star{border-radius:50%!important}.card,.product-item,.product-block,.product-form__payment-container,.es-card,.product-card-mini,.drawer,.popover,.es-sticky,.es-col__panel,.collapsible,.payment-list__item,.jdgm-carousel-item,.jdgm-rev{box-shadow:none!important}.card,.product-block{border:1px solid #E1E5E2!important}.product-item:hover,.es-card:hover,.product-card-mini:hover{transform:none!important;box-shadow:none!important}
+.es-pdp.es-pdp.es-pdp,.es-pdp.es-pdp.es-pdp *,.esl.esl .ehk.ehk,.esl.esl .ehk.ehk *,.es-ch.es-ch.es-ch *,.esk.esk.esk .esk__v{border-radius:0!important}
+.es-pdp.es-pdp.es-pdp .rr,.esl.esl .ehk.ehk .ehk__dot,.esk.esk.esk .esk__sun{border-radius:50%!important}
+.footer .footer__collapsible{height:auto!important;visibility:visible!important;overflow:visible!important;opacity:1!important}
+.footer .footer__collapsible-content{opacity:1!important;transform:none!important}
+.footer .footer__title{pointer-events:none;cursor:default}.footer .footer__title .plus-button{display:none!important}
+@media(max-width:640px){.footer .footer__block-list{display:grid;grid-template-columns:1fr 1fr;gap:28px 18px}.footer .footer__block-item{margin:0!important;padding:0!important;border:0!important}.footer .footer__block-item--text,.footer .footer__block-item--newsletter{grid-column:1/-1}.footer .footer__title{padding:0 0 10px!important;margin:0!important;min-height:0!important}.footer .footer__collapsible-content{padding:0!important}.footer .footer__linklist li{margin:0 0 8px}}
+@media(max-width:1000px){html body .esl.esl .trust .c{display:grid!important;grid-template-columns:1fr 1fr;gap:0!important;padding:0!important;overflow:visible!important}html body .esl.esl .trust .c>div{display:flex!important;align-items:flex-start;gap:8px;padding:12px 14px!important;margin:0!important;border:0!important;border-bottom:1px solid #E1E5E2!important;background:none!important;white-space:normal!important;font-size:13px!important;line-height:1.4}html body .esl.esl .trust .c>div:nth-child(odd){border-right:1px solid #E1E5E2!important}html body .esl.esl .trust .c>div:nth-last-child(-n+2){border-bottom:0!important}html body .esl.esl .trust svg{margin-top:2px;width:14px;height:14px}}</style>
+    {% render 'es-overrides' %}
+  </head>
+
+  <body class="warehouse--v4 {% if settings.animation_image_zoom %}features--animate-zoom{% endif%} template-{{ request.page_type | handle }} {% if request.page_type contains '/' %}template-{{ request.page_type | split: '/' | last | handle }}{% endif %}" data-instant-intensity="viewport">
+    {%- comment -%}Common SVG definitions that we are re-using in several places{%- endcomment -%}
+    <svg class="visually-hidden">
+      <linearGradient id="rating-star-gradient-half">
+        <stop offset="50%" stop-color="var(--product-review-star-color)" />
+        <stop offset="50%" stop-color="rgba(var(--text-color-rgb), .4)" stop-opacity="0.4" />
+      </linearGradient>
+    </svg>
+
+    <a href="#main" class="visually-hidden skip-to-content">{{ 'general.accessibility.skip_to_content' | t }}</a>
+    <span class="loading-bar"></span>
+
+    {% render 'es-topbar' %}
+    {%- sections 'header-group' -%}
+    {% render 'es-promo-bar' %}
+    {%- sections 'overlay-group' -%}
+
+    <main id="main" role="main">
+      {{ content_for_layout }}
+    </main>
+
+    {%- sections 'footer-group' -%}
+
+    {% render 'es-led-guard' %}
+
+    <ul hidden>
+      <li id="a11y-new-window-message">{{ 'general.accessibility.new_window' | t }}</li>
+    </ul>
+    
+  </body>
+</html>

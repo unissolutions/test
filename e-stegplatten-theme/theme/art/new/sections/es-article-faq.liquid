@@ -1,0 +1,74 @@
+{%- comment -%}e-Stegplatten: Ratgeber-Artikel – FAQ-Akkordeon + FAQPage-Schema aus Metafeld custom.seo_faq (JSON [{question, answer}]), HowTo-Schema aus custom.howto (JSON [{name, text}]), Beratungs-Box und Tabellen-Styling für den Artikeltext.{%- endcomment -%}
+{%- assign faq = article.metafields.custom.seo_faq.value -%}
+{%- assign howto = article.metafields.custom.howto.value -%}
+{%- assign nfaq = 0 -%}
+{%- if section.settings.show_faq and faq != blank -%}{%- for f in faq -%}{%- if f.question != blank and f.answer != blank -%}{%- assign nfaq = nfaq | plus: 1 -%}{%- endif -%}{%- endfor -%}{%- endif -%}
+{%- assign nhow = 0 -%}
+{%- if howto != blank -%}{%- for s in howto -%}{%- if s.name != blank and s.text != blank -%}{%- assign nhow = nhow | plus: 1 -%}{%- endif -%}{%- endfor -%}{%- endif -%}
+<style>
+.template-article main .rte table{width:100%;border-collapse:collapse;margin:8px 0 24px;font-size:14px;line-height:1.45}
+.template-article main .rte th,.template-article main .rte td{border:1px solid var(--es-line,#DCE3DE);padding:9px 12px;text-align:left;vertical-align:top}
+.template-article main .rte thead th{background:var(--es-bg2,#F0F4F1);color:var(--es-ink,#1B1F1D);font-weight:700}
+.template-article main .rte tbody tr:nth-child(even) td{background:var(--es-sub,#F7F8F7)}
+.template-article main .rte h2{scroll-margin-top:96px}
+@media(max-width:749px){.template-article main .rte table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}.template-article main .rte th,.template-article main .rte td{min-width:120px;padding:8px 10px}}
+#es-af-{{ section.id }}{max-width:780px;margin:0 auto;padding:8px var(--es-gut,24px) 56px;color:var(--es-tx,#272D2A);font-size:15px;line-height:1.6}
+#es-af-{{ section.id }} *{box-sizing:border-box}
+.es-af__k{margin:0 0 6px;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--es-g,#338258)}
+.es-af__h{font-size:var(--es-fs-h2b,22px);font-weight:800;color:var(--es-ink,#1B1F1D);line-height:1.25;margin:0 0 16px}
+.es-af details{border-top:1px solid var(--es-line,#DCE3DE)}
+.es-af details:last-of-type{border-bottom:1px solid var(--es-line,#DCE3DE)}
+.es-af summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;min-height:56px;padding:12px 0;font-weight:700;color:var(--es-ink,#1B1F1D);font-size:15px;line-height:1.35}
+.es-af summary::-webkit-details-marker{display:none}
+.es-af summary::after{content:'+';color:var(--es-g,#338258);font-size:22px;line-height:1;flex:none}
+.es-af details[open] summary::after{content:'–'}
+.es-af details div{padding:0 0 16px;font-size:15px;line-height:1.6;max-width:70ch}
+.es-af__box{margin-top:32px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;align-items:center;padding:20px 24px;background:var(--es-g50,#E8F2EC);border-left:4px solid var(--es-g,#338258)}
+.es-af__box h3{margin:0 0 4px;font-size:var(--es-fs-h3,18px);font-weight:700;color:var(--es-ink,#1B1F1D)}
+.es-af__box p{margin:0;font-size:14px}
+.es-af__box>div:last-child{display:flex;gap:8px;flex-wrap:wrap}
+.es-af__box a{display:inline-flex;align-items:center;justify-content:center;height:var(--es-h-m,48px);padding:0 16px;font-weight:700;font-size:15px;text-decoration:none!important;background:var(--es-ink,#1B1F1D);color:#fff!important;white-space:nowrap}
+.es-af__box a.is-wa{background:var(--es-g,#338258)}
+@media(max-width:749px){.es-af__box{grid-template-columns:1fr}.es-af__box a{flex:1 1 auto}}
+</style>
+{%- if nfaq > 0 or section.settings.show_box -%}
+<div id="es-af-{{ section.id }}" class="es-af">
+{%- if nfaq > 0 -%}
+<p class="es-af__k">{{ section.settings.kicker }}</p>
+<h2 class="es-af__h">{{ section.settings.title }}</h2>
+{%- assign fi = 0 -%}
+{%- for f in faq -%}{%- if f.question != blank and f.answer != blank -%}{%- assign fi = fi | plus: 1 -%}<details{% if fi == 1 %} open{% endif %}><summary>{{ f.question | escape }}</summary><div>{{ f.answer | escape | newline_to_br }}</div></details>{%- endif -%}{%- endfor -%}
+{%- endif -%}
+{%- if section.settings.show_box -%}
+<div class="es-af__box">
+<div><h3>{{ section.settings.box_title }}</h3><p>{{ section.settings.box_text }}</p></div>
+<div>{%- if section.settings.phone != blank -%}<a href="tel:{{ section.settings.phone | remove: ' ' | replace: '0209', '+49209' }}">{{ section.settings.phone }}</a>{%- endif -%}{%- if section.settings.whatsapp != blank -%}<a class="is-wa" href="https://wa.me/{{ section.settings.whatsapp }}?text={{ article.title | prepend: 'Hallo, ich habe eine Frage zum Ratgeber: ' | url_encode }}" target="_blank" rel="noopener">WhatsApp</a>{%- endif -%}</div>
+</div>
+{%- endif -%}
+</div>
+{%- endif -%}
+{%- if nfaq > 0 -%}
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{%- assign fi = 0 -%}{%- for f in faq -%}{%- if f.question != blank and f.answer != blank -%}{%- assign fi = fi | plus: 1 -%}{"@type":"Question","name":{{ f.question | strip_html | json }},"acceptedAnswer":{"@type":"Answer","text":{{ f.answer | strip_html | json }}}}{%- unless fi == nfaq -%},{%- endunless -%}{%- endif -%}{%- endfor -%}]}</script>
+{%- endif -%}
+{%- if nhow > 0 -%}
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"HowTo","name":{{ article.title | json }},"description":{{ article.excerpt_or_content | strip_html | truncate: 300 | json }},"step":[{%- assign si = 0 -%}{%- for s in howto -%}{%- if s.name != blank and s.text != blank -%}{%- assign si = si | plus: 1 -%}{"@type":"HowToStep","position":{{ si }},"name":{{ s.name | strip_html | json }},"text":{{ s.text | strip_html | json }}}{%- unless si == nhow -%},{%- endunless -%}{%- endif -%}{%- endfor -%}]}</script>
+{%- endif -%}
+{% schema %}
+{
+  "name": "Ratgeber: FAQ + Beratung",
+  "class": "es-af-sec",
+  "settings": [
+    {"type":"paragraph","content":"FAQ kommt aus dem Artikel-Metafeld „FAQ (Fragen & Antworten)“ (custom.seo_faq), Anleitungs-Schritte aus „Anleitung (Schritte)“ (custom.howto)."},
+    {"type":"checkbox","id":"show_faq","label":"FAQ anzeigen (inkl. FAQPage-Schema)","default":true},
+    {"type":"text","id":"kicker","label":"FAQ Überzeile","default":"Kurz beantwortet"},
+    {"type":"text","id":"title","label":"FAQ Titel","default":"Häufige Fragen"},
+    {"type":"checkbox","id":"show_box","label":"Beratungs-Box anzeigen","default":true},
+    {"type":"text","id":"box_title","label":"Box Titel","default":"Fragen zu Ihrem Projekt?"},
+    {"type":"text","id":"box_text","label":"Box Text","default":"Wir prüfen Maße, Stärke und Zubehör kostenlos – Mo–Fr 8–17 Uhr."},
+    {"type":"text","id":"phone","label":"Telefon","default":"0209 513 078 34"},
+    {"type":"text","id":"whatsapp","label":"WhatsApp-Nummer (international, ohne +)","default":"491781199805"}
+  ],
+  "presets": [{"name":"Ratgeber: FAQ + Beratung"}],
+  "enabled_on": {"templates":["article"]}
+}
+{% endschema %}

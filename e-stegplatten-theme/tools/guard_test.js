@@ -1,0 +1,43 @@
+const { chromium } = require('playwright');
+const fs = require('fs');
+const src = fs.readFileSync(process.argv[2], 'utf8');
+const js = src.match(/<script>\(function\(\)\{([\s\S]*?)<\/script>/)[0];
+if (/\{\{|\{%/.test(js)) throw new Error('Liquid im Skript');
+const LED = { key: 'L1', handle: 'led-spots-terrassenueberdachung', product_type: 'LED-Beleuchtung', product_title: 'LED-Spots für Terrassenüberdachung (vormontiert)' };
+const STEG = { key: 'R1', handle: 'premium-anthrazit-terrassenueberdachung-alu-nobelline-stegplatten-16mm-klar-1', product_type: 'Terrassenüberdachung', product_title: 'Terrassenüberdachung Premium Anthrazit Alu mit Stegplatten 16mm klar/farblos' };
+const VSG = { key: 'R2', handle: 'terrassendach-alu-anthrazit-vsg-klar', product_type: 'Glassysteme', product_title: 'Terrassendach Alu Anthrazit mit 8mm VSG Glas klar/farblos' };
+const TAPE = { key: 'Z1', handle: 'alu-klebeband', product_type: 'Zubehör', product_title: 'Aluminium Klebeband 60mm' };
+const page = (items, count) => `<!doctype html><meta charset=utf-8><script>
+window.__items=${JSON.stringify(items)};window.__log=[];window.__refresh=0;
+window.theme={cartCount:${count},pageType:'index'};window.routes={rootUrlWithoutSlash:''};
+document.documentElement.addEventListener('cart:refresh',function(){__refresh++});
+window.fetch=function(u,o){var s=String(u);__log.push(s);var body=o&&o.body?JSON.parse(o.body):null;
+ if(s==='/cart.js')return Promise.resolve({json:function(){return Promise.resolve({items:__items})}});
+ if(s==='/cart/update.js'){__log.push('UPDATE '+JSON.stringify(body.updates));__items=__items.filter(function(i){return body.updates[i.key]!==0});return Promise.resolve({json:function(){return Promise.resolve({})}})}
+ if(s==='/cart/change.js'){__items=__items.filter(function(i){return i.key!==body.id});return Promise.resolve({json:function(){return Promise.resolve({})}})}
+ return Promise.resolve({json:function(){return Promise.resolve({})}})};
+</script>${js}`;
+let pass = 0, fail = 0;
+const eq = (n, g, w) => { const ok = JSON.stringify(g) === JSON.stringify(w); ok ? pass++ : fail++; console.log(`${ok ? '✓' : '✗'} ${n}${ok ? '' : `\n    erwartet ${JSON.stringify(w)}\n    erhalten ${JSON.stringify(g)}`}`); };
+(async () => {
+  const b = await chromium.launch(), pg = await b.newPage(); const errs = []; pg.on('pageerror', e => errs.push(e.message));
+  const run = async (items, count, wait = 400) => { fs.writeFileSync('/tmp/es_guard.html', page(items, count)); await pg.goto('file:///tmp/es_guard.html'); await pg.waitForTimeout(wait); return pg.evaluate(() => ({ items: __items.map(i => i.key), log: __log, refresh: __refresh })); };
+  let r = await run([LED], 1);
+  eq('Nur LED im Warenkorb → wird entfernt', r.items, []);
+  eq('… per /cart/update.js {L1:0}', r.log.filter(x => x.startsWith('UPDATE')), ['UPDATE {"L1":0}']);
+  eq('… Mini-Warenkorb wird aktualisiert', r.refresh >= 1, true);
+  r = await run([STEG, LED], 2);
+  eq('Stegplatten-Dach + LED → bleibt', r.items, ['R1', 'L1']);
+  r = await run([VSG, LED], 2);
+  eq('VSG-Glasdach (Typ „Glassysteme") + LED → bleibt', r.items, ['R2', 'L1']);
+  r = await run([TAPE, LED], 2);
+  eq('Nur Zubehör + LED (kein Dach) → LED entfernt', r.items, ['Z1']);
+  r = await run([STEG, LED], 2);
+  await pg.evaluate(() => fetch('/cart/change.js', { method: 'POST', body: JSON.stringify({ id: 'R1', quantity: 0 }) }));
+  await pg.waitForTimeout(800);
+  eq('Dach im Mini-Warenkorb entfernt → LED folgt automatisch', await pg.evaluate(() => __items.map(i => i.key)), []);
+  r = await run([], 0);
+  eq('Leerer Warenkorb → keine Abfrage', r.log, []);
+  eq('Keine JavaScript-Fehler', errs, []);
+  console.log(`\n${pass} bestanden, ${fail} fehlgeschlagen`); await b.close(); process.exit(fail ? 1 : 0);
+})().catch(e => { console.error('ABBRUCH', e.message); process.exit(2); });

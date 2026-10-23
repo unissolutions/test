@@ -1,0 +1,91 @@
+{%- comment -%}e-Stegplatten: Ratgeber-Text + FAQ unter dem Produktraster. Quelle: Kollektions-Metafelder custom.seo_text (HTML) und custom.seo_faq (JSON [{question, answer}]); ohne seo_text greift die Kollektionsbeschreibung. FAQ sichtbar als Akkordeon + identisches FAQPage-Schema.{%- endcomment -%}
+{%- assign txt = collection.metafields.custom.seo_text.value -%}
+{%- if txt == blank and section.settings.fallback_desc -%}{%- assign txt = collection.description -%}{%- endif -%}
+{%- assign faq = collection.metafields.custom.seo_faq.value -%}
+{%- assign nfaq = 0 -%}
+{%- if section.settings.show_faq and faq != blank -%}{%- for f in faq -%}{%- if f.question != blank and f.answer != blank -%}{%- assign nfaq = nfaq | plus: 1 -%}{%- endif -%}{%- endfor -%}{%- endif -%}
+{%- if txt != blank or nfaq > 0 -%}
+<div id="es-cs-{{ section.id }}" class="es-cs">
+<style>
+#es-cs-{{ section.id }}{max-width:var(--es-wrap,1280px);margin:0 auto;padding:8px var(--es-gut,24px) 56px;color:var(--es-tx,#272D2A);font-size:var(--es-fs-body,15px);line-height:1.6}
+#es-cs-{{ section.id }} *{box-sizing:border-box}
+.es-cs__in{border-top:1px solid var(--es-line,#DCE3DE);padding-top:40px;display:grid;grid-template-columns:minmax(0,1fr) 400px;gap:56px;align-items:start}
+.es-cs__in--one{grid-template-columns:minmax(0,1fr)}
+.es-cs__txt{max-width:78ch;position:relative}
+.es-cs__txt h2{font-size:var(--es-fs-h2b,22px);font-weight:800;color:var(--es-ink,#1B1F1D);letter-spacing:-.01em;line-height:1.25;margin:32px 0 12px}
+.es-cs__txt h2:first-child{margin-top:0}
+.es-cs__txt h3{font-size:var(--es-fs-h3,18px);font-weight:700;color:var(--es-ink,#1B1F1D);margin:24px 0 8px}
+.es-cs__txt p{margin:0 0 14px}
+.es-cs__txt ul,.es-cs__txt ol{margin:0 0 16px;padding-left:22px}
+.es-cs__txt li{margin:0 0 6px}
+.es-cs__txt li::marker{color:var(--es-g,#338258);font-weight:700}
+.es-cs__txt a{color:var(--es-gt,#2A6C49);text-decoration:underline;text-underline-offset:2px}
+.es-cs__txt a:hover{color:var(--es-ink,#1B1F1D)}
+.es-cs__txt strong{color:var(--es-ink,#1B1F1D)}
+.es-cs__txt table{width:100%;border-collapse:collapse;margin:4px 0 20px;font-size:14px;line-height:1.45;background:#fff}
+.es-cs__txt th,.es-cs__txt td{border:1px solid var(--es-line,#DCE3DE);padding:9px 12px;text-align:left;vertical-align:top}
+.es-cs__txt thead th{background:var(--es-bg2,#F0F4F1);color:var(--es-ink,#1B1F1D);font-weight:700}
+.es-cs__txt tbody tr:nth-child(even) td{background:var(--es-sub,#F7F8F7)}
+.es-cs__txt.is-clamp{max-height:560px;overflow:hidden}
+.es-cs__txt.is-clamp::after{content:'';position:absolute;left:0;right:0;bottom:0;height:120px;background:linear-gradient(rgba(255,255,255,0),#fff);pointer-events:none}
+.es-cs__more{display:inline-flex;align-items:center;gap:8px;margin-top:16px;height:var(--es-h-s,40px);padding:0 16px;border:1px solid var(--es-ink,#1B1F1D);background:#fff;color:var(--es-ink,#1B1F1D);font:inherit;font-weight:700;font-size:14px;cursor:pointer}
+.es-cs__more:hover{background:var(--es-ink,#1B1F1D);color:#fff}
+.es-cs__faq{position:sticky;top:96px}
+.es-cs__k{margin:0 0 6px;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--es-g,#338258)}
+.es-cs__faq h2{font-size:var(--es-fs-h2b,22px);font-weight:800;color:var(--es-ink,#1B1F1D);line-height:1.25;margin:0 0 16px}
+.es-cs__faq details{border-top:1px solid var(--es-line,#DCE3DE)}
+.es-cs__faq details:last-of-type{border-bottom:1px solid var(--es-line,#DCE3DE)}
+.es-cs__faq summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;min-height:56px;padding:12px 0;font-weight:700;color:var(--es-ink,#1B1F1D);font-size:15px;line-height:1.35}
+.es-cs__faq summary::-webkit-details-marker{display:none}
+.es-cs__faq summary::after{content:'+';color:var(--es-g,#338258);font-size:22px;line-height:1;flex:none}
+.es-cs__faq details[open] summary::after{content:'–'}
+.es-cs__faq details div{padding:0 0 16px;font-size:14px;line-height:1.6}
+.es-cs__help{margin:16px 0 0;font-size:14px}.es-cs__help p{margin:0}
+.es-cs__help a{color:var(--es-gt,#2A6C49);font-weight:700}
+@media(max-width:1000px){.es-cs__in{grid-template-columns:minmax(0,1fr);gap:40px}.es-cs__faq{position:static}}
+@media(max-width:749px){#es-cs-{{ section.id }}{padding-bottom:40px}.es-cs__in{padding-top:28px}.es-cs__txt table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;white-space:normal}.es-cs__txt th,.es-cs__txt td{min-width:120px;padding:8px 10px}.es-cs__txt.is-clamp{max-height:440px}}
+</style>
+<div class="es-cs__in{% if txt == blank or nfaq == 0 %} es-cs__in--one{% endif %}">
+{%- if txt != blank -%}
+<div>
+<div class="es-cs__txt" data-cs-txt>{{ txt }}</div>
+{%- if section.settings.clamp -%}<button type="button" class="es-cs__more" data-cs-more hidden aria-expanded="false">Weiterlesen</button>{%- endif -%}
+</div>
+{%- endif -%}
+{%- if nfaq > 0 -%}
+<div class="es-cs__faq">
+<p class="es-cs__k">{{ section.settings.faq_kicker }}</p>
+<h2>{{ section.settings.faq_title | replace: '[title]', collection.title }}</h2>
+{%- assign fi = 0 -%}
+{%- for f in faq -%}{%- if f.question != blank and f.answer != blank -%}{%- assign fi = fi | plus: 1 -%}<details{% if fi == 1 %} open{% endif %}><summary>{{ f.question | escape }}</summary><div>{{ f.answer | escape | newline_to_br }}</div></details>{%- endif -%}{%- endfor -%}
+{%- if section.settings.help_text != blank -%}<div class="es-cs__help">{{ section.settings.help_text }}</div>{%- endif -%}
+</div>
+{%- endif -%}
+</div>
+{%- if nfaq > 0 -%}
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{%- assign fi = 0 -%}{%- for f in faq -%}{%- if f.question != blank and f.answer != blank -%}{%- assign fi = fi | plus: 1 -%}{"@type":"Question","name":{{ f.question | strip_html | json }},"acceptedAnswer":{"@type":"Answer","text":{{ f.answer | strip_html | json }}}}{%- unless fi == nfaq -%},{%- endunless -%}{%- endif -%}{%- endfor -%}]}</script>
+{%- endif -%}
+{%- if section.settings.clamp and txt != blank -%}
+<script>(function(){var R=document.getElementById('es-cs-{{ section.id }}');if(!R)return;var t=R.querySelector('[data-cs-txt]'),b=R.querySelector('[data-cs-more]');if(!t||!b)return;
+var lim=window.matchMedia('(max-width:749px)').matches?440:560;if(t.scrollHeight<=lim+160)return;
+t.classList.add('is-clamp');b.hidden=false;b.addEventListener('click',function(){var o=t.classList.toggle('is-clamp');b.setAttribute('aria-expanded',!o);b.textContent=o?'Weiterlesen':'Weniger anzeigen';if(o)t.scrollIntoView({block:'start',behavior:'smooth'})})})();</script>
+{%- endif -%}
+</div>
+{%- endif -%}
+{% schema %}
+{
+  "name": "Ratgeber-Text + FAQ",
+  "class": "es-cs-sec",
+  "settings": [
+    {"type":"paragraph","content":"Inhalt kommt aus den Kollektions-Metafeldern „SEO-Text unter dem Produktraster“ (custom.seo_text) und „FAQ“ (custom.seo_faq)."},
+    {"type":"checkbox","id":"fallback_desc","label":"Ohne SEO-Text die Kollektionsbeschreibung zeigen","default":true},
+    {"type":"checkbox","id":"clamp","label":"Langen Text einklappen („Weiterlesen“)","default":true},
+    {"type":"checkbox","id":"show_faq","label":"FAQ anzeigen (inkl. FAQPage-Schema)","default":true},
+    {"type":"text","id":"faq_kicker","label":"FAQ Überzeile","default":"Häufige Fragen"},
+    {"type":"text","id":"faq_title","label":"FAQ Titel ([title] = Kollektionsname)","default":"Fragen zu [title]"},
+    {"type":"richtext","id":"help_text","label":"Hinweis unter der FAQ","default":"<p>Noch Fragen? <a href=\"tel:+4920951307834\">0209 513 078 34</a> · Mo–Fr 8–17 Uhr</p>"}
+  ],
+  "presets": [{"name":"Ratgeber-Text + FAQ"}],
+  "enabled_on": {"templates":["collection"]}
+}
+{% endschema %}

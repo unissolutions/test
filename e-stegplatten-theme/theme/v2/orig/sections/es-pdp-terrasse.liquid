@@ -1,0 +1,150 @@
+{%- comment -%}e-Stegplatten: Produktseite Terrassendach v3 – Galerie, Rahmenfarbe/Dachplatte (Geschwister-Produkte, Maß bleibt erhalten), Breite/Tiefe, Draufsicht, Lager, Zubehör, Warenkorb, mobile Sticky-Bar. Styles: snippets/es-pdp-css, Logik: snippets/es-pdp-js{%- endcomment -%}
+{%- liquid
+  assign p = product
+  assign v = p.selected_or_first_available_variant
+  assign fam = 'steg'
+  if p.title contains 'VSG'
+    assign fam = 'vsg'
+  endif
+  assign frame = 'Anthrazit'
+  if p.title contains 'Weiß Alu' or p.title contains 'Alu weiß' or p.title contains 'Alu Weiß'
+    assign frame = 'Weiß'
+  endif
+  assign cover = 'Klar'
+  if p.title contains 'opal'
+    assign cover = 'Opal'
+  elsif p.title contains 'graphit'
+    assign cover = 'Graphit'
+  endif
+  assign wi = 0
+  assign di = 1
+  for o in p.options_with_values
+    if o.name == 'Breite'
+      assign wi = forloop.index0
+    elsif o.name == 'Tiefe' or o.name == 'Länge'
+      assign di = forloop.index0
+    endif
+  endfor
+  if fam == 'steg'
+    assign sib_col = collections['terrassenuberdachung-alu-mit-stegplatten']
+    assign covers = 'Klar,Opal,Graphit' | split: ','
+    assign dach = '16-mm-Stegplatten'
+    assign short = 'Premium '
+  else
+    assign sib_col = collections['terrassenuberdachung-alu-mit-vsg-glas']
+    assign covers = 'Klar,Opal' | split: ','
+    assign dach = '8-mm-VSG-Glas'
+    assign short = 'VSG-Glas '
+  endif
+  assign short = short | append: frame | append: ', ' | append: cover
+  assign frames = 'Anthrazit,Weiß' | split: ','
+  assign lz = section.settings.lieferzeit
+  for c in p.collections
+    if c.metafields.custom.lieferzeit.value != blank
+      assign lz = c.metafields.custom.lieferzeit.value
+      break
+    endif
+  endfor
+  assign ga = p.metafields.custom.garantie_aluminium.value
+  assign gs = p.metafields.custom.garantie_stegplatten.value
+  assign cw = v.options[wi]
+  assign cd = v.options[di]
+  assign pairs = ''
+  for sp in sib_col.products
+    assign sf = 'Anthrazit'
+    if sp.title contains 'Weiß Alu' or sp.title contains 'Alu weiß' or sp.title contains 'Alu Weiß'
+      assign sf = 'Weiß'
+    endif
+    assign sc = 'Klar'
+    if sp.title contains 'opal'
+      assign sc = 'Opal'
+    elsif sp.title contains 'graphit'
+      assign sc = 'Graphit'
+    endif
+    assign pairs = pairs | append: sf | append: '|' | append: sc | append: '>' | append: sp.url | append: ';'
+  endfor
+  assign pl = pairs | split: ';'
+  assign aw = cw | remove: ' Meter' | replace: ',', '.' | times: 1.0
+  assign ad = cd | remove: ' Meter' | replace: ',', '.' | times: 1.0
+  assign area = aw | times: ad
+  assign skuok = false
+  if v.sku contains '-' and v.sku.size < 30
+    assign skuok = true
+  endif
+  assign imgs = p.media | where: 'media_type', 'image'
+  assign led = section.settings.led_product
+  if led == blank
+    assign led = all_products['led-spots-terrassenueberdachung']
+  endif
+-%}
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..800&display=swap">
+{% render 'es-pdp-css' %}
+<style>.es-pdp .es-pdp__lr input{-webkit-appearance:radio;appearance:auto}.es-pdp .es-pdp__lr:has(input:checked){background:var(--gl);box-shadow:inset 3px 0 0 var(--g)}.es-pdp .es-pdp__li{display:flex;align-items:center;justify-content:center;width:58px;height:58px;border:1px solid var(--ln);background:#1F2427;color:#F2C94C}.es-pdp .es-pdp__li--off{background:#fff;color:#C9CFCB}.es-pdp .es-pdp__li--off .bm{display:none}.es-pdp .es-pdp__lnote{margin:0;padding:12px 20px;border-top:1px solid var(--ln);background:var(--bg2);font-size:14px;color:var(--tx)}.es-pdp .es-pdp__tot{margin:-6px 0 14px;font-size:16px;color:var(--tx)}.es-pdp .es-pdp__tot b{color:var(--ink);font-size:20px;font-stretch:115%}@media(max-width:749px){.es-pdp .es-pdp__li{width:48px;height:48px;grid-row:span 2}.es-pdp .es-pdp__lnote{padding:10px 14px;font-size:13px}}</style>
+<div class="es-pdp" id="es-pdp-{{ section.id }}">
+<nav class="es-pdp__bc" aria-label="Brotkrumen"><a href="{{ routes.root_url }}">Startseite</a> / <a href="/collections/terrassenuberdachung">Terrassenüberdachungen</a> / <span>{{ short }}</span></nav>
+<div class="es-pdp__g">
+<div class="es-pdp__gal">
+<div class="es-pdp__ths">{%- for m in imgs limit: 8 -%}<button type="button" class="es-pdp__th r10{% if forloop.first %} is-on{% endif %}" data-th="{{ forloop.index0 }}" aria-label="Bild {{ forloop.index }}"><img src="{{ m | image_url: width: 200 }}" alt="" loading="lazy" width="96" height="96"></button>{%- endfor -%}</div>
+<div class="es-pdp__main r14"><div class="es-pdp__track" data-track>{%- for m in imgs -%}<div class="es-pdp__slide"><img src="{{ m | image_url: width: 1100 }}" srcset="{{ m | image_url: width: 600 }} 600w, {{ m | image_url: width: 900 }} 900w, {{ m | image_url: width: 1300 }} 1300w" sizes="(max-width:999px) 100vw, 640px" alt="{{ m.alt | default: p.title | escape }}" width="{{ m.width }}" height="{{ m.height }}"{% if forloop.first %} fetchpriority="high"{% else %} loading="lazy"{% endif %}></div>{%- endfor -%}</div>{%- if imgs.size > 1 -%}<span class="es-pdp__count" data-count>1 / {{ imgs.size }}</span>{%- endif -%}</div>
+</div>
+<div class="es-pdp__info">
+<h1 class="es-pdp__t">{{ p.title }}</h1>
+<div class="es-pdp__meta"><span>Wandanbau</span><span>{{ dach }}</span><span data-sku-wrap{% unless skuok %} hidden{% endunless %}>Art.-Nr. <span data-sku>{{ v.sku }}</span></span></div>
+{%- if p.metafields.reviews.rating_count > 0 -%}<div class="jdgm-widget jdgm-preview-badge" data-id="{{ p.id }}">{{ p.metafields.judgeme.badge }}</div>{%- endif -%}
+<div class="es-pdp__pr"><span class="es-pdp__price" data-price>{{ v.price | money_without_currency }} €</span><span class="es-pdp__sqm" data-sqm>{%- if area > 0 -%}{%- assign sqm = v.price | divided_by: area | round -%}{{ sqm | money_without_currency }} €/m²{%- endif -%}</span></div>
+<p class="es-pdp__tax">inkl. MwSt., zzgl. <a href="{{ section.settings.shipping_url | default: '/policies/shipping-policy' }}">Versandkosten</a></p>
+<div data-opts>
+<div class="es-pdp__opt"><div class="es-pdp__ol"><b>Rahmenfarbe</b><span>{{ frame }}</span></div><div class="es-pdp__pills es-pdp__pills--eq">
+{%- for fr in frames -%}{%- assign key = fr | append: '|' | append: cover -%}{%- assign href = '' -%}{%- for e in pl -%}{%- assign kv = e | split: '>' -%}{%- if kv[0] == key -%}{%- assign href = kv[1] -%}{%- endif -%}{%- endfor -%}{%- if href == blank and fr == frame -%}{%- assign href = p.url -%}{%- endif -%}{%- if href != blank -%}<a class="es-pdp__pill r10{% if fr == frame %} is-on{% endif %}" href="{{ href }}" data-sib="{{ key }}"{% if fr == frame %} aria-current="true"{% endif %}><i class="es-pdp__dot es-pdp__dot--{{ fr | handle }} rr"></i>{{ fr }}</a>{%- endif -%}{%- endfor -%}
+</div></div>
+<div class="es-pdp__opt"><div class="es-pdp__ol"><b>Dachplatte</b><span>{%- case cover -%}{%- when 'Opal' -%}weiches Licht, weniger Hitze{%- when 'Graphit' -%}getönt, schattig{%- else -%}maximal hell{%- endcase -%}</span></div><div class="es-pdp__pills es-pdp__pills--eq">
+{%- for cv in covers -%}{%- assign key = frame | append: '|' | append: cv -%}{%- assign href = '' -%}{%- for e in pl -%}{%- assign kv = e | split: '>' -%}{%- if kv[0] == key -%}{%- assign href = kv[1] -%}{%- endif -%}{%- endfor -%}{%- if href == blank and cv == cover -%}{%- assign href = p.url -%}{%- endif -%}{%- if href != blank -%}<a class="es-pdp__pill r10{% if cv == cover %} is-on{% endif %}" href="{{ href }}" data-sib="{{ key }}"{% if cv == cover %} aria-current="true"{% endif %}><i class="es-pdp__sw es-pdp__sw--{{ cv | handle }}"></i>{{ cv }}</a>{%- endif -%}{%- endfor -%}
+</div></div>
+<div class="es-pdp__opt"><div class="es-pdp__ol"><b>Breite</b><span>entlang der Hauswand</span></div><div class="es-pdp__pills">
+{%- for val in p.options_with_values[wi].values -%}<button type="button" class="es-pdp__pill r10{% if val == cw %} is-on{% endif %}" data-w="{{ val | escape }}" aria-pressed="{% if val == cw %}true{% else %}false{% endif %}">{{ val | remove: ',00' | replace: ',50', ',5' | replace: ' Meter', ' m' }}</button>{%- endfor -%}
+</div></div>
+<div class="es-pdp__opt"><div class="es-pdp__ol"><b>Tiefe</b><span>von der Wand nach vorn</span></div><div class="es-pdp__pills">
+{%- for val in p.options_with_values[di].values -%}<button type="button" class="es-pdp__pill r10{% if val == cd %} is-on{% endif %}" data-d="{{ val | escape }}" aria-pressed="{% if val == cd %}true{% else %}false{% endif %}">{{ val | remove: ',00' | replace: ',50', ',5' | replace: ' Meter', ' m' }}</button>{%- endfor -%}
+</div></div>
+</div>
+<div class="es-pdp__plan r14"><div class="es-pdp__plan-h"><b>Draufsicht</b><span data-plan-l></span></div><svg data-plan viewBox="0 0 440 240" role="img" aria-label="Draufsicht der Überdachung"></svg></div>
+<p class="es-pdp__stock{% unless v.available %} is-out{% endunless %}" data-stock><i class="rr"></i><span><b>{% if v.available %}Auf Lager{% else %}Derzeit nicht verfügbar{% endif %}</b> – Lieferzeit {{ lz }}</span></p>
+{%- if led.id != blank and led.available -%}{%- capture ledsvg -%}<svg width="36" height="36" viewBox="0 0 36 36" fill="none"><rect x="3" y="8" width="30" height="5" fill="#3B4043"/><path class="bm" d="M9 17 5 31h8zM18 17l-4 14h8zM27 17l-4 14h8z" fill="currentColor" fill-opacity=".28"/><circle cx="9" cy="16" r="2.6" fill="currentColor"/><circle cx="18" cy="16" r="2.6" fill="currentColor"/><circle cx="27" cy="16" r="2.6" fill="currentColor"/></svg>{%- endcapture -%}
+<div class="es-pdp__add es-pdp__led r14" data-led-box><div class="es-pdp__add-h">Beleuchtung</div>
+<label class="es-pdp__ar es-pdp__lr"><input type="radio" name="es-led-{{ section.id }}" value="" data-led="0" checked><span class="es-pdp__li es-pdp__li--off r10" aria-hidden="true">{{ ledsvg }}</span><span>Ohne LED-Beleuchtung</span><b>+ 0 €</b></label>
+{%- for lv in led.variants -%}{%- unless lv.available -%}{%- continue -%}{%- endunless -%}{%- assign lcnt = lv.title | split: 'er' | first | strip -%}{%- assign limg = lv.image | default: led.featured_image -%}<label class="es-pdp__ar es-pdp__lr"><input type="radio" name="es-led-{{ section.id }}" value="{{ lv.id }}" data-addon data-led="{{ lcnt }}" data-cents="{{ lv.price }}">{%- if limg != blank -%}<img class="r10" src="{{ limg | image_url: width: 120 }}" alt="" loading="lazy" width="58" height="58">{%- else -%}<span class="es-pdp__li r10" aria-hidden="true">{{ ledsvg }}</span>{%- endif -%}<span>LED-Spots – {{ lv.title }}</span><b>+ {{ lv.price | money_without_currency | remove: ',00' }} €</b></label>{%- endfor -%}
+<p class="es-pdp__lnote">{{ section.settings.led_note | default: 'Unsere vormontierten LED-Spots werden optimal auf die Anzahl der Träger abgestimmt.' }}</p></div>
+{%- endif -%}
+{%- capture addons -%}{%- for b in section.blocks -%}{%- if b.type != 'addon' -%}{%- continue -%}{%- endif -%}{%- if b.settings.fam != 'all' and b.settings.fam != fam -%}{%- continue -%}{%- endif -%}{%- assign ap = b.settings.product -%}{%- if ap == blank -%}{%- continue -%}{%- endif -%}{%- assign av = ap.selected_or_first_available_variant -%}{%- if b.settings.variant_match != blank -%}{%- for x in ap.variants -%}{%- if x.title contains b.settings.variant_match -%}{%- assign av = x -%}{%- break -%}{%- endif -%}{%- endfor -%}{%- endif -%}{%- unless av.available -%}{%- continue -%}{%- endunless -%}<label class="es-pdp__ar" {{ b.shopify_attributes }}><input type="checkbox" data-addon value="{{ av.id }}" data-cents="{{ av.price }}"><img class="r10" src="{{ ap.featured_image | image_url: width: 120 }}" alt="" loading="lazy" width="58" height="58"><span>{{ b.settings.label | default: ap.title }}</span><b>{{ av.price | money_without_currency }} €</b></label>{%- endfor -%}{%- endcapture -%}
+{%- if addons != blank -%}<div class="es-pdp__add r14"><div class="es-pdp__add-h">Passendes Zubehör</div>{{ addons }}</div>{%- endif -%}
+<p class="es-pdp__tot" data-tot hidden>Gesamt inkl. Auswahl: <b data-tot-v></b></p>
+<form class="es-pdp__buy" action="{{ routes.cart_add_url }}" method="post" data-form>
+<input type="hidden" name="id" value="{{ v.id }}" data-id>
+<div class="es-pdp__qty r10"><button type="button" data-qd="-1" aria-label="Weniger">−</button><input type="number" name="quantity" value="1" min="1" inputmode="numeric" aria-label="Anzahl" data-qty><button type="button" data-qd="1" aria-label="Mehr">+</button></div>
+<button type="submit" class="es-pdp__atc r10" data-atc{% unless v.available %} disabled{% endunless %}>{% if v.available %}In den Warenkorb{% else %}Nicht verfügbar{% endif %}</button>
+</form>
+<p class="es-pdp__msg" data-msg hidden></p>
+<div class="es-pdp__trust">
+{%- if ga != blank -%}<div><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg><span>{% if fam == 'steg' and gs != blank and gs == ga %}{{ ga }} Garantie auf Aluminium und Stegplatten{% else %}{{ ga }} Garantie auf Aluminium{% endif %}</span></div>{%- endif -%}
+{%- if section.settings.trust2 != blank -%}<div><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5"/></svg><span>{{ section.settings.trust2 }}</span></div>{%- endif -%}
+</div>
+</div>
+</div>
+<div class="es-pdp__sticky" data-sticky><div><small>{{ short }}</small><b data-sticky-price>{{ v.price | money_without_currency }} €</b></div><button type="button" class="r10" data-sticky-go>Maße wählen</button></div>
+{% render 'es-pdp-js', sid: section.id, p: p, wi: wi, di: di, sib_col: sib_col, pl: pl, frame: frame, cover: cover, cw: cw, cd: cd %}
+</div>
+{% schema %}
+{"name":"ES Produkt Terrassendach","tag":"section","class":"es-pdp-sec","settings":[
+{"type":"text","id":"lieferzeit","label":"Lieferzeit (Fallback, wenn kein Kollektions-Metafeld)","default":"ca. 10–40 Werktage"},
+{"type":"url","id":"shipping_url","label":"Link Versandkosten"},
+{"type":"text","id":"trust2","label":"Vorteil 2 (Vorteil 1 = Garantie aus Metafeld)","default":"Montageanleitung liegt bei, Telefon-Support bei der Montage"},
+{"type":"header","content":"LED-Beleuchtung"},
+{"type":"product","id":"led_product","label":"LED-Produkt (Varianten = Sets)","info":"Leer = Produkt mit Handle led-spots-terrassenueberdachung. Ohne Produkt wird die Auswahl ausgeblendet."},
+{"type":"text","id":"led_note","label":"Hinweis unter der LED-Auswahl","default":"Unsere vormontierten LED-Spots werden optimal auf die Anzahl der Träger abgestimmt."}
+],"blocks":[{"type":"addon","name":"Zubehör","limit":4,"settings":[
+{"type":"product","id":"product","label":"Produkt"},
+{"type":"text","id":"variant_match","label":"Variante enthält (optional, z. B. 15 Meter / für 16mm)"},
+{"type":"text","id":"label","label":"Beschriftung"},
+{"type":"select","id":"fam","label":"Zeigen bei","options":[{"value":"all","label":"allen Dächern"},{"value":"steg","label":"Stegplatten-Dächern"},{"value":"vsg","label":"VSG-Glas-Dächern"}],"default":"all"}
+]}],"presets":[{"name":"ES Produkt Terrassendach"}]}
+{% endschema %}

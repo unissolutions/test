@@ -1,0 +1,45 @@
+{%- comment -%}e-Stegplatten: Judge.me-Bewertungskarussell (alle Seiten) wird durch eigene DS-Karten ersetzt. Daten kommen live aus dem Judge.me-Widget (Sterne, Text, Name, Produkt); Original bleibt im DOM, nur ausgeblendet.{%- endcomment -%}
+<style id="es-reviews">
+html body .jdgm-carousel-wrapper.es-rv-done:not(#_)>*:not(.es-rv){display:none!important}
+html body .es-rv:not(#_){font-family:Archivo,system-ui,sans-serif;color:#3A423E}
+html body .es-rv__hd:not(#_){display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin:0 0 16px}
+html body .es-rv__hd h2:not(#_){font-family:Archivo,sans-serif;font-stretch:115%;font-weight:800;font-size:clamp(20px,5vw,26px);line-height:1.15;color:#1B1F1D;margin:0 0 6px;letter-spacing:-.01em}
+html body .es-rv__sum:not(#_){display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:14px;color:#6B7570}
+html body .es-rv__sum b:not(#_){font-size:16px;font-weight:800;color:#1B1F1D}
+html body .es-rv__st:not(#_){display:inline-flex;gap:2px;color:#D9962B;font-size:15px;line-height:1;letter-spacing:0}
+html body .es-rv__st i:not(#_){font-style:normal;color:#DCE3DE}
+html body .es-rv__nav:not(#_){display:flex;gap:6px}
+html body .es-rv__nav button:not(#_){width:44px;height:44px;border:1px solid #DCE3DE;background:#fff;color:#1B1F1D;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0}
+html body .es-rv__nav button:not(#_):hover{border-color:#338258;color:#2A6C49}
+html body .es-rv__row:not(#_){display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - 36px)/4);gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:0 0 2px}
+html body .es-rv__row:not(#_)::-webkit-scrollbar{display:none}
+html body .es-rv__c:not(#_){scroll-snap-align:start;display:flex;flex-direction:column;gap:10px;background:#fff;border:1px solid #DCE3DE;padding:18px;min-width:0}
+html body .es-rv__c h3:not(#_){font-family:Archivo,sans-serif;font-weight:800;font-size:16px;line-height:1.3;color:#1B1F1D;margin:0}
+html body .es-rv__c p:not(#_){font-size:15px;line-height:1.55;color:#272D2A;margin:0;display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden}
+html body .es-rv__who:not(#_){margin-top:auto;display:flex;align-items:center;gap:8px;font-size:13px;color:#6B7570;padding-top:4px}
+html body .es-rv__who b:not(#_){color:#1B1F1D;font-size:14px;font-weight:700}
+html body .es-rv__v:not(#_){display:inline-flex;align-items:center;gap:4px;color:#2A6C49;font-weight:600}
+html body .es-rv__p:not(#_){display:flex;align-items:center;gap:10px;padding-top:10px;border-top:1px solid #EEF1EF;color:#1B1F1D;text-decoration:none;font-size:13px;font-weight:600;line-height:1.3}
+html body .es-rv__p img:not(#_){width:40px;height:40px;object-fit:cover;border:1px solid #EEF1EF;flex:none}
+html body .es-rv__p span:not(#_){display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+html body .es-rv__p:not(#_):hover{color:#2A6C49}
+@media(max-width:1000px){html body .es-rv__row:not(#_){grid-auto-columns:calc((100% - 12px)/2)}}
+@media(max-width:749px){html body .es-rv__nav:not(#_){display:none}html body .es-rv__row:not(#_){grid-auto-columns:84%;gap:10px}html body .es-rv__c:not(#_){padding:16px}}
+</style>
+<script>(function(){
+function esc(s){return String(s||'').replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function stars(n){n=Math.round(+n||0);var s='';for(var i=1;i<=5;i++)s+=i<=n?'★':'<i>★</i>';return '<span class="es-rv__st" aria-label="'+n+' von 5 Sternen">'+s+'</span>'}
+function build(w){if(w.classList.contains('es-rv-done'))return true;var items=w.querySelectorAll('.jdgm-carousel-item');if(!items.length)return false;
+var seen={},R=[];items.forEach(function(it){if(it.closest('.slick-cloned'))return;var body=(it.querySelector('.jdgm-carousel-item__review-body')||{}).textContent||'';body=body.trim();var name=((it.querySelector('.jdgm-carousel-item__reviewer-name')||{}).textContent||'').trim();var k=name+'|'+body;if(!body||seen[k])return;seen[k]=1;
+var rt=it.querySelector('[data-score]');var sc=rt?rt.getAttribute('data-score'):it.querySelectorAll('.jdgm--on').length;var a=it.querySelector('.jdgm-carousel-item__product a,a.jdgm-carousel-item__product')||it.querySelector('a[href*="/products/"]');var im=it.querySelector('.jdgm-carousel-item__product-image');var pt=((it.querySelector('.jdgm-carousel-item__product-title')||{}).textContent||'').trim();
+R.push({s:sc,t:((it.querySelector('.jdgm-carousel-item__review-title')||{}).textContent||'').trim(),b:body,n:name,h:a?a.getAttribute('href'):'',i:im?(im.getAttribute('src')||im.getAttribute('data-src')||''):'',p:pt})});
+if(!R.length)return false;
+var avg=w.querySelector('.jdgm-all-reviews-rating[data-score],.jdgm-carousel-title-and-link [data-score]');var a=avg?(+avg.getAttribute('data-score')):0;var cnt=((w.querySelector('.jdgm-carousel-number-of-reviews,.jdgm-all-reviews-rating-wrapper')||{}).textContent||'').match(/\d+/);
+var inHome=!!w.closest('.esl');
+var hd='<div class="es-rv__hd"><div>'+(inHome?'':'<h2>Das sagen unsere Kunden</h2>')+(a?'<div class="es-rv__sum">'+stars(a)+'<b>'+a.toLocaleString('de-DE',{minimumFractionDigits:1,maximumFractionDigits:1})+'</b> von 5'+(cnt?' · '+cnt[0]+' Bewertungen':'')+' · <span class="es-rv__v">✓ verifiziert über Judge.me</span></div>':'')+'</div><div class="es-rv__nav"><button type="button" data-d="-1" aria-label="Zurück">←</button><button type="button" data-d="1" aria-label="Weiter">→</button></div></div>';
+var cards=R.map(function(r){return '<article class="es-rv__c">'+stars(r.s)+(r.t?'<h3>'+esc(r.t)+'</h3>':'')+'<p>'+esc(r.b)+'</p><div class="es-rv__who"><b>'+esc(r.n||'Kunde')+'</b><span class="es-rv__v">✓ Verifizierter Kauf</span></div>'+(r.h&&r.p?'<a class="es-rv__p" href="'+esc(r.h)+'">'+(r.i?'<img src="'+esc(r.i)+'" alt="" loading="lazy">':'')+'<span>'+esc(r.p)+'</span></a>':'')+'</article>'}).join('');
+var box=document.createElement('div');box.className='es-rv';box.innerHTML=hd+'<div class="es-rv__row">'+cards+'</div>';w.appendChild(box);w.classList.add('es-rv-done');
+var row=box.querySelector('.es-rv__row');box.querySelectorAll('.es-rv__nav button').forEach(function(b){b.addEventListener('click',function(){var c=row.querySelector('.es-rv__c');row.scrollBy({left:(+b.dataset.d)*((c?c.offsetWidth:300)+12),behavior:'smooth'})})});return true}
+function run(){var all=document.querySelectorAll('.jdgm-carousel-wrapper'),ok=true;all.forEach(function(w){if(!build(w))ok=false});return all.length&&ok}
+document.addEventListener('DOMContentLoaded',function(){var n=0,t=setInterval(function(){if(run()||++n>40)clearInterval(t)},400)});
+})();</script>

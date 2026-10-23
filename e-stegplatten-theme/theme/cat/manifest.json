@@ -1,0 +1,17 @@
+[
+ {
+  "path": "sections/es-collection-seo.liquid",
+  "new_size": 7690,
+  "new_md5": "ce42f9ff92d7745d7bbdcdf73cc1fcfe"
+ },
+ {
+  "path": "templates/collection.json",
+  "new_size": 4924,
+  "new_md5": "7bc550978107f674ca511d4e5d4e1e66"
+ },
+ {
+  "path": "templates/collection.stegplatten.json",
+  "new_size": 4924,
+  "new_md5": "7bc550978107f674ca511d4e5d4e1e66"
+ }
+]

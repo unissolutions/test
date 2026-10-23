@@ -1,0 +1,152 @@
+{%- comment -%}e-Stegplatten: Kollektions-Kopf v3 – Brotkrumen, Titel (einzeilig), Intro, Maß-Preisfilter + Terrassen-Filter (Rahmenfarbe/Dachmaterial/Lichtwirkung, clientseitig) für Terrassendach-Kollektionen; sonst Kontext-Chips. Styles: snippets/es-col-css{%- endcomment -%}
+{%- liquid
+  assign cur = collection.handle
+  assign active_tags = current_tags | default: empty
+  assign ws = ''
+  assign ds = ''
+  assign nsz = 0
+  assign cA = 0
+  assign cW = 0
+  assign cS = 0
+  assign cV = 0
+  assign cK = 0
+  assign cO = 0
+  assign cG = 0
+  if section.settings.size_filter
+    for p in collection.products
+      unless p.tags contains 'Terrassenüberdachung'
+        continue
+      endunless
+      for o in p.options_with_values
+        if o.name == 'Breite'
+          assign nsz = nsz | plus: 1
+          for val in o.values
+            assign ws = ws | append: val | append: '|'
+          endfor
+        elsif o.name == 'Tiefe' or o.name == 'Länge'
+          for val in o.values
+            assign ds = ds | append: val | append: '|'
+          endfor
+        endif
+      endfor
+      if p.title contains 'Weiß Alu' or p.title contains 'Alu weiß' or p.title contains 'Alu Weiß'
+        assign cW = cW | plus: 1
+      else
+        assign cA = cA | plus: 1
+      endif
+      if p.title contains 'VSG'
+        assign cV = cV | plus: 1
+      else
+        assign cS = cS | plus: 1
+      endif
+      if p.title contains 'opal'
+        assign cO = cO | plus: 1
+      elsif p.title contains 'graphit'
+        assign cG = cG | plus: 1
+      else
+        assign cK = cK | plus: 1
+      endif
+    endfor
+  endif
+  assign wl = ws | split: '|' | uniq | sort
+  assign dl = ds | split: '|' | uniq | sort
+  assign tf = false
+  if nsz > 0 and wl.size > 0 and dl.size > 0
+    assign tf = true
+  endif
+  assign intro = collection.metafields.custom.intro.value
+  if intro == blank and section.settings.intro_auto
+    assign intro = collection.description | replace: '</h1>', '. ' | replace: '</h2>', '. ' | replace: '</h3>', '. ' | replace: '</p>', ' ' | strip_html | strip_newlines | replace: '..', '.' | truncatewords: 24, ' …'
+  endif
+-%}
+{% render 'es-col-css' %}
+{%- if tf -%}<style>.es-colhead-sec + .shopify-section .es-col__filters{display:none}</style>{%- endif -%}
+{%- if section.settings.show_head -%}
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..800&display=swap">
+<div class="es-ch" data-es-ch>
+<nav class="es-ch__bc" aria-label="Brotkrumen"><a href="{{ routes.root_url }}">Startseite</a> / <span>{{ collection.title }}</span></nav>
+<h1 class="es-ch__h1" style="--n:{{ collection.title.size }}">{{ collection.title }}</h1>
+{%- if intro != blank -%}<p class="es-ch__intro" data-intro>{{ intro }}</p>{%- endif -%}
+{%- if tf -%}
+<div class="es-sz" data-es-sz>
+<span class="es-sz__l">{{ section.settings.size_label }}</span>
+<div class="es-sz__s"><select data-w aria-label="Breite">{%- for w in wl -%}<option value="{{ w | escape }}"{% if w contains '4,00' %} selected{% endif %}>Breite {{ w | replace: ' Meter', ' m' }}</option>{%- endfor -%}</select><span class="es-sz__x">×</span><select data-d aria-label="Tiefe">{%- for d in dl -%}<option value="{{ d | escape }}"{% if d contains '3,00' %} selected{% endif %}>Tiefe {{ d | replace: ' Meter', ' m' }}</option>{%- endfor -%}</select></div>
+<span class="es-sz__a" data-a></span>
+</div>
+<div class="es-tf" data-es-tf>
+<button type="button" class="es-tf__tg" data-tf-tg aria-expanded="false"><span>Filter <span data-tf-n></span></span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>
+<div class="es-tf__bd">
+<div class="es-tf__g"><b>Rahmenfarbe</b>{% if cA > 0 %}<label><input type="checkbox" data-tf="f" value="A"><span>Anthrazit</span><small>{{ cA }}</small></label>{% endif %}{% if cW > 0 %}<label><input type="checkbox" data-tf="f" value="W"><span>Weiß</span><small>{{ cW }}</small></label>{% endif %}</div>
+<div class="es-tf__g"><b>Dachmaterial</b>{% if cS > 0 %}<label><input type="checkbox" data-tf="m" value="S"><span>Stegplatten 16 mm</span><small>{{ cS }}</small></label>{% endif %}{% if cV > 0 %}<label><input type="checkbox" data-tf="m" value="V"><span>VSG-Glas 8 mm</span><small>{{ cV }}</small></label>{% endif %}</div>
+<div class="es-tf__g"><b>Lichtwirkung</b>{% if cK > 0 %}<label><input type="checkbox" data-tf="l" value="K"><span>Klar</span><small>{{ cK }}</small></label>{% endif %}{% if cO > 0 %}<label><input type="checkbox" data-tf="l" value="O"><span>Opal / milchig</span><small>{{ cO }}</small></label>{% endif %}{% if cG > 0 %}<label><input type="checkbox" data-tf="l" value="G"><span>Getönt (graphit)</span><small>{{ cG }}</small></label>{% endif %}</div>
+<button type="button" class="es-tf__reset" data-tf-reset>Filter zurücksetzen</button>
+</div>
+</div>
+<script type="application/json" data-es-szmap>{ {%- assign first = true -%}{%- for p in collection.products -%}{%- unless p.tags contains 'Terrassenüberdachung' -%}{%- continue -%}{%- endunless -%}{%- assign wi = 99 -%}{%- assign di = 99 -%}{%- for o in p.options_with_values -%}{%- if o.name == 'Breite' -%}{%- assign wi = forloop.index0 -%}{%- elsif o.name == 'Tiefe' or o.name == 'Länge' -%}{%- assign di = forloop.index0 -%}{%- endif -%}{%- endfor -%}{%- if wi == 99 or di == 99 -%}{%- continue -%}{%- endif -%}{%- liquid
+  assign ff = 'A'
+  if p.title contains 'Weiß Alu' or p.title contains 'Alu weiß' or p.title contains 'Alu Weiß'
+    assign ff = 'W'
+  endif
+  assign fm = 'S'
+  if p.title contains 'VSG'
+    assign fm = 'V'
+  endif
+  assign fl = 'K'
+  if p.title contains 'opal'
+    assign fl = 'O'
+  elsif p.title contains 'graphit'
+    assign fl = 'G'
+  endif
+-%}{%- unless first -%},{%- endunless -%}{%- assign first = false -%}{{ p.handle | json }}:{"f":"{{ ff }}","m":"{{ fm }}","l":"{{ fl }}","v":[{%- for v in p.variants -%}[{{ v.options[wi] | json }},{{ v.options[di] | json }},{{ v.id }},{{ v.price }},{{ v.compare_at_price | default: 0 }},{{ v.available }}]{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%}]}{%- endfor -%} }</script>
+{%- endif -%}
+</div>
+{%- endif -%}
+{%- unless tf -%}
+<div class="es-chips">
+{%- for blk in section.blocks -%}
+{%- assign scopes = blk.settings.scope | split: ',' -%}{%- assign show = false -%}
+{%- for s in scopes -%}{%- assign st = s | strip -%}{%- if st == '*' or cur contains st -%}{%- assign show = true -%}{%- endif -%}{%- endfor -%}
+{%- unless show -%}{%- continue -%}{%- endunless -%}
+{%- assign excl = blk.settings.exclude | split: ',' -%}
+{%- for s in excl -%}{%- assign st = s | strip -%}{%- if st != blank and cur contains st -%}{%- assign show = false -%}{%- endif -%}{%- endfor -%}
+{%- unless show -%}{%- continue -%}{%- endunless -%}
+{%- assign lines = blk.settings.chips | newline_to_br | split: '<br />' -%}
+<div class="es-chips__row" {{ blk.shopify_attributes }}>{%- if blk.settings.label != blank -%}<span class="es-chips__label">{{ blk.settings.label }}</span>{%- endif -%}
+{%- for ln in lines -%}{%- assign parts = ln | strip | split: '|' -%}{%- if parts.size < 2 -%}{%- continue -%}{%- endif -%}{%- assign lbl = parts[0] | strip -%}{%- assign tgt = parts[1] | strip -%}
+{%- if tgt contains 'collection:' -%}{%- assign h = tgt | remove: 'collection:' | strip -%}{%- assign c = collections[h] -%}{%- if c != blank -%}<a class="es-chip{% if c.handle == cur %} is-active{% endif %}" href="{{ c.url }}">{{ lbl }}</a>{%- endif -%}
+{%- elsif tgt contains 'tag:' -%}{%- assign t = tgt | remove: 'tag:' | strip -%}{%- assign th = t | handleize -%}{%- assign is_on = false -%}{%- for at in active_tags -%}{%- if at == t -%}{%- assign is_on = true -%}{%- endif -%}{%- endfor -%}
+{%- if is_on -%}<a class="es-chip is-active" href="{{ collection.url }}" title="Filter entfernen">{{ lbl }} ×</a>{%- else -%}<a class="es-chip" href="{{ collection.url }}/{{ th }}">{{ lbl }}</a>{%- endif -%}
+{%- endif -%}{%- endfor -%}
+</div>
+{%- endfor -%}
+</div>
+{%- endunless -%}
+<script>(function(){function init(){
+var it=document.querySelector('[data-intro]');if(it)it.addEventListener('click',function(){it.classList.toggle('is-open')});
+document.querySelectorAll('.es-col__sort option').forEach(function(o){if(o.textContent.trim()==='Ausgewählt')o.textContent='Empfohlen'});
+var bar=document.querySelector('[data-es-sz]'),mj=document.querySelector('[data-es-szmap]');if(!bar||!mj)return;var M=JSON.parse(mj.textContent),sw=bar.querySelector('[data-w]'),sd=bar.querySelector('[data-d]'),ar=bar.querySelector('[data-a]');
+function n(s){var m=String(s).match(/[0-9]+(?:[.,][0-9]+)?/);return m?parseFloat(m[0].replace(',','.')):0}
+function eur(c){return (c/100).toLocaleString('de-DE',{minimumFractionDigits:2,maximumFractionDigits:2})+' €'}
+function dm(x){return x.toLocaleString('de-DE',{minimumFractionDigits:2,maximumFractionDigits:2})}
+try{var sv=JSON.parse(localStorage.getItem('es-sz')||'null');if(sv)[sw,sd].forEach(function(s,i){if([].some.call(s.options,function(o){return o.value===sv[i]}))s.value=sv[i]})}catch(e){}
+var all=[],cards=[];document.querySelectorAll('.es-col__grid .es-card').forEach(function(c){var a=c.querySelector('a[href*="/products/"]');var h=a?(a.getAttribute('href').split('/products/')[1]||'').split(/[?#\/]/)[0]:'';all.push({c:c,h:h});if(!M[h])return;var pr=c.querySelector('.es-card__pr');if(!pr)return;var l=document.createElement('span');l.className='es-card__sz';pr.parentNode.insertBefore(l,pr);cards.push({c:c,h:h,pr:pr,o:pr.innerHTML,l:l,a:[].map.call(c.querySelectorAll('a[href*="/products/"]'),function(x){return {el:x,u:x.getAttribute('href').split('?')[0]}})})});
+function upd(){var w=n(sw.value),d=n(sd.value);ar.textContent='Fläche '+(w*d).toLocaleString('de-DE',{maximumFractionDigits:2})+' m²';try{localStorage.setItem('es-sz',JSON.stringify([sw.value,sd.value]))}catch(e){}
+cards.forEach(function(e){var m=null;M[e.h].v.forEach(function(v){if(n(v[0])===w&&n(v[1])===d)m=v});
+if(m){var sale=m[4]>m[3];e.pr.innerHTML='<b'+(sale?' class="sale"':'')+'>'+eur(m[3])+'</b>'+(sale?'<s>'+eur(m[4])+'</s><span class="es-card__save">Sie sparen '+eur(m[4]-m[3])+'</span>':'');e.l.textContent='für '+dm(w)+' × '+dm(d)+' m';e.c.classList.remove('is-na');e.a.forEach(function(x){x.el.setAttribute('href',x.u+'?variant='+m[2])})}
+else{e.pr.innerHTML=e.o;e.l.textContent='In diesem Maß nicht lieferbar';e.c.classList.add('is-na');e.a.forEach(function(x){x.el.setAttribute('href',x.u)})}})}
+sw.addEventListener('change',upd);sd.addEventListener('change',upd);upd();
+var tfw=document.querySelector('[data-es-tf]');if(!tfw)return;var tg=tfw.querySelector('[data-tf-tg]'),nn=tfw.querySelector('[data-tf-n]');
+tg.addEventListener('click',function(){var o=tfw.classList.toggle('is-open');tg.setAttribute('aria-expanded',o)});
+function flt(){var sel={f:[],m:[],l:[]},k=0;tfw.querySelectorAll('[data-tf]:checked').forEach(function(i){sel[i.dataset.tf].push(i.value);k++});
+all.forEach(function(e){var d=M[e.h],ok=!k||(d&&(!sel.f.length||sel.f.indexOf(d.f)>-1)&&(!sel.m.length||sel.m.indexOf(d.m)>-1)&&(!sel.l.length||sel.l.indexOf(d.l)>-1));e.c.classList.toggle('is-off',!ok)});
+nn.textContent=k?'('+k+')':''}
+tfw.addEventListener('change',flt);tfw.querySelector('[data-tf-reset]').addEventListener('click',function(){tfw.querySelectorAll('[data-tf]').forEach(function(i){i.checked=false});flt()});flt()}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init()})();</script>
+{% schema %}
+{"name":"ES Kollektion Kopf+Chips","tag":"section","class":"es-colhead-sec","settings":[
+{"type":"checkbox","id":"show_head","label":"Kopf zeigen (Brotkrumen, Titel, Intro, Maß-Filter)","default":true},
+{"type":"checkbox","id":"intro_auto","label":"Intro aus Beschreibung kürzen (wenn Metafeld custom.intro leer)","default":true},
+{"type":"checkbox","id":"size_filter","label":"Maß-Preisfilter + Terrassen-Filter","default":true},
+{"type":"text","id":"size_label","label":"Text Maß-Filter","default":"Preise für Ihre Terrasse anzeigen:"}
+],"blocks":[{"type":"group","name":"Chip-Gruppe","settings":[{"type":"text","id":"label","label":"Label (optional)"},{"type":"text","id":"scope","label":"Zeigen bei Kollektion (Handle-Teile, kommagetrennt, * = alle)","default":"*"},{"type":"text","id":"exclude","label":"Nicht zeigen bei (Handle-Teile, kommagetrennt)"},{"type":"textarea","id":"chips","label":"Chips (eine pro Zeile: Label|collection:handle oder Label|tag:Tag)"}]}],"presets":[{"name":"ES Kategorie-Chips"}]}
+{% endschema %}

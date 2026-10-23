@@ -1,0 +1,91 @@
+{%- comment -%}e-Stegplatten: Produktseiten-Overrides (aus es-overrides gerendert, nur auf Produktseiten): Titel, Klarna-Zeile (neutral, auf der Terrassendach-Seite serverseitig gerendert, hier nur Rate aktualisiert; sonst per JS erzeugt) + Lagerstatus, Lieferumfang-Widget (.es-lf-*), Produktbeschreibung/Technische Daten (.es-ds).{%- endcomment -%}
+<style id="es-overrides-pdp">
+html body .product-meta .product-meta__title:not(#_){font-size:var(--es-fs-h1p,30px)!important;line-height:1.18!important;font-weight:800!important;font-stretch:100%;letter-spacing:-.01em;margin-bottom:10px!important}
+html body .es-kl:not(#_){margin:0 0 12px;padding:0;background:none;border:0}
+html body .es-kl__bar:not(#_){display:flex;align-items:center;gap:4px 10px;flex-wrap:wrap;max-width:100%;min-height:44px;padding:8px 12px;margin:0;background:#fff;border:1px solid var(--es-line,#DCE3DE);color:#3A423E;font-size:14px;line-height:1.35;white-space:normal}
+html body .es-kl__bar:not(#_) b{display:inline-block;flex:none;background:#FFB3C7;color:#17120F;font-weight:800;font-size:12px;line-height:1;padding:4px 8px;margin:0}
+html body .es-kl__bar:not(#_) span{display:inline;min-width:0;margin:0}
+html body .es-kl__bar:not(#_) strong{font-weight:800;color:#1B1F1D}
+html body .es-kl__st:not(#_){display:flex;align-items:center;gap:8px;margin:10px 0 0;font-size:14px;color:#5E6863}
+html body .es-kl__st:not(#_) i{width:10px;height:10px;background:#2FA463;box-shadow:0 0 0 3px #D5EEDF;flex:none;margin-left:3px;border-radius:50%!important}
+html body .es-kl__st:not(#_) b{color:#2A6C49;font-weight:700}
+html body .es-kl__st.is-out:not(#_) i{background:#C93F3F;box-shadow:0 0 0 3px #F5DADA}html body .es-kl__st.is-out:not(#_) b{color:#C93F3F}
+html body .es-ds:not(#_){max-width:var(--es-wrap,1280px);margin:16px auto 24px;padding:0 24px;color:#3A423E}
+html body .es-ds:not(#_) .es-ds__g{gap:16px}
+html body .es-ds:not(#_) .es-ds__c{background:#fff;border:1px solid #DCE3DE;padding:28px}
+html body .es-ds:not(#_) h2{font-stretch:100%;font-weight:800;font-size:var(--es-fs-h2b,22px);color:#1B1F1D;margin:0 0 16px;padding:0 0 12px;border-bottom:1px solid #DCE3DE;letter-spacing:-.01em}
+html body .es-ds:not(#_) .es-ds__rte{font-size:16px;line-height:1.65;color:#3A423E}
+html body .es-ds:not(#_) .es-ds__rte p{margin:0 0 14px}
+html body .es-ds:not(#_) .es-ds__rte > h3,html body .es-ds:not(#_) .es-ds__rte > h4{font-stretch:100%;font-weight:800;font-size:var(--es-fs-h3,18px);color:#1B1F1D;margin:24px 0 10px}
+html body .es-ds:not(#_) .es-ds__rte > ul{list-style:none;margin:0 0 18px;padding:0;border-top:1px solid #EEF1EF}
+html body .es-ds:not(#_) .es-ds__rte > ul > li{position:relative;margin:0;padding:8px 0 8px 28px;border-bottom:1px solid #EEF1EF;font-size:15px}
+html body .es-ds:not(#_) .es-ds__rte > ul > li::before{content:"";position:absolute;left:2px;top:13px;width:14px;height:14px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23338258' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 12 5 5L20 7'/%3E%3C/svg%3E") center/contain no-repeat}
+html body .es-ds:not(#_) .es-ds__rte strong{color:#1B1F1D}
+html body .es-ds:not(#_) .es-ds__rte em{color:#5E6863;font-size:14px}
+html body .es-ds:not(#_) .es-ds__rte a{color:#2A6C49;text-decoration:underline}
+html body .es-ds:not(#_) .es-ds__tbl{font-size:15px}
+html body .es-ds:not(#_) .es-ds__tbl th{color:#5E6863;font-weight:500}
+html body .es-ds:not(#_) .es-ds__tbl td{color:#1B1F1D;font-weight:700}
+html body .es-ds:not(#_) .es-ds__tbl th,html body .es-ds:not(#_) .es-ds__tbl td{padding:11px 0;border-bottom:1px solid #EEF1EF}
+html body .es-lf-container:not(#_){box-shadow:none!important;border:1px solid #DCE3DE!important;margin:20px 0!important;color:#3A423E!important;background:#fff!important}
+html body .es-lf-header:not(#_){background:#F0F4F1!important;border-bottom:1px solid #DCE3DE;flex-wrap:nowrap!important}
+html body .es-lf-img-wrap:not(#_){flex:0 0 240px!important;max-width:240px!important;min-height:0!important;background:#fff;border-right:1px solid #DCE3DE}
+html body .es-lf-img-wrap:not(#_) img{object-fit:contain!important;padding:10px}
+html body .es-lf-product-info:not(#_){color:#1B1F1D!important;padding:18px 22px!important;gap:8px;min-width:0!important}
+html body .es-lf-header:not(#_) h2{color:#1B1F1D!important;font-stretch:100%;font-size:18px!important;font-weight:800!important;line-height:1.25!important;margin:0 0 4px!important;border:0!important;padding:0!important}
+html body .es-lf-header:not(#_) .es-lf-badge{background:#fff!important;color:#1B1F1D!important;border:1px solid #DCE3DE;padding:6px 10px!important;font-size:13px!important;line-height:1.35;margin:0!important;max-width:100%}
+html body .es-lf-header:not(#_) .es-lf-badge i{color:#338258!important}
+html body .es-lf-body:not(#_){padding:20px 22px!important}
+html body .es-lf-section-title:not(#_){color:#1B1F1D!important;font-stretch:100%;font-size:17px!important;font-weight:800!important;border-bottom:1px solid #DCE3DE!important;margin-bottom:14px!important}
+html body .es-lf-grid:not(#_){grid-template-columns:repeat(auto-fill,minmax(230px,1fr))!important;gap:8px!important;margin-bottom:18px!important}
+html body .lf-item:not(#_){background:#fff!important;border:1px solid #DCE3DE!important;padding:10px 12px!important;gap:12px;transform:none!important;box-shadow:none!important}
+html body .lf-item:not(#_):hover{border-color:#9DAAA2!important;background:#fff!important}
+html body .lf-icon:not(#_){width:48px!important;height:48px!important;background:#F7F8F7!important;border:1px solid #E1E5E2!important}
+html body .lf-title:not(#_){color:#1B1F1D!important;font-size:14px!important;font-weight:700!important;line-height:1.3}
+html body .lf-title:not(#_) a{color:#2A6C49!important;text-decoration:underline!important}
+html body .lf-desc:not(#_){font-size:13px!important;color:#5E6863!important}
+html body .es-lf-notes:not(#_){background:#FBF7EC!important;border:1px solid #EADFC4!important;border-left:3px solid #D9962B!important;padding:14px 16px!important}
+html body .es-lf-notes:not(#_) h4{color:#1B1F1D!important;font-size:14px!important}
+html body .es-lf-notes:not(#_) li{color:#3A423E!important;font-size:13.5px!important}
+html body .es-lf-notes:not(#_) li i{color:#D9962B!important}
+html body .es-lf-guarantee:not(#_){background:#1B1F1D!important;color:#fff!important;font-size:15px!important;padding:12px 16px!important}
+@media(max-width:749px){
+html body .product-meta .product-meta__title:not(#_){font-size:var(--es-fs-h1p,20px)!important}
+html body .es-ds:not(#_){padding:0 16px;margin:8px auto 16px}
+html body .es-ds:not(#_) .es-ds__g{gap:10px}
+html body .es-ds:not(#_) .es-ds__c{padding:16px}
+html body .es-ds:not(#_) h2{margin-bottom:12px;padding-bottom:10px}
+html body .es-ds:not(#_) .es-ds__rte{font-size:15px}
+html body .es-ds:not(#_) .es-ds__rte > ul > li{font-size:14.5px}
+html body .es-lf-header:not(#_){flex-direction:column!important}
+html body .es-lf-img-wrap:not(#_){flex:none!important;max-width:100%!important;width:100%;border-right:0;border-bottom:1px solid #DCE3DE;aspect-ratio:16/10}
+html body .es-lf-product-info:not(#_),html body .es-lf-body:not(#_){padding:16px!important}
+html body .es-lf-header:not(#_) h2{font-size:16px!important}
+html body .es-lf-grid:not(#_){grid-template-columns:1fr!important}
+}
+</style>
+{%- liquid
+  assign klz = '5–8 Werktage'
+  if product.tags contains 'Terrassenüberdachung' or product.type contains 'Terrassen'
+    assign klz = 'ca. 10–40 Werktage'
+  endif
+  for c in product.collections
+    if c.metafields.custom.lieferzeit.value != blank
+      assign klz = c.metafields.custom.lieferzeit.value
+      break
+    endif
+  endfor
+-%}
+<script>window.esKl={lz:{{ klz | json }},cur:{{ product.selected_or_first_available_variant.id }},v:{ {%- for v in product.variants -%}"{{ v.id }}":[{{ v.price }},{{ v.available }}]{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%} }};
+document.addEventListener('DOMContentLoaded',function(){var D=window.esKl;if(!D)return;
+function eur(c){return (c/100).toLocaleString('de-DE',{minimumFractionDigits:2,maximumFractionDigits:2})+' €'}
+var lz=String(D.lz).replace(/Werktage\s*$/,'Werktagen');
+var box=document.querySelector('[data-es-kl]');
+if(!box){var a=document.querySelector('.es-pdp__tax')||document.querySelector('.es-buy__klarna');if(!a)return;
+box=document.createElement('div');box.className='es-kl';box.innerHTML='<div class="es-kl__bar"><b>Klarna</b><span>ab <strong data-kl-r></strong>/Monat · 12 Raten oder Rechnung</span></div><p class="es-kl__st"><i></i><b data-kl-s></b><span data-kl-l></span></p>';
+if(a.classList.contains('es-buy__klarna')){a.parentNode.replaceChild(box,a)}else{a.parentNode.insertBefore(box,a.nextSibling)}}
+function upd(id){var v=D.v[id];if(!v)return;var kr=box.querySelector('[data-kl-r]');if(kr)kr.textContent=eur(Math.ceil(v[0]/12));var s=box.querySelector('.es-kl__st');if(!s)return;s.classList.toggle('is-out',!v[1]);box.querySelector('[data-kl-s]').textContent=v[1]?'Auf Lager':'Derzeit nicht verfügbar';box.querySelector('[data-kl-l]').textContent=v[1]?'Lieferung in '+lz:'Liefertermin auf Anfrage'}
+upd(D.cur);
+document.addEventListener('variant:changed',function(e){var v=e.detail&&e.detail.variant;if(v)upd(v.id)});
+var idIn=document.querySelector('.es-pdp [data-id]'),pe=document.querySelector('.es-pdp [data-price]');if(idIn&&pe){upd(idIn.value);new MutationObserver(function(){upd(idIn.value)}).observe(pe,{childList:true,characterData:true,subtree:true})}
+});</script>

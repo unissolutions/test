@@ -1,0 +1,74 @@
+{%- comment -%}e-Stegplatten: globale Feinschliff-Overrides (in layout/theme.liquid vor </head> gerendert). :not(#_) = ID-Spezifität, schlägt Theme-/DS-/App-CSS. Teile: es-overrides-pdp, es-overrides-rev, es-zuschnitt, es-wunschmass (Produkt), es-overrides-col (Kollektion).{%- endcomment -%}
+<style id="es-overrides">
+/* Rundungen: EINE Regel (ID-Spezifität schlägt Theme-/DS-/App-CSS) + EINE Ausnahmeliste für echte Kreise */
+html body *:not(#_),html body *:not(#_)::before,html body *:not(#_)::after{border-radius:0!important}
+html body input[type=radio]:not(#_),html body .jdgm-star:not(#_),html body .block-swatch__item--color:not(#_),html body .rating__star:not(#_),html body .rr:not(#_),html body .ehk__dot:not(#_),html body .esk__sun:not(#_),html body .color-swatch__item:not(#_),html body .es-kl__st i:not(#_),html body .jdgm-rev__icon:not(#_){border-radius:50%!important}
+html body .header__cart-count:not(#_){border-radius:8px!important}
+html body .card:not(#_),html body .card__section:not(#_),html body .product-block:not(#_),html body .product-block-list__item:not(#_),html body .product-gallery:not(#_),html body .product-meta:not(#_),html body .product-form__payment-container:not(#_),html body .product-item:not(#_),html body .es-card:not(#_){box-shadow:none!important}
+/* Container: eine Inhaltsbreite (1280 px inkl. Rand) für Theme-Container */
+html body .container:not([class*="container--"]):not(#_){max-width:var(--es-wrap,1280px)}
+html body.template-product .product-meta:not(#_),html body.template-product .product-gallery:not(#_){border-top:0!important;border-bottom:0!important}
+html body.template-product .card__separator:not(#_),html body.template-product .product-meta__separator:not(#_),html body.template-product .product-block-list hr:not(#_){display:none!important}
+html body .es-col .es-card__lz:not(#_){margin-top:auto!important;padding-top:6px}
+html body .es-col .es-card__ft:not(#_){margin-top:0!important}
+/* Überschriften in Theme-Sektionen = H2 (Box/Utility) der Skala */
+html body .section__title:not(#_),html body .section__header .heading:not(#_){font-family:var(--es-font)!important;font-stretch:100%;font-weight:800!important;font-size:var(--es-fs-h2b,22px)!important;line-height:1.2;color:#1B1F1D!important;letter-spacing:-.01em;text-align:left!important}
+html body .es-pi h2:not(#_){font-size:var(--es-fs-h2b,22px);font-weight:800;line-height:1.2;letter-spacing:-.01em}
+/* Theme-Produktkarten (Empfehlungen, zuletzt angesehen) – gleiche Werte wie .pc/.es-card */
+html body .product-item:not(#_){border:1px solid var(--es-line)!important;background:#fff!important;text-align:left!important}
+html body .product-item:hover:not(#_){border-color:#1B1F1D!important}
+html body .product-item__image-wrapper:not(#_){border-bottom:1px solid var(--es-line);margin-bottom:0!important}
+html body .product-item__info:not(#_){padding:12px 16px 4px!important;text-align:left!important;display:flex;flex-direction:column;gap:6px}
+html body .product-item__vendor:not(#_){display:none!important}
+html body .product-item__title:not(#_){font-size:var(--es-fs-card,15px)!important;font-weight:700!important;line-height:1.3!important;color:#1B1F1D!important;margin:0!important;min-height:3.9em;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+html body .product-item__price-list:not(#_){margin:2px 0 0!important;display:flex;gap:6px;align-items:baseline;flex-wrap:wrap;justify-content:flex-start}
+html body .product-item .price:not(#_){font-size:20px!important;font-weight:800!important;color:#1B1F1D!important}
+html body .product-item .price--highlight:not(#_){color:#C93F3F!important}
+html body .product-item .price--compare:not(#_){font-size:13px!important;font-weight:500!important;color:#5E6863!important}
+html body .product-item .jdgm-prev-badge__text:not(#_){display:none!important}
+html body .product-item__label-list .label:not(#_){font-size:12px!important;padding:3px 8px!important;line-height:1.3!important}
+html body .product-item__action-list:not(#_){padding:6px 16px 16px!important;margin:0!important}
+html body .product-item__action-button:not(#_){display:flex!important;align-items:center;justify-content:center;width:100%;height:var(--es-h-m,48px)!important;min-height:0!important;line-height:1.2!important;padding:0 12px!important;background:#fff!important;border:1px solid var(--es-line2)!important;color:#1B1F1D!important;font-size:15px!important;font-weight:700!important;white-space:nowrap;text-transform:none!important;letter-spacing:0!important}
+html body .product-item:hover .product-item__action-button:not(#_){background:#338258!important;border-color:#338258!important;color:#fff!important}
+/* Judge.me-Karussell */
+html body .jdgm-carousel-wrapper:not(#_){max-width:var(--es-wrap,1280px)!important;margin:24px auto!important;padding:0 24px!important}
+html body .jdgm-carousel-title:not(#_){font-stretch:100%;font-weight:800!important;font-size:var(--es-fs-h2b,22px)!important;color:#1B1F1D!important;text-align:left!important;white-space:normal!important;overflow:visible!important;text-overflow:clip!important;margin:0 0 6px!important;width:100%}
+html body .jdgm-carousel-title-and-link:not(#_){text-align:left!important;margin:0 0 16px!important;padding:0!important;display:flex!important;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-start!important}
+html body .jdgm-all-reviews-rating-wrapper:not(#_),html body .jdgm-carousel-number-of-reviews:not(#_){display:inline-flex!important;align-items:center;gap:8px;margin:0!important;font-size:14px!important;color:#5E6863!important}
+html body .jdgm-carousel:not(#_){margin:0!important}
+html body .jdgm-carousel-item:not(#_){background:#fff!important;border:1px solid var(--es-line)!important;padding:20px!important;text-align:left!important;box-shadow:none!important}
+html body .jdgm-carousel-item__review-rating:not(#_){text-align:left!important;margin:0 0 8px!important}
+html body .jdgm-carousel-item .jdgm-star:not(#_),html body .jdgm-carousel-wrapper .jdgm-star:not(#_){color:#D9962B!important}
+html body .jdgm-carousel-item__review-title:not(#_){font-weight:700!important;font-size:16px!important;color:#1B1F1D!important;text-align:left!important;margin:0 0 6px!important}
+html body .jdgm-carousel-item__review-body:not(#_){font-size:15px!important;line-height:1.5!important;color:#272D2A!important;text-align:left!important}
+html body .jdgm-carousel-item__review-body p:not(#_){margin:0!important}
+html body .jdgm-carousel-item__reviewer-name:not(#_){font-size:13px!important;color:#5E6863!important;text-align:left!important;margin:12px 0 0!important;justify-content:flex-start!important}
+html body .jdgm-carousel-item__product:not(#_){display:flex!important;align-items:center;justify-content:flex-start!important;gap:10px;margin:12px 0 0!important;padding:12px 0 0!important;border-top:1px solid var(--es-line);text-align:left!important}
+html body .jdgm-carousel-item__product-image:not(#_){width:44px!important;height:44px!important;object-fit:cover;border:1px solid var(--es-line);margin:0!important}
+html body .jdgm-carousel-item__product-title:not(#_){font-size:13px!important;font-weight:600!important;color:#1B1F1D!important;text-align:left!important}
+html body .jdgm-carousel__arrows:not(#_){justify-content:flex-start!important;margin:14px 0 0!important}
+html body .esl .jdgm-carousel-wrapper:not(#_){padding:0!important;margin:0!important;max-width:none!important}
+html body .esl .jdgm-carousel-title:not(#_){display:none!important}
+/* WhatsApp-Flächen: dunkle Schrift auf #25D366 (8,4:1 statt 2:1) */
+html body .es-pi__wa:not(#_){color:#1B1F1D!important}
+@media(max-width:999px){
+html body.template-product .product-block-list__item .card:not(#_){border-top:0!important;border-bottom:0!important}
+html body.template-product .card__section:not(#_){border-top:0!important;border-bottom:0!important}
+html body .text-with-icons__list:not(#_){display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:20px 12px!important;overflow:visible!important;transform:none!important;scroll-snap-type:none!important;margin:0!important;padding:0!important}
+html body .text-with-icons__item:not(#_){width:auto!important;min-width:0!important;flex:none!important;max-width:none!important;margin:0!important;padding:0 4px!important;opacity:1!important;visibility:visible!important;transform:none!important;position:static!important}
+html body .text-with-icons__dots:not(#_),html body .text-with-icons__dot-list:not(#_),html body .text-with-icons .flickity-page-dots:not(#_),html body .text-with-icons .dots-nav:not(#_){display:none!important}
+html body .text-with-icons__title:not(#_){font-size:14px!important;margin-bottom:4px!important}
+html body .text-with-icons__content:not(#_){font-size:13px!important;line-height:1.4!important}
+}
+@media(max-width:749px){
+html body .jdgm-carousel-wrapper:not(#_){padding:0 16px!important}
+html body .jdgm-carousel-item:not(#_){padding:16px!important}
+html body .product-item__info:not(#_){padding:10px 12px 2px!important}
+html body .product-item .price:not(#_){font-size:18px!important}
+html body .product-item__action-list:not(#_){padding:6px 12px 12px!important}
+html body .product-item__action-button:not(#_){height:44px!important;font-size:14px!important}
+}
+</style>
+<script>(function(){var MAP={'Wähle Deine Optionen':'Größe wählen','Wähle deine Optionen':'Größe wählen'};function fx(root){(root||document).querySelectorAll('.product-item__action-button').forEach(function(b){var t=b.textContent.trim();if(MAP[t])b.textContent=MAP[t]})}document.addEventListener('DOMContentLoaded',function(){fx();var to;new MutationObserver(function(){clearTimeout(to);to=setTimeout(fx,120)}).observe(document.body,{childList:true,subtree:true})})})();</script>
+{%- if request.page_type == 'product' and product != blank -%}{% render 'es-overrides-pdp', product: product %}{% render 'es-overrides-rev' %}{% render 'es-zuschnitt', product: product %}{% render 'es-wunschmass', product: product %}{%- endif -%}
+{%- if request.page_type == 'collection' -%}{% render 'es-overrides-col' %}<script>document.addEventListener('DOMContentLoaded',function(){document.querySelectorAll('.es-card__f').forEach(function(e){e.textContent=e.textContent.replace(/^\s*·\s*/,'').trim();if(!e.textContent)e.style.display='none'})});</script>{%- endif -%}

@@ -1,0 +1,115 @@
+{%- comment -%}e-Stegplatten: Produktraster für Kollektionen (v3: Fakten-Zeile – bei Terrassendächern Eindeckung · Rahmen · Material, Kurztitel ohne „Terrassenüberdachung“ in Terrassen-Kollektionen, echte Judge.me-Sterne, Lieferzeit; Werte = Skala aus es-design-system){%- endcomment -%}
+{%- assign lz = section.settings.lieferzeit -%}
+{%- if collection.handle contains 'terrassen' -%}{%- assign lz = 'ca. 10–40 Werktage' -%}{%- endif -%}
+{%- assign has_mf = false -%}
+{%- if collection.metafields.custom.lieferzeit.value != blank -%}{%- assign lz = collection.metafields.custom.lieferzeit.value -%}{%- assign has_mf = true -%}{%- elsif collection.metafields.custom.lieferzeit != blank -%}{%- assign lz = collection.metafields.custom.lieferzeit -%}{%- assign has_mf = true -%}{%- endif -%}
+{%- capture ic_arrow -%}<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>{%- endcapture -%}
+<div id="es-col-{{ section.id }}" class="es-col">
+<style>
+#es-col-{{ section.id }}{max-width:var(--es-wrap,1280px);margin:0 auto;padding:16px 24px 48px;font-size:15px;color:#272D2A}
+#es-col-{{ section.id }} *{box-sizing:border-box}
+.es-col__head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:16px}
+.es-col__h1{font-size:var(--es-fs-h1,clamp(30px,3.4vw,44px));font-weight:800;color:#1B1F1D;letter-spacing:-.015em;margin:0;line-height:1.1}
+.es-col__count{font-size:14px;color:#5E6863;margin-top:6px}
+.es-col__sort{display:flex;align-items:center;gap:8px;font-size:14px;color:#5E6863;margin:0}
+.es-col__sort select{height:44px;border:1px solid var(--es-ui,#8C9792);padding:0 12px;background:#fff;color:#1B1F1D;font-family:inherit;font-size:14px;font-weight:600}
+.es-col__filters{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:0 0 20px}
+.es-col__filters details{position:relative}
+.es-col__filters summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:6px;height:44px;padding:0 14px;border:1px solid var(--es-line2,#C9CFCB);background:#fff;font-weight:600;font-size:14px;color:#1B1F1D;white-space:nowrap}
+.es-col__filters summary::-webkit-details-marker{display:none}
+.es-col__filters details[open] summary,.es-col__filters summary.is-active{border-color:#338258;background:var(--es-gl,#E8F2EC)}
+.es-col__panel{position:absolute;top:50px;left:0;z-index:20;min-width:230px;max-height:320px;overflow:auto;background:#fff;border:1px solid #1B1F1D;padding:8px}
+.es-col__panel label{display:flex;align-items:center;gap:10px;min-height:44px;padding:0 10px;font-size:14px;cursor:pointer;color:#1B1F1D}
+.es-col__panel label:hover{background:#F7F8F7}
+.es-col__panel input{accent-color:#338258;width:18px;height:18px;margin:0}
+.es-col__panel small{color:#5E6863;margin-left:auto}
+.es-col__reset{display:inline-flex;align-items:center;min-height:44px;font-size:14px;color:#2A6C49!important;font-weight:600;text-decoration:none;margin-left:4px}
+.es-col__grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.es-card{display:flex;flex-direction:column;min-width:0;background:#fff;border:1px solid var(--es-line,#DCE3DE);transition:border-color .12s}
+.es-card:hover{border-color:#1B1F1D}
+.es-card__im{position:relative;display:block;aspect-ratio:4/3;background:#F7F8F7;overflow:hidden;border-bottom:1px solid var(--es-line,#DCE3DE)}
+.es-card__im img{width:100%;height:100%;object-fit:cover;display:block}
+.es-card__bd{position:absolute;top:0;left:0;display:flex}
+.es-badge{display:inline-flex;align-items:center;height:26px;padding:0 10px;font-weight:700;font-size:12px;color:#fff;background:#338258}
+.es-badge--sale{background:#C93F3F}.es-badge--out{background:#5E6863}
+.es-card__bo{padding:16px;display:flex;flex-direction:column;gap:6px;flex:1}
+.es-card__f{font-size:13px;color:#5E6863;font-weight:600}
+.es-card__t{font-size:var(--es-fs-card,15px);font-weight:700;line-height:1.3;color:#1B1F1D;margin:0}
+.es-card__t a{color:inherit!important;text-decoration:none}
+.es-card .jdgm-widget{min-height:0}
+.es-card__lz{font-size:13px;color:#5E6863}.es-card__lz b{color:#2A6C49;font-weight:700}
+.es-card__ft{margin-top:auto;padding-top:8px;display:flex;flex-direction:column;gap:10px}
+.es-card__pr{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.es-card__pr b{font-size:20px;font-weight:800;color:#1B1F1D}.es-card__pr b.sale{color:#C93F3F}
+.es-card__pr small{font-size:13px;color:#5E6863;font-weight:600}
+.es-card__pr s{font-size:13px;color:#5E6863}
+.es-card__save{font-size:12px;font-weight:700;color:#C93F3F;width:100%}
+.es-card__btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:var(--es-h-m,48px);border:1px solid var(--es-line2,#C9CFCB);background:transparent;color:#1B1F1D!important;font-weight:700;font-size:15px;text-decoration:none!important;transition:background .12s,color .12s,border-color .12s}
+.es-card:hover .es-card__btn,.es-card__btn:hover{background:#338258;border-color:#338258;color:#fff!important}
+.es-col__pag{display:flex;justify-content:center;gap:6px;margin:32px 0 0;flex-wrap:wrap}
+.es-col__pag a,.es-col__pag span{display:inline-flex;align-items:center;justify-content:center;min-width:44px;height:44px;padding:0 12px;border:1px solid var(--es-line,#DCE3DE);background:#fff;color:#1B1F1D!important;font-weight:600;text-decoration:none;font-size:14px}
+.es-col__pag a:hover{border-color:#1B1F1D}
+.es-col__pag .is-cur{background:#338258;border-color:#338258;color:#fff!important}
+.es-col__consult{margin-top:32px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;align-items:center;padding:20px 24px;background:#fff;border:1px solid var(--es-line,#DCE3DE)}
+.es-col__consult h3{margin:0 0 4px;font-size:var(--es-fs-h3,18px);font-weight:700;color:#1B1F1D}
+.es-col__consult p{margin:0;font-size:14px;color:#272D2A}
+.es-col__consult>div:last-child{display:flex;gap:8px;flex-wrap:wrap}
+.es-col__consult a{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:var(--es-h-m,48px);padding:0 16px;font-weight:700;text-decoration:none!important;font-size:15px}
+.es-col__tel{background:#1B1F1D;color:#fff!important}
+.es-col__wa{background:var(--es-wa,#25D366);color:#1B1F1D!important}
+.es-col__empty{padding:48px 0;text-align:center;color:#5E6863}
+@media(max-width:1000px){.es-col__grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:749px){#es-col-{{ section.id }}{padding:8px 16px 32px}.es-col__head{margin-bottom:10px}.es-col__sort label{display:none}.es-col__grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.es-card__bo{padding:10px 12px 12px;gap:4px}.es-card__f,.es-card__lz{font-size:12px}.es-card__pr b{font-size:18px}.es-card__pr s{display:none}.es-card__btn{height:44px;font-size:14px}.es-col__consult{grid-template-columns:1fr;padding:16px}.es-col__consult a{flex:1}.es-col__filters{overflow-x:auto;flex-wrap:nowrap;margin:0 -16px 14px;padding:0 16px 4px;scrollbar-width:none}.es-col__filters::-webkit-scrollbar{display:none}.es-col__filters details{flex:none;position:static}.es-col__panel{position:fixed;left:16px;right:16px;top:auto;bottom:16px;min-width:0;max-height:60vh;z-index:95}}
+</style>
+{%- paginate collection.products by section.settings.per_page -%}
+<div class="es-col__head"><div><h1 class="es-col__h1">{{ collection.title }}</h1><div class="es-col__count">{{ collection.products_count }} Produkte · Lieferzeit {{ lz }}</div></div>
+<form method="get" action="{{ collection.url }}" class="es-col__sort" data-es-sort><label for="es-sort-{{ section.id }}">Sortieren</label><select id="es-sort-{{ section.id }}" name="sort_by" aria-label="Sortieren">{%- for o in collection.sort_options -%}<option value="{{ o.value }}"{% if o.value == collection.sort_by %} selected{% endif %}>{{ o.name }}</option>{%- endfor -%}</select></form></div>
+{%- if collection.filters.size > 0 -%}
+<form method="get" action="{{ collection.url }}" class="es-col__filters" data-es-filters>
+<input type="hidden" name="sort_by" value="{{ collection.sort_by }}">
+{%- assign any_active = false -%}
+{%- for f in collection.filters -%}{%- if f.type == 'list' -%}
+{%- assign act = f.active_values.size -%}{%- if act > 0 -%}{%- assign any_active = true -%}{%- endif -%}
+<details><summary class="{% if act > 0 %}is-active{% endif %}">{{ f.label }}{% if act > 0 %} ({{ act }}){% endif %} <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></summary>
+<div class="es-col__panel">{%- for v in f.values -%}<label><input type="checkbox" name="{{ v.param_name }}" value="{{ v.value }}"{% if v.active %} checked{% endif %}{% if v.count == 0 and v.active == false %} disabled{% endif %}>{{ v.label }}<small>{{ v.count }}</small></label>{%- endfor -%}</div></details>
+{%- endif -%}{%- endfor -%}
+{%- if any_active -%}<a class="es-col__reset" href="{{ collection.url }}?sort_by={{ collection.sort_by }}">Filter zurücksetzen</a>{%- endif -%}
+</form>
+{%- endif -%}
+{%- if collection.products.size == 0 -%}<div class="es-col__empty">Keine Produkte für diese Auswahl. <a href="{{ collection.url }}" style="color:#338258;font-weight:700">Filter zurücksetzen</a></div>{%- endif -%}
+<div class="es-col__grid">
+{%- for p in collection.products -%}
+{%- assign on_sale = false -%}{%- if p.compare_at_price > p.price -%}{%- assign on_sale = true -%}{%- endif -%}
+{%- assign plz = lz -%}{%- if has_mf == false -%}{%- if p.type contains 'Terrassen' or p.tags contains 'Terrassenüberdachung' -%}{%- assign plz = 'ca. 10–40 Werktage' -%}{%- else -%}{%- assign plz = section.settings.lieferzeit -%}{%- endif -%}{%- endif -%}
+{%- assign mm = '' -%}{%- assign col = '' -%}{%- assign mat = '' -%}
+{%- for t in p.tags -%}{%- if t contains 'mm Stegplatten' and mm == '' -%}{%- assign mm = t | remove: ' Stegplatten' | replace: 'mm', ' mm' -%}{%- endif -%}{%- if t == 'Klar/Transparent' -%}{%- assign col = 'Klar' -%}{%- elsif t == 'Opal/Weiß' -%}{%- assign col = 'Opal' -%}{%- elsif t == 'Anthrazit/Graphit' -%}{%- assign col = 'Anthrazit' -%}{%- elsif t == 'Bronze' -%}{%- assign col = 'Bronze' -%}{%- elsif t == 'Weiß' -%}{%- assign col = 'Weiß' -%}{%- elsif t == 'Anthrazit' -%}{%- assign col = 'Anthrazit' -%}{%- endif -%}{%- if t == 'Polycarbonat' -%}{%- assign mat = 'Polycarbonat' -%}{%- elsif t == 'Glassysteme' -%}{%- assign mat = 'Acrylglas' -%}{%- endif -%}{%- endfor -%}
+{%- assign tl = p.title | downcase -%}{%- assign dt = p.title -%}
+{%- if p.tags contains 'Terrassenüberdachung' and p.type != 'Stegplatten' -%}{%- comment -%}Terrassendach: Eindeckung · Rahmen · Material (gleiche Logik wie Produktseite){%- endcomment -%}{%- assign col = 'Klar' -%}{%- if tl contains 'opal' -%}{%- assign col = 'Opal' -%}{%- elsif tl contains 'graphit' -%}{%- assign col = 'Graphit' -%}{%- endif -%}{%- assign mm = 'Rahmen anthrazit' -%}{%- if p.title contains 'Weiß Alu' or p.title contains 'Alu weiß' or p.title contains 'Alu Weiß' -%}{%- assign mm = 'Rahmen weiß' -%}{%- endif -%}{%- assign mat = '16 mm Stegplatten' -%}{%- if p.title contains 'VSG' -%}{%- assign mat = '8 mm VSG-Glas' -%}{%- endif -%}{%- if collection.handle contains 'terrassen' -%}{%- assign dt = p.title | remove_first: 'Terrassenüberdachung ' | remove_first: 'Terrassendach ' -%}{%- endif -%}
+{%- else -%}{%- if tl contains 'opal' -%}{%- assign col = 'Opal' -%}{%- elsif tl contains 'graphit' -%}{%- assign col = 'Anthrazit' -%}{%- elsif tl contains 'bronze' -%}{%- assign col = 'Bronze' -%}{%- elsif tl contains 'klar' -%}{%- assign col = 'Klar' -%}{%- endif -%}{%- if mat == 'Acrylglas' and p.title contains 'VSG' -%}{%- assign mat = 'VSG-Glas' -%}{%- endif -%}{%- endif -%}
+<article class="es-card"><a class="es-card__im" href="{{ p.url | within: collection }}">{%- if p.featured_image -%}<img src="{{ p.featured_image | image_url: width: 600 }}" srcset="{{ p.featured_image | image_url: width: 400 }} 400w, {{ p.featured_image | image_url: width: 600 }} 600w, {{ p.featured_image | image_url: width: 900 }} 900w" sizes="(max-width:749px) 50vw, 300px" alt="{{ p.featured_image.alt | default: p.title | escape }}" loading="lazy">{%- endif -%}<div class="es-card__bd">{%- if on_sale -%}{%- assign sv = p.compare_at_price | minus: p.price | times: 100 | divided_by: p.compare_at_price -%}<span class="es-badge es-badge--sale">−{{ sv }} %</span>{%- endif -%}{%- if p.tags contains 'Bestseller' -%}<span class="es-badge">Bestseller</span>{%- endif -%}{%- unless p.available -%}<span class="es-badge es-badge--out">Ausverkauft</span>{%- endunless -%}</div></a>
+<div class="es-card__bo">{%- if mm != '' or mat != '' or col != '' -%}<span class="es-card__f">{%- if p.tags contains 'Terrassenüberdachung' and p.type != 'Stegplatten' -%}{{ col }} · {{ mm }} · {{ mat }}{%- else -%}{{ mm }}{% if mat != '' %}{% if mm != '' %} · {% endif %}{{ mat }}{% endif %}{% if col != '' %} · {{ col }}{% endif %}{%- endif -%}</span>{%- endif -%}<h3 class="es-card__t"><a href="{{ p.url | within: collection }}"{% if dt != p.title %} title="{{ p.title | escape }}"{% endif %}>{{ dt }}</a></h3>
+{%- if p.metafields.reviews.rating_count > 0 -%}<div class="jdgm-widget jdgm-preview-badge" data-id="{{ p.id }}">{{ p.metafields.judgeme.badge }}</div>{%- endif -%}
+<span class="es-card__lz">Lieferzeit <b>{{ plz }}</b></span>
+<div class="es-card__ft"><div class="es-card__pr">{%- if p.price_varies -%}<small>ab</small>{%- endif -%}<b class="{% if on_sale %}sale{% endif %}">{{ p.price_min | money }}</b>{%- if on_sale -%}<s>{{ p.compare_at_price | money }}</s><span class="es-card__save">Sie sparen {{ p.compare_at_price | minus: p.price | money }}</span>{%- endif -%}</div>
+<a class="es-card__btn" href="{{ p.url | within: collection }}">{% if p.has_only_default_variant %}Zum Produkt{% else %}Größe wählen{% endif %} {{ ic_arrow }}</a></div></div></article>
+{%- endfor -%}
+</div>
+{%- if paginate.pages > 1 -%}<nav class="es-col__pag" aria-label="Seiten">{%- if paginate.previous -%}<a href="{{ paginate.previous.url }}">‹</a>{%- endif -%}{%- for part in paginate.parts -%}{%- if part.is_link -%}<a href="{{ part.url }}">{{ part.title }}</a>{%- elsif part.title == paginate.current_page -%}<span class="is-cur">{{ part.title }}</span>{%- else -%}<span>{{ part.title }}</span>{%- endif -%}{%- endfor -%}{%- if paginate.next -%}<a href="{{ paginate.next.url }}">›</a>{%- endif -%}</nav>{%- endif -%}
+{%- endpaginate -%}
+{%- if section.settings.show_consult -%}
+<div class="es-col__consult"><div class="es-col__consult-t"><h3>{{ section.settings.consult_heading }}</h3><p>{{ section.settings.consult_text }}</p></div><div><a class="es-col__tel" href="tel:{{ section.settings.phone | remove: ' ' }}">{{ section.settings.phone }}</a>{%- if section.settings.whatsapp != blank -%}<a class="es-col__wa" href="https://wa.me/{{ section.settings.whatsapp }}?text={{ section.settings.whatsapp_text | url_encode }}" target="_blank" rel="noopener">WhatsApp</a>{%- endif -%}</div></div>
+{%- endif -%}
+</div>
+<script>(function(){var r=document.getElementById('es-col-{{ section.id }}');if(!r)return;var s=r.querySelector('[data-es-sort] select');if(s)s.addEventListener('change',function(){s.form.submit()});var f=r.querySelector('[data-es-filters]');if(f){f.addEventListener('change',function(){f.submit()});document.addEventListener('click',function(e){r.querySelectorAll('.es-col__filters details[open]').forEach(function(d){if(!d.contains(e.target))d.removeAttribute('open')})})}})();</script>
+{% schema %}
+{"name":"ES Produktraster","tag":"section","settings":[
+{"type":"range","id":"per_page","label":"Produkte pro Seite","min":8,"max":48,"step":4,"default":24},
+{"type":"text","id":"lieferzeit","label":"Lieferzeit (Fallback)","default":"5–8 Werktage"},
+{"type":"checkbox","id":"show_consult","label":"Beratungsbox zeigen","default":true},
+{"type":"text","id":"consult_heading","label":"Beratung Titel","default":"Unsicher bei der Auswahl?"},
+{"type":"text","id":"consult_text","label":"Beratung Text","default":"Wir prüfen Maße, Stärke und Zubehör kostenlos – telefonisch oder per WhatsApp."},
+{"type":"text","id":"phone","label":"Telefon","default":"0209 513 078 34"},
+{"type":"text","id":"whatsapp","label":"WhatsApp-Nummer (nur Ziffern)","default":"491781199805"},
+{"type":"text","id":"whatsapp_text","label":"WhatsApp Vorlagentext","default":"Hallo, ich habe eine Frage zu Ihren Produkten."}
+],"presets":[{"name":"ES Produktraster"}]}
+{% endschema %}

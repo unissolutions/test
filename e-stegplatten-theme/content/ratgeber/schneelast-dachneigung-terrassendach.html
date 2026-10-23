@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Schneelast &amp; Dachneigung beim Terrassendach berechnen</title>
+<meta name="description" content="Schneelastzonen nach DIN EN 1991-1-3, Mindestneigung für Stegplatten und wann Statiker oder Bauamt gefragt sind – verständlich erklärt mit Rechenbeispiel.">
+<meta name="robots" content="noindex">
+<base href="https://e-stegplatten.de/">
+<style>
+:root{--bg:#f6f7f6;--surface:#ffffff;--text:#1b1f1d;--muted:#5b625e;--line:#dfe3e0;--accent:#2f7d52;
+--warn-bg:#fff6e0;--warn-line:#e0b44c;--code-bg:#f0f2f1;--serp-title:#1a0dab;--serp-url:#1e6b3a}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#131615;--surface:#1b1f1d;--text:#e6e9e7;
+--muted:#a3aba6;--line:#2e3431;--accent:#6cc494;--warn-bg:#2d2614;--warn-line:#8a6d27;--code-bg:#232826;
+--serp-title:#8ab4f8;--serp-url:#7fc59a}}
+:root[data-theme="dark"]{--bg:#131615;--surface:#1b1f1d;--text:#e6e9e7;--muted:#a3aba6;--line:#2e3431;--accent:#6cc494;
+--warn-bg:#2d2614;--warn-line:#8a6d27;--code-bg:#232826;--serp-title:#8ab4f8;--serp-url:#7fc59a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.65 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:860px;margin:0 auto;padding:24px 16px 64px}
+.badge{display:inline-block;font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--accent);
+border:1px solid var(--accent);border-radius:999px;padding:2px 10px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:20px;margin:18px 0}
+.meta{display:grid;grid-template-columns:max-content 1fr;gap:6px 14px;font-size:14px}
+.meta dt{color:var(--muted)}.meta dd{margin:0;overflow-wrap:anywhere}
+.ok{color:var(--accent)}
+.serp{font-family:Arial,sans-serif}.serp .u{color:var(--serp-url);font-size:13px}
+.serp .t{color:var(--serp-title);font-size:19px;line-height:1.3;margin:2px 0}.serp .d{color:var(--muted);font-size:14px}
+article h1{font-size:30px;line-height:1.25;margin:8px 0 12px}
+article h2{font-size:23px;margin-top:34px;padding-top:6px;border-top:1px solid var(--line)}
+article h3{font-size:18px;margin-top:22px}
+article a{color:var(--accent)}
+.excerpt{font-size:18px;color:var(--muted)}
+.tbl{overflow-x:auto;margin:12px 0}
+table{border-collapse:collapse;width:100%;font-size:14.5px}
+th,td{border:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top}
+th{background:var(--code-bg)}
+.warn{background:var(--warn-bg);border-color:var(--warn-line)}
+details summary{cursor:pointer;font-weight:600}
+pre{background:var(--code-bg);padding:12px;border-radius:8px;overflow-x:auto;font-size:12.5px}
+ol.steps li{margin-bottom:8px}
+.small{font-size:13.5px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<span class="badge">Entwurf · Ratgeber · nicht veröffentlicht</span>
+<section class="card">
+<dl class="meta">
+<dt>Handle</dt><dd>schneelast-dachneigung-terrassendach</dd>
+<dt>SEO-Titel</dt><dd>Schneelast &amp; Dachneigung beim Terrassendach berechnen <span class="small">(53 Zeichen)</span></dd>
+<dt>Meta-Description</dt><dd>Schneelastzonen nach DIN EN 1991-1-3, Mindestneigung für Stegplatten und wann Statiker oder Bauamt gefragt sind – verständlich erklärt mit Rechenbeispiel. <span class="small">(154 Zeichen)</span></dd>
+<dt>Wortzahl Body</dt><dd>1124</dd>
+<dt>Prüfung</dt><dd><span class="ok">alle automatischen Prüfungen bestanden</span></dd>
+</dl>
+</section>
+<section class="card serp" aria-label="Suchergebnis-Vorschau">
+<div class="u">e-stegplatten.de › blogs › ratgeber › schneelast-dachneigung-terrassendach</div>
+<div class="t">Schneelast &amp; Dachneigung beim Terrassendach berechnen</div>
+<div class="d">Schneelastzonen nach DIN EN 1991-1-3, Mindestneigung für Stegplatten und wann Statiker oder Bauamt gefragt sind – verständlich erklärt mit Rechenbeispiel.</div>
+</section>
+<article class="card">
+<h1>Schneelast und Dachneigung bei Terrassenüberdachungen: Das sollten Sie vor dem Bau wissen</h1>
+<p class="excerpt">Wie viel Schnee muss Ihr Terrassendach tragen, wie viel Neigung braucht es und wann sind Statiker oder Bauamt gefragt? Die Grundlagen mit Zonentabelle, Formel und Rechenbeispiel.</p>
+<p>Ein Terrassendach muss nicht nur Regen ableiten, sondern im Winter auch Schnee tragen – so viel, wie an Ihrem Standort realistisch zu erwarten ist. Wie viel das ist, regelt die Schneelastnorm. Die Dachneigung entscheidet darüber, ob Wasser zuverlässig abläuft. Dieser Ratgeber erklärt die Grundlagen. Er ersetzt keine Statik: Ob Ihre Überdachung ausreichend bemessen ist, beurteilt im Zweifel ein Tragwerksplaner vor Ort.</p>
+
+<h2>Wie hoch ist die Schneelast in Deutschland?</h2>
+<p>Die Schneelast hängt von der Schneelastzone und der Geländehöhe ab. Nach DIN EN 1991-1-3 mit Nationalem Anhang ist Deutschland in die Zonen 1, 1a, 2, 2a und 3 eingeteilt. Die charakteristische Bodenschneelast beträgt mindestens 0,65 kN/m² in Zone 1, 0,85 kN/m² in Zone 2 und 1,10 kN/m² in Zone 3; in höheren Lagen steigt sie deutlich.</p>
+
+<h2>Die Schneelastzonen im Überblick</h2>
+<div class="tbl"><table>
+<thead><tr><th>Zone</th><th>Mindestwert s<sub>k</sub></th><th>gilt bis etwa</th><th>Formel für höhere Lagen (A = Geländehöhe in m ü. NN)</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>0,65 kN/m²</td><td>400 m</td><td>0,19 + 0,91 · ((A + 140) / 760)²</td></tr>
+<tr><td>1a</td><td>0,81 kN/m²</td><td>400 m</td><td>Wert der Zone 1 × 1,25</td></tr>
+<tr><td>2</td><td>0,85 kN/m²</td><td>285 m</td><td>0,25 + 1,91 · ((A + 140) / 760)²</td></tr>
+<tr><td>2a</td><td>1,06 kN/m²</td><td>285 m</td><td>Wert der Zone 2 × 1,25</td></tr>
+<tr><td>3</td><td>1,10 kN/m²</td><td>255 m</td><td>0,31 + 2,91 · ((A + 140) / 760)²</td></tr>
+</tbody>
+</table></div>
+<p>Zur Einordnung: 1 kN/m² entspricht etwa 100 kg je Quadratmeter. Welche Zone für Ihre Gemeinde gilt, veröffentlicht das Deutsche Institut für Bautechnik (DIBt) in einer Zuordnungstabelle nach Verwaltungsgrenzen; auch Ihr Bauamt gibt Auskunft. Für einzelne Orte in Zone 3, etwa im Oberharz, gelten gesonderte Werte. Im Norddeutschen Tiefland ist zusätzlich ein außergewöhnlicher Lastfall mit erhöhter Schneelast zu berücksichtigen. Die Tabelle dient der Orientierung, maßgeblich ist die aktuelle Fassung der Norm.</p>
+
+<h2>Von der Bodenschneelast zur Last auf dem Dach</h2>
+<p>Für flach geneigte Dächer bis 30 Grad wird die Bodenschneelast mit dem Formbeiwert 0,8 multipliziert. Unter normalen Bedingungen gilt also vereinfacht: Dachschneelast = 0,8 × s<sub>k</sub>.</p>
+<p><strong>Rechenbeispiel:</strong> Ein Haus steht in Zone 2 auf 400 m Höhe. Die Bodenschneelast beträgt dann 0,25 + 1,91 · ((400 + 140) / 760)² ≈ 1,21 kN/m². Auf dem Terrassendach sind 0,8 × 1,21 ≈ 0,97 kN/m² anzusetzen, also rund 97 kg je Quadratmeter. Bei 4 × 3 m Dachfläche sind das zusammen weit über eine Tonne Schnee.</p>
+<p>Wichtig für Terrassendächer: Grenzt die Überdachung an ein höheres Gebäude, kann zusätzlicher Schnee vom Hausdach abrutschen oder sich an der Wand anwehen. Die Norm sieht für solche Höhensprünge eigene Lastansätze vor, die die Last im wandnahen Bereich deutlich erhöhen können. Schneefanggitter auf dem Hausdach halten abrutschenden Schnee zurück; ob die Überdachung die Zusatzlasten trägt, sollte ein Statiker bewerten.</p>
+
+<h2>Welche Dachneigung braucht ein Terrassendach?</h2>
+<p>Für Dächer mit Stegplatten nennen die meisten Plattenhersteller eine Mindestneigung von 5 Grad, das entspricht rund 9 cm Höhenunterschied pro Meter. Einige Hersteller fordern 7 Grad. Maßgeblich sind die Angaben des Plattenherstellers und des Dachsystems. Mehr Neigung lässt Regen schneller ablaufen und verbessert die Selbstreinigung der Platten.</p>
+<p>Auf eine Entlastung durch abrutschenden Schnee dürfen Sie bei flachen Dächern nicht setzen: Bis 30 Grad Neigung bleibt der Formbeiwert unverändert, ein Terrassendach mit 5 bis 10 Grad muss also die volle Dachschneelast tragen. Rutscht Schnee doch ab, landet er vor der Rinne – planen Sie Wege und Beete entsprechend.</p>
+
+<h2>Dachneigung berechnen: Formel und Tabelle</h2>
+<p>Den nötigen Höhenunterschied zwischen Wandanschluss und Rinne berechnen Sie so: <strong>Höhenunterschied = Tiefe × tan(Neigungswinkel)</strong>. Die Tiefe ist der waagerechte Abstand von der Hauswand bis zur Rinne.</p>
+<div class="tbl"><table>
+<thead><tr><th>Tiefe (waagerecht)</th><th>5° (≈ 8,7 %)</th><th>7° (≈ 12,3 %)</th><th>10° (≈ 17,6 %)</th></tr></thead>
+<tbody>
+<tr><td>2,0 m</td><td>ca. 17 cm</td><td>ca. 25 cm</td><td>ca. 35 cm</td></tr>
+<tr><td>2,5 m</td><td>ca. 22 cm</td><td>ca. 31 cm</td><td>ca. 44 cm</td></tr>
+<tr><td>3,0 m</td><td>ca. 26 cm</td><td>ca. 37 cm</td><td>ca. 53 cm</td></tr>
+<tr><td>3,5 m</td><td>ca. 31 cm</td><td>ca. 43 cm</td><td>ca. 62 cm</td></tr>
+<tr><td>4,0 m</td><td>ca. 35 cm</td><td>ca. 49 cm</td><td>ca. 71 cm</td></tr>
+<tr><td>4,5 m</td><td>ca. 39 cm</td><td>ca. 55 cm</td><td>ca. 79 cm</td></tr>
+<tr><td>5,0 m</td><td>ca. 44 cm</td><td>ca. 61 cm</td><td>ca. 88 cm</td></tr>
+</tbody>
+</table></div>
+<p>Beispiel: Bei 3 m Tiefe, 5 Grad Neigung und gewünschten 2,30 m Durchgangshöhe vorn liegt der Wandanschluss etwa auf 2,56 m. Rechnen Sie zusätzlich die Bauhöhe von Träger, Rinne und Profilen ein und prüfen Sie, ob Fenster, Rollladenkästen und die Dachrinne des Hauses darüber Platz lassen.</p>
+
+<h2>Wann brauche ich einen Statiker?</h2>
+<p>Einen Statiker sollten Sie hinzuziehen, wenn Sie eine eigene Konstruktion planen, in Zone 2a oder 3, in höheren Lagen oder im Norddeutschen Tiefland bauen, die Überdachung unter einem höheren Hausdach liegt oder an einer gedämmten Fassade befestigt wird. Verlangt das Bauamt einen Standsicherheitsnachweis, führt ohnehin kein Weg an einer Statik vorbei.</p>
+<ul>
+<li>Eigenbau ohne Statik des Herstellers</li>
+<li>Schneelastzone 2a oder 3, höhere Lagen oder Norddeutsches Tiefland</li>
+<li>Anbau unter einem höheren Dach (abrutschender und angewehter Schnee)</li>
+<li>Befestigung an Wärmedämmverbundsystem, Verblendmauerwerk, Holzständerwand oder an Dachsparren</li>
+<li>große Breiten und Tiefen oder abweichende Pfostenabstände</li>
+<li>spätere Erweiterung mit Seitenwänden oder Glasschiebewänden, die zusätzliche Wind- und Eigenlasten bringen</li>
+</ul>
+<p>Fragen Sie bei einem Bausatz vor der Bestellung, für welche Schneelast er ausgelegt ist und welche Nachweise vorliegen. Liegt Ihr Standort darüber, können zusätzliche Pfosten, verstärkte Profile oder eine individuelle Bemessung nötig sein.</p>
+
+<h2>Brauche ich eine Baugenehmigung für ein Terrassendach?</h2>
+<p>Das hängt vom Bundesland ab. In vielen Ländern sind Terrassenüberdachungen bis 30 m² Fläche und 3 m Tiefe verfahrensfrei, Nordrhein-Westfalen erlaubt bis 30 m² und 4,50 m Tiefe. Verfahrensfrei heißt aber nicht regelfrei: Abstandsflächen, Bebauungsplan, Denkmalschutz und Standsicherheit müssen trotzdem stimmen. Fragen Sie im Zweifel beim Bauamt nach.</p>
+<div class="tbl"><table>
+<thead><tr><th>Bundesland (Beispiele)</th><th>verfahrensfrei bis (Stand Recherche, ohne Gewähr)</th></tr></thead>
+<tbody>
+<tr><td>Nordrhein-Westfalen (§ 62 BauO NRW)</td><td>30 m² Grundfläche und 4,50 m Tiefe, gemessen ab Außenwand</td></tr>
+<tr><td>Bayern (Art. 57 BayBO)</td><td>30 m² Fläche und 3 m Tiefe</td></tr>
+<tr><td>Sachsen (§ 61 SächsBO)</td><td>30 m² Fläche und 3 m Tiefe</td></tr>
+<tr><td>übrige Bundesländer</td><td>teils abweichende Grenzen – Landesbauordnung oder Bauamt prüfen</td></tr>
+</tbody>
+</table></div>
+<p>Ein Beispiel: Ein Terrassendach mit 7 m Breite und 5 m Tiefe hat 35 m² Fläche und überschreitet damit in allen genannten Ländern die Grenze. Bei Reihen- und Doppelhäusern kommen Grenzabstände und gegebenenfalls Brandschutzanforderungen an Grenzwände hinzu. Für einen geschlossenen Wintergarten gelten wieder andere Regeln.</p>
+
+<h2>Checkliste vor der Bestellung</h2>
+<ul>
+<li>Schneelastzone und Geländehöhe ermitteln, Dachschneelast überschlagen</li>
+<li>prüfen, ob die Überdachung unter einem höheren Dach liegt</li>
+<li>Dachneigung nach Herstellerangabe festlegen und die Höhen am Wandanschluss durchrechnen</li>
+<li>Wandaufbau klären: Mauerwerk, Dämmung, Verblender</li>
+<li>Baurecht prüfen: Landesbauordnung, Bebauungsplan, Abstandsflächen, Nachbarn</li>
+<li>bei Bausätzen: zulässige Schneelast und vorhandene Nachweise beim Händler erfragen</li>
+</ul>
+<p>Wie Sie Planung, Fundament und Montage anschließend praktisch umsetzen, beschreibt unser Ratgeber „Terrassendach selber bauen“.</p>
+<p>Unsere <a href="/collections/terrassenuberdachung-alu-mit-stegplatten">Alu-Terrassenüberdachungen mit 16-mm-Stegplatten</a> und <a href="/collections/terrassenuberdachung-alu-mit-vsg-glas">mit 8-mm-VSG-Glas</a> gibt es bis 7 m Breite und von 2 bis 5 m Tiefe. Einzelne Platten für eigene Konstruktionen finden Sie unter <a href="/collections/doppelstegplatten-16mm">Doppelstegplatten 16 mm</a>.</p>
+
+<h2>Kurzfazit</h2>
+<p>Die Schneelast an Ihrem Standort ergibt sich aus Zone und Geländehöhe; auf flach geneigten Dächern sind 80 Prozent davon anzusetzen, an Hauswänden unter höheren Dächern auch mehr. Stegplattendächer brauchen meist mindestens 5 Grad Neigung. Bei Statik und Genehmigung gilt: lieber einmal mehr beim Bauamt oder einem Statiker nachfragen. Unsere Terrassendächer finden Sie unter <a href="/collections/terrassenuberdachung">Terrassenüberdachung</a>; vor der Bestellung prüfen wir Ihre Maße kostenlos – sprechen Sie uns über das <a href="/pages/contact">Kontaktformular</a> an.</p>
+</article>
+<section class="card"><h2>FAQ</h2><h3>Wie viel Schnee hält ein Terrassendach aus?</h3><p>Das hängt von der Bemessung ab: Profile, Pfostenabstände, Platten und Befestigung müssen für die Schneelast an Ihrem Standort ausgelegt sein. Als Faustwert entspricht 1 kN/m² etwa 100 kg je Quadratmeter. Fragen Sie beim Hersteller nach, für welche Schneelast ein Bausatz ausgelegt ist.</p><h3>Wie finde ich meine Schneelastzone heraus?</h3><p>Das Deutsche Institut für Bautechnik (DIBt) veröffentlicht eine Tabelle, die jeder Gemeinde eine Schneelastzone zuordnet. Auch das örtliche Bauamt gibt Auskunft. Zusätzlich brauchen Sie die Geländehöhe Ihres Grundstücks.</p><h3>Welche Mindestneigung brauchen Stegplatten?</h3><p>Die meisten Hersteller nennen mindestens 5 Grad, also rund 9 cm Höhenunterschied pro Meter. Einige fordern 7 Grad. Verbindlich ist die Angabe des Platten- und Dachsystemherstellers.</p><h3>Muss ich Schnee vom Terrassendach räumen?</h3><p>Ein richtig bemessenes Dach trägt die Normschneelast. Bei außergewöhnlichen Schneemengen oder Schnee, der vom Hausdach nachrutscht, kann Räumen sinnvoll sein. Betreten Sie das Dach dabei nie und arbeiten Sie vom Boden aus mit einem weichen Werkzeug, das die Platten nicht verkratzt.</p><h3>Ist eine Terrassenüberdachung genehmigungspflichtig?</h3><p>Das regelt jedes Bundesland selbst. Häufig sind Überdachungen bis 30 m² und 3 m Tiefe verfahrensfrei, in NRW bis 30 m² und 4,50 m Tiefe. Bebauungsplan, Abstandsflächen und Denkmalschutz gelten trotzdem. Im Zweifel fragen Sie beim Bauamt nach.</p></section>
+
+<section class="card warn"><h2>Bitte prüfen (unsichere Aussagen)</h2><ul><li>Formeln und Übergangshöhen der Schneelastzonen stammen aus einer Sekundärquelle (mb-news 2009 zu DIN 1055-5) und wurden rechnerisch gegengeprüft; die Werte entsprechen nach unserem Kenntnisstand dem Nationalen Anhang zu DIN EN 1991-1-3. Bitte vor Veröffentlichung gegen den Normtext prüfen lassen.</li><li>Norddeutsches Tiefland: Der Text nennt nur „außergewöhnlicher Lastfall mit erhöhter Schneelast“; der Faktor (in der Norm ein Vielfaches von s_k) wurde bewusst nicht genannt, weil er nicht aus einer Primärquelle verifiziert ist.</li><li>Ein DIBt-Forschungsbericht (2018) empfiehlt eine Überarbeitung der Zonenkarte; ob inzwischen eine neue Zuordnung gilt, ist nicht geprüft.</li><li>Baurecht: NRW (30 m², 4,50 m) ist durch mehrere kommunale Merkblätter belegt. Bayern (30 m², 3 m) und Sachsen (30 m², 3 m) sind durch Sekundärquellen bzw. eine Stadtseite belegt; zur Bayern-Tiefengrenze gibt es eine widersprüchliche Quelle. Andere Bundesländer weichen ab (z. B. Saarland, Brandenburg, Hessen laut Ratgeberseiten). Vor Veröffentlichung juristisch bzw. am Gesetzestext prüfen.</li><li>Mindestneigung: 5° laut TUJ und Lexan-Angebot, 7° laut Mondesi/Scobalit. Die Produktseiten der Shop-Terrassendächer nennen „Dachneigung 3–10°“. Das widerspricht der Plattenhersteller-Empfehlung von mindestens 5° – bitte mit dem Systemhersteller klären, bevor der Artikel online geht.</li><li>Räumhinweis in der FAQ (vom Boden aus, Dach nie betreten) ist eine allgemeine Sicherheitsempfehlung ohne Herstellerquelle.</li></ul></section>
+<section class="card"><h2>Interne Links</h2><div class="tbl"><table><thead><tr><th>Ankertext</th><th>Ziel</th></tr></thead><tbody><tr><td>Alu-Terrassenüberdachungen mit 16-mm-Stegplatten</td><td><a href="/collections/terrassenuberdachung-alu-mit-stegplatten">/collections/terrassenuberdachung-alu-mit-stegplatten</a></td></tr><tr><td>mit 8-mm-VSG-Glas</td><td><a href="/collections/terrassenuberdachung-alu-mit-vsg-glas">/collections/terrassenuberdachung-alu-mit-vsg-glas</a></td></tr><tr><td>Doppelstegplatten 16 mm</td><td><a href="/collections/doppelstegplatten-16mm">/collections/doppelstegplatten-16mm</a></td></tr><tr><td>Terrassenüberdachung</td><td><a href="/collections/terrassenuberdachung">/collections/terrassenuberdachung</a></td></tr><tr><td>Kontaktformular</td><td><a href="/pages/contact">/pages/contact</a></td></tr></tbody></table></div></section>
+<section class="card"><h2>Bildideen</h2><div class="tbl"><table><thead><tr><th>Motiv</th><th>Alt-Text-Vorschlag</th></tr></thead><tbody><tr><td>Vereinfachte Deutschlandkarte mit farbig markierten Schneelastzonen (Hinweis: nur schematisch, Quelle DIBt)</td><td>Schematische Karte der Schneelastzonen in Deutschland nach DIN EN 1991-1-3</td></tr><tr><td>Seitenansicht-Skizze Terrassendach mit Tiefe, Höhenunterschied und Neigungswinkel</td><td>Skizze: Dachneigung eines Terrassendachs aus Tiefe und Höhenunterschied berechnen</td></tr><tr><td>Foto eines verschneiten Terrassendachs mit Stegplatten an einem Wohnhaus</td><td>Verschneites Terrassendach mit Stegplatten an einem Einfamilienhaus</td></tr><tr><td>Skizze Höhensprung: Schnee rutscht vom Hausdach auf die tiefer liegende Überdachung</td><td>Skizze: abrutschender Schnee vom Hausdach erhöht die Last auf der Terrassenüberdachung</td></tr></tbody></table></div></section>
+<section class="card"><h2>Quellen</h2><ul class="small"><li><a href="https://www.mbaec.de/fileadmin/documents/mb-news/2009/mb-news_01-09_Hinweise_Normen_Schneelasten_DIN1055.pdf" rel="noopener">https://www.mbaec.de/fileadmin/documents/mb-news/2009/mb-news_01-09_Hinweise_Normen_Schneelasten_DIN1055.pdf</a></li><li><a href="https://www.dlubal.com/de/support-und-schulungen/support/knowledge-base/001530" rel="noopener">https://www.dlubal.com/de/support-und-schulungen/support/knowledge-base/001530</a></li><li><a href="https://www.dlubal.com/de/support-und-schulungen/support/knowledge-base/001611" rel="noopener">https://www.dlubal.com/de/support-und-schulungen/support/knowledge-base/001611</a></li><li><a href="https://forum-verlag.com/fachwissen/bau-und-gebaeudemanagement/schneelast-berechnen/" rel="noopener">https://forum-verlag.com/fachwissen/bau-und-gebaeudemanagement/schneelast-berechnen/</a></li><li><a href="https://mobilitaet.bayern.de/assets/stmi/buw/baurechtundtechnik/iib8_2018_forschungsprojekt_schneelasten_mit_anhang_m.pdf" rel="noopener">https://mobilitaet.bayern.de/assets/stmi/buw/baurechtundtechnik/iib8_2018_forschungsprojekt_schneelasten_mit_anhang_m.pdf</a></li><li><a href="https://solarlux.com/files/pdf1/210218_sl_schneelast_ev.pdf" rel="noopener">https://solarlux.com/files/pdf1/210218_sl_schneelast_ev.pdf</a></li><li><a href="https://assets.koempf24.de/tuj_Montage_2019_12_06_Stegplatten.pdf" rel="noopener">https://assets.koempf24.de/tuj_Montage_2019_12_06_Stegplatten.pdf</a></li><li><a href="https://www.baustoffshop.de/thyssen-lexan-thermoclear-s3p-16-20-stegplatte-beidseitig-uv-schutz-farblos-glatt-n677-10045-grp.html" rel="noopener">https://www.baustoffshop.de/thyssen-lexan-thermoclear-s3p-16-20-stegplatte-beidseitig-uv-schutz-farblos-glatt-n677-10045-grp.html</a></li><li><a href="https://www.mondesi.de/media/attachment/file/s/t/stegplatten_verlegeanleitung.pdf" rel="noopener">https://www.mondesi.de/media/attachment/file/s/t/stegplatten_verlegeanleitung.pdf</a></li><li><a href="https://www.monheim.de/fileadmin/user_upload/Media/Dokumente_NEU/61_Stadtplanung/02_Bauaufsicht/Merkblatt_Terrassenueberdachung.pdf" rel="noopener">https://www.monheim.de/fileadmin/user_upload/Media/Dokumente_NEU/61_Stadtplanung/02_Bauaufsicht/Merkblatt_Terrassenueberdachung.pdf</a></li><li><a href="https://www.hagen.de/web/media/files/fb/fb_61/bauordnung/kurz_infos/_terrassenueberdachung.pdf" rel="noopener">https://www.hagen.de/web/media/files/fb/fb_61/bauordnung/kurz_infos/_terrassenueberdachung.pdf</a></li><li><a href="https://www.bielefeld.de/sites/default/files/datei/2020/Terrassenueberd.pdf" rel="noopener">https://www.bielefeld.de/sites/default/files/datei/2020/Terrassenueberd.pdf</a></li><li><a href="https://serviceportal.unna.de/detail/-/vr-bis-detail/dokument/109152/download" rel="noopener">https://serviceportal.unna.de/detail/-/vr-bis-detail/dokument/109152/download</a></li><li><a href="https://portawestfalica.de/rathaus/verwaltung/bauordnung/informationen-zu-haeufig-gestellten-fragen/merkblatt-terrassenueberdachungen.pdf" rel="noopener">https://portawestfalica.de/rathaus/verwaltung/bauordnung/informationen-zu-haeufig-gestellten-fragen/merkblatt-terrassenueberdachungen.pdf</a></li><li><a href="https://www.radebeul.de/en/Town-hall/Urban-development/Information-for-building-owners/Building-project/Terrace-extension-or-patio-cover" rel="noopener">https://www.radebeul.de/en/Town-hall/Urban-development/Information-for-building-owners/Building-project/Terrace-extension-or-patio-cover</a></li><li><a href="https://www.hausundgrund.de/verband/bayern/gartenhaus-terrasse-co" rel="noopener">https://www.hausundgrund.de/verband/bayern/gartenhaus-terrasse-co</a></li><li><a href="https://www.aroundhome.de/terrassenueberdachung/verordnung-baugenehmigung/" rel="noopener">https://www.aroundhome.de/terrassenueberdachung/verordnung-baugenehmigung/</a></li></ul></section>
+<section class="card"><details><summary>JSON-LD-Vorschlag (Article, FAQPage)</summary>
+<p class="small">Die URL nimmt den Blog-Handle „ratgeber“ an und muss an den tatsächlichen Blog angepasst werden.</p>
+<pre>{
+  &quot;@context&quot;: &quot;https://schema.org&quot;,
+  &quot;@graph&quot;: [
+    {
+      &quot;@type&quot;: &quot;Article&quot;,
+      &quot;headline&quot;: &quot;Schneelast und Dachneigung bei Terrassenüberdachungen: Das sollten Sie vor dem Bau wissen&quot;,
+      &quot;description&quot;: &quot;Schneelastzonen nach DIN EN 1991-1-3, Mindestneigung für Stegplatten und wann Statiker oder Bauamt gefragt sind – verständlich erklärt mit Rechenbeispiel.&quot;,
+      &quot;inLanguage&quot;: &quot;de-DE&quot;,
+      &quot;mainEntityOfPage&quot;: &quot;https://e-stegplatten.de/blogs/ratgeber/schneelast-dachneigung-terrassendach&quot;,
+      &quot;publisher&quot;: {
+        &quot;@type&quot;: &quot;Organization&quot;,
+        &quot;name&quot;: &quot;e-stegplatten.de (TSZ GmbH)&quot;,
+        &quot;url&quot;: &quot;https://e-stegplatten.de&quot;
+      }
+    },
+    {
+      &quot;@type&quot;: &quot;FAQPage&quot;,
+      &quot;mainEntity&quot;: [
+        {
+          &quot;@type&quot;: &quot;Question&quot;,
+          &quot;name&quot;: &quot;Wie viel Schnee hält ein Terrassendach aus?&quot;,
+          &quot;acceptedAnswer&quot;: {
+            &quot;@type&quot;: &quot;Answer&quot;,
+            &quot;text&quot;: &quot;Das hängt von der Bemessung ab: Profile, Pfostenabstände, Platten und Befestigung müssen für die Schneelast an Ihrem Standort ausgelegt sein. Als Faustwert entspricht 1 kN/m² etwa 100 kg je Quadratmeter. Fragen Sie beim Hersteller nach, für welche Schneelast ein Bausatz ausgelegt ist.&quot;
+          }
+        },
+        {
+          &quot;@type&quot;: &quot;Question&quot;,
+          &quot;name&quot;: &quot;Wie finde ich meine Schneelastzone heraus?&quot;,
+          &quot;acceptedAnswer&quot;: {
+            &quot;@type&quot;: &quot;Answer&quot;,
+            &quot;text&quot;: &quot;Das Deutsche Institut für Bautechnik (DIBt) veröffentlicht eine Tabelle, die jeder Gemeinde eine Schneelastzone zuordnet. Auch das örtliche Bauamt gibt Auskunft. Zusätzlich brauchen Sie die Geländehöhe Ihres Grundstücks.&quot;
+          }
+        },
+        {
+          &quot;@type&quot;: &quot;Question&quot;,
+          &quot;name&quot;: &quot;Welche Mindestneigung brauchen Stegplatten?&quot;,
+          &quot;acceptedAnswer&quot;: {
+            &quot;@type&quot;: &quot;Answer&quot;,
+            &quot;text&quot;: &quot;Die meisten Hersteller nennen mindestens 5 Grad, also rund 9 cm Höhenunterschied pro Meter. Einige fordern 7 Grad. Verbindlich ist die Angabe des Platten- und Dachsystemherstellers.&quot;
+          }
+        },
+        {
+          &quot;@type&quot;: &quot;Question&quot;,
+          &quot;name&quot;: &quot;Muss ich Schnee vom Terrassendach räumen?&quot;,
+          &quot;acceptedAnswer&quot;: {
+            &quot;@type&quot;: &quot;Answer&quot;,
+            &quot;text&quot;: &quot;Ein richtig bemessenes Dach trägt die Normschneelast. Bei außergewöhnlichen Schneemengen oder Schnee, der vom Hausdach nachrutscht, kann Räumen sinnvoll sein. Betreten Sie das Dach dabei nie und arbeiten Sie vom Boden aus mit einem weichen Werkzeug, das die Platten nicht verkratzt.&quot;
+          }
+        },
+        {
+          &quot;@type&quot;: &quot;Question&quot;,
+          &quot;name&quot;: &quot;Ist eine Terrassenüberdachung genehmigungspflichtig?&quot;,
+          &quot;acceptedAnswer&quot;: {
+            &quot;@type&quot;: &quot;Answer&quot;,
+            &quot;text&quot;: &quot;Das regelt jedes Bundesland selbst. Häufig sind Überdachungen bis 30 m² und 3 m Tiefe verfahrensfrei, in NRW bis 30 m² und 4,50 m Tiefe. Bebauungsplan, Abstandsflächen und Denkmalschutz gelten trotzdem. Im Zweifel fragen Sie beim Bauamt nach.&quot;
+          }
+        }
+      ]
+    }
+  ]
+}</pre></details></section>
+</div>
+</body>
+</html>
