@@ -7,10 +7,15 @@
 {% render 'es-landing-css' %}
 <section class="hero" data-screen-label="Hero">
 <div class="c">
-<div>
+<div class="hv">
+{%- if s.hero_image != blank -%}<img class="hv__img" src="{{ s.hero_image | image_url: width: 1400 }}" srcset="{{ s.hero_image | image_url: width: 700 }} 700w, {{ s.hero_image | image_url: width: 1000 }} 1000w, {{ s.hero_image | image_url: width: 1400 }} 1400w" sizes="(max-width:999px) 100vw, 660px" alt="{{ s.hero_image.alt | default: s.hero_title | escape }}" width="{{ s.hero_image.width | default: 1400 }}" height="{{ s.hero_image.height | default: 1050 }}" fetchpriority="high">{%- endif -%}
+<div class="hv__tx">
 {%- if s.kicker != blank -%}<p class="k">{{ s.kicker }}</p>{%- endif -%}
 <h1>{{ s.hero_title }}</h1>
 {%- if s.hero_text != blank -%}<p class="lead">{{ s.hero_text }}</p>{%- endif -%}
+</div>
+</div>
+<div class="hc">
 {%- assign kh = s.konfig_handle | default: 'terrassenuberdachung-alu-mit-stegplatten' -%}{%- assign kc = collections[kh] -%}
 {%- if s.hero_mode == 'finder' -%}
 {% render 'es-landing-finder', s: s, blocks: section.blocks, sid: section.id, ic_arrow: ic_arrow, lz: s.lz_default %}
@@ -32,10 +37,7 @@ T.forEach(function(t,i){t.addEventListener('click',function(){sel(t)});t.addEven
 {% render 'es-hero-konfig', kc: kc, lz: s.lz_terrassen, mu: s.muster_url %}
 {%- endif -%}
 </div>
-<div>
-{%- if s.hero_image != blank -%}<img src="{{ s.hero_image | image_url: width: 1200 }}" srcset="{{ s.hero_image | image_url: width: 700 }} 700w, {{ s.hero_image | image_url: width: 1200 }} 1200w" sizes="(max-width:1000px) 100vw, 600px" alt="{{ s.hero_image.alt | default: s.hero_title | escape }}" fetchpriority="high">{%- endif -%}
-<div class="proof"><div><b>{{ s.proof1_t }}</b>{{ s.proof1_s }}</div><div><b>{{ s.proof2_t }}</b>{{ s.proof2_s }}</div>{%- assign jc = shop.metafields.judgeme.all_reviews_count | plus: 0 -%}{%- assign jr = shop.metafields.judgeme.all_reviews_rating | times: 1.0 | round: 1 -%}<div>{%- if jc > 0 -%}<b>{{ jr | replace: '.', ',' }} ★ aus {{ jc }} Bewertungen</b>{%- else -%}<b>{{ s.proof3_t }}</b>{%- endif -%}{{ s.proof3_s }}</div></div>
-</div>
+<div class="proof"><div>{{ ic_check }}<b>{{ s.proof1_t }}</b><span>{{ s.proof1_s }}</span></div><div>{{ ic_check }}<b>{{ s.proof2_t }}</b><span>{{ s.proof2_s }}</span></div>{%- assign jc = shop.metafields.judgeme.all_reviews_count | plus: 0 -%}{%- assign jr = shop.metafields.judgeme.all_reviews_rating | times: 1.0 | round: 1 -%}<div>{{ ic_check }}{%- if jc > 0 -%}<b>{{ jr | replace: '.', ',' }} ★ aus {{ jc }} Bewertungen</b>{%- else -%}<b>{{ s.proof3_t }}</b>{%- endif -%}<span>{{ s.proof3_s }}</span></div></div>
 </div>
 </section>
 <section class="trust" data-screen-label="Vertrauen">
@@ -44,7 +46,7 @@ T.forEach(function(t,i){t.addEventListener('click',function(){sel(t)});t.addEven
 <section class="s" data-screen-label="Kategorien">
 <div class="c">
 <div class="head"><div><p class="k">Sortiment</p><h2>{{ s.cat_title }}</h2></div></div>
-<div class="cats">{%- for b in section.blocks -%}{%- if b.type == 'category' -%}<a class="cat" href="{{ b.settings.url }}" {{ b.shopify_attributes }}><div class="es-cimg">{%- if b.settings.image != blank -%}<img src="{{ b.settings.image | image_url: width: 640 }}" alt="{{ b.settings.title | escape }}" loading="lazy">{%- endif -%}</div><div class="tx"><h3>{{ b.settings.title | escape | replace: 'Terrassenüberdachung', 'Terrassen&shy;überdachung' | replace: 'Stegplatten', 'Steg&shy;platten' }}</h3><p>{{ b.settings.text }}</p><span class="l">{{ b.settings.cta }} {{ ic_arrow }}</span></div></a>{%- endif -%}{%- endfor -%}</div>
+<div class="cats">{%- for b in section.blocks -%}{%- if b.type == 'category' -%}<a class="cat" href="{{ b.settings.url }}" {{ b.shopify_attributes }}><div class="es-cimg">{%- if b.settings.image != blank -%}<img src="{{ b.settings.image | image_url: width: 640 }}" alt="{{ b.settings.title | escape }}" loading="lazy">{%- endif -%}</div><div class="tx"><h3>{{ b.settings.title | escape }}</h3><p>{{ b.settings.text }}</p><span class="l">{{ b.settings.cta }} {{ ic_arrow }}</span></div></a>{%- endif -%}{%- endfor -%}</div>
 {%- if s.more_links != blank -%}<div class="more">{%- for l in linklists[s.more_links].links -%}<a href="{{ l.url }}">{{ l.title }}</a>{%- endfor -%}</div>{%- endif -%}
 </div>
 </section>

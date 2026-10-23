@@ -20,9 +20,9 @@ Stand: 23.10.2026. Dieser Ordner sichert die Arbeitsdateien. Maßgeblich ist der
 3. **Kategorieseiten:** SEO-Titel/-Beschreibung **live** für 9 Kollektionen; Metafelder `custom.intro`, `custom.seo_text`, `custom.seo_faq`; Section `es-collection-seo` in `collection.json` + `collection.stegplatten.json` (`theme/cat`). Texte: `content/kategorien`.
 4. **Ratgeber:** 6 Artikel als **Entwurf** mit SEO-Feldern, FAQ/HowTo-Metafeldern (`custom.seo_faq`, `custom.howto`); Section `es-article-faq` in `article.json` (`theme/art`). Alle 6 gemeinsam veröffentlichen (verlinken sich gegenseitig). Offene Fachfragen: `content/ratgeber/README.md`.
 
-## Lokal fertig, noch NICHT hochgeladen: `theme/v3` (7 Dateien)
+## Lokal fertig, noch NICHT hochgeladen: `theme/v3` (8 Dateien)
 
-Shopify-Verbindung war weg (Shop-Wechsel beim Lesen der TerrassenPost-Preise hat den Zugang zurückgesetzt). Tests grün: `tools/pdp_test.js` 57/57, `tools/guard_test.js` 12/12, `tools/led_test.js` 26/26 (Regression). Screenshots: `screenshots/pdp-390-*.png`, `pdp-1280-montage-offer.png`, `hero-390.png`.
+Shopify-Verbindung war weg (Shop-Wechsel beim Lesen der TerrassenPost-Preise hat den Zugang zurückgesetzt; Connector muss neu verbunden werden). Tests grün: `tools/pdp_test.js` 61/61, `tools/guard_test.js` 12/12, `tools/led_test.js` 26/26, `tools/shoot_home.js` 12/12 (Startseite: Hero beginnt mit dem Bild; alle Überschriften von 320 bis 1280 px einzeilig). Screenshots: `screenshots/pdp-390-*.png`, `pdp-1280-montage-offer.png`, `hero-390.png`, `screenshots/v3/home-*.png`.
 
 | Datei | Änderung |
 |---|---|
@@ -31,8 +31,9 @@ Shopify-Verbindung war weg (Shop-Wechsel beim Lesen der TerrassenPost-Preise hat
 | `snippets/es-pdp-css.liquid` | Styles für Montage, Panels, Formular, Druckansicht. |
 | `snippets/es-led-guard.liquid` | Wächter jetzt für LED **und** Montage (Handles in `ADD` + Liquid-Liste pflegen). |
 | `snippets/es-hero-konfig.liquid` | Zeile „Farbmuster bestellen · Angebot anfordern“ (Link übergibt Variante/LED + `angebot=1`). Neuer Parameter `mu`. |
-| `sections/es-landing.liquid` | Beleg 3 im Hero = Judge.me-Gesamtwertung („4,9 ★ aus 212 Bewertungen“ aus `shop.metafields.judgeme.all_reviews_*`, Fallback Text); Einstellung `muster_url`. |
-| `templates/index.json` | Trust-Leiste: „Zuschnitt millimetergenau – rechtwinklig, Kanten entgratet, Kammern staubfrei“; Farbmuster-Link im Finder; `muster_url`. |
+| `sections/es-landing.liquid` | **Hero beginnt mit dem Bild** (Kicker + H1 + Lead liegen auf dem Bild, Konfigurator rechts daneben, Belege darunter; mobil Bild → Konfigurator → Belege). Beleg 3 = Judge.me-Gesamtwertung („4,9 ★ aus 212 Bewertungen“ aus `shop.metafields.judgeme.all_reviews_*`, Fallback Text); Belege als Zeilen mit Haken. Kategorie-Titel ohne weiche Trennstriche. Einstellung `muster_url`. |
+| `snippets/es-landing-css.liquid` | Hero-Raster (Bild/Konfigurator/Belege), Bildüberlagerung; **Überschriften möglichst einzeilig:** Kachel-Titel/-Links skalieren mit der Kachelbreite (`cqi`), keine Silbentrennung; Belege als Zeilen (Titel `nowrap`, Zusatz rückt darunter); Hero-Tabs verteilen die Breite nach Beschriftung; Trust-Leiste ≤ 480 px einspaltig; H2 ≤ 380 px 22 px; Kacheln ≤ 359 px als Liste (Bild links). |
+| `templates/index.json` | Trust-Leiste: „Zuschnitt millimetergenau – rechtwinklig, Kanten entgratet, Kammern staubfrei“; Kacheln „Stegplatten“ / „Terrassendächer“, CTA „Nach Stärke“; Farbmuster-Link im Finder; `muster_url`. |
 
 **Upload:** `python3 tools/upload.py stage theme/v3` → stagedUploadsCreate → `put` → `upsert` → Job abwarten → `verify` (Manifest aus `theme/v3/new` erzeugen).
 
@@ -65,7 +66,10 @@ Shopify-Verbindung war weg (Shop-Wechsel beim Lesen der TerrassenPost-Preise hat
 
 - `upload.py` – `stage` / `put` / `upsert` / `verify`: Sammel-Upload über Staged Uploads mit MD5-Abgleich.
 - `v3_patch.py` – erzeugt `theme/v3/new` reproduzierbar aus `theme/v3/orig`.
-- `render_v3.py` – rendert Produktseite + Hero mit python-liquid und Beispieldaten nach `design-review/v3/` (Grundlage für Tests/Screenshots).
-- `pdp_test.js`, `guard_test.js`, `led_test.js` – Playwright-Funktionstests.
+- `mockdata.py` – Beispieldaten + Liquid-Umgebung (python-liquid) für das lokale Rendern.
+- `render_v3.py` – rendert Produktseite + Hero; `render_home.py` – rendert die Startseite (Hero, Trust-Leiste, Kategorien aus `index.json`) nach `design-review/v3/`.
+- `pdp_test.js`, `guard_test.js <snippets/es-led-guard.liquid>`, `led_test.js theme/v3/flat` – Playwright-Funktionstests; `shoot_home.js` – Startseiten-Geometrie + Umbruch-Report aller Überschriften (320–1280 px) + Screenshots; `measure_home.js` – misst einzeilige Textbreite gegen verfügbaren Platz.
+
+Aufruf (Playwright aus `/tmp`): `NODE_PATH=/opt/node-tools/node_modules node tools/<test>.js`.
 - `montage_product.py`, `localbusiness_patch.py` – siehe oben.
 - `cat_verify.py`, `art_verify.py`, `render_cat.py`, `shoot_*.js` – Kategorien/Ratgeber.

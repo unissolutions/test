@@ -5,7 +5,7 @@ import json, pathlib, re, shutil
 
 B = pathlib.Path('/tmp/claude-0/-home-user-test/beef7815-2c55-57f0-9ec2-48630e491a1b/scratchpad/theme/v3')
 FILES = ['sections/es-pdp-terrasse.liquid', 'sections/es-landing.liquid', 'snippets/es-pdp-js.liquid',
-         'snippets/es-pdp-css.liquid', 'snippets/es-hero-konfig.liquid', 'snippets/es-led-guard.liquid', 'templates/index.json']
+         'snippets/es-pdp-css.liquid', 'snippets/es-hero-konfig.liquid', 'snippets/es-led-guard.liquid', 'snippets/es-landing-css.liquid', 'templates/index.json']
 for f in FILES:
     shutil.copy(B / 'orig' / f, B / 'new' / f)
 
@@ -274,6 +274,151 @@ assert s.count("{% render 'es-hero-konfig', kc: kc, lz: s.lz_terrassen %}") == 2
 s = s.replace("{% render 'es-hero-konfig', kc: kc, lz: s.lz_terrassen %}", "{% render 'es-hero-konfig', kc: kc, lz: s.lz_terrassen, mu: s.muster_url %}")
 (B / 'new/sections/es-landing.liquid').write_text(s, encoding='utf-8')
 
+# ---------------------------------------------------------------- Startseite: Hero beginnt mit dem Bild, Kategorie-Titel ohne Trennstriche
+patch('sections/es-landing.liquid', [
+    ("""<section class="hero" data-screen-label="Hero">
+<div class="c">
+<div>
+{%- if s.kicker != blank -%}<p class="k">{{ s.kicker }}</p>{%- endif -%}
+<h1>{{ s.hero_title }}</h1>
+{%- if s.hero_text != blank -%}<p class="lead">{{ s.hero_text }}</p>{%- endif -%}
+{%- assign kh""",
+     """<section class="hero" data-screen-label="Hero">
+<div class="c">
+<div class="hv">
+{%- if s.hero_image != blank -%}<img class="hv__img" src="{{ s.hero_image | image_url: width: 1400 }}" srcset="{{ s.hero_image | image_url: width: 700 }} 700w, {{ s.hero_image | image_url: width: 1000 }} 1000w, {{ s.hero_image | image_url: width: 1400 }} 1400w" sizes="(max-width:999px) 100vw, 660px" alt="{{ s.hero_image.alt | default: s.hero_title | escape }}" width="{{ s.hero_image.width | default: 1400 }}" height="{{ s.hero_image.height | default: 1050 }}" fetchpriority="high">{%- endif -%}
+<div class="hv__tx">
+{%- if s.kicker != blank -%}<p class="k">{{ s.kicker }}</p>{%- endif -%}
+<h1>{{ s.hero_title }}</h1>
+{%- if s.hero_text != blank -%}<p class="lead">{{ s.hero_text }}</p>{%- endif -%}
+</div>
+</div>
+<div class="hc">
+{%- assign kh"""),
+    ("""{% render 'es-hero-konfig', kc: kc, lz: s.lz_terrassen, mu: s.muster_url %}
+{%- endif -%}
+</div>
+<div>
+{%- if s.hero_image != blank -%}<img src="{{ s.hero_image | image_url: width: 1200 }}" srcset="{{ s.hero_image | image_url: width: 700 }} 700w, {{ s.hero_image | image_url: width: 1200 }} 1200w" sizes="(max-width:1000px) 100vw, 600px" alt="{{ s.hero_image.alt | default: s.hero_title | escape }}" fetchpriority="high">{%- endif -%}
+<div class="proof">""",
+     """{% render 'es-hero-konfig', kc: kc, lz: s.lz_terrassen, mu: s.muster_url %}
+{%- endif -%}
+</div>
+<div class="proof">"""),
+    ("""
+</div>
+</div>
+</section>
+<section class="trust" data-screen-label="Vertrauen">""",
+     """
+</div>
+</section>
+<section class="trust" data-screen-label="Vertrauen">"""),
+    ("""<h3>{{ b.settings.title | escape | replace: 'Terrassenüberdachung', 'Terrassen&shy;überdachung' | replace: 'Stegplatten', 'Steg&shy;platten' }}</h3>""",
+     """<h3>{{ b.settings.title | escape }}</h3>"""),
+])
+
+patch('snippets/es-landing-css.liquid', [
+    ("""/* Hero */
+.esl .hero{border-bottom:1px solid var(--ln)}
+.esl .hero .c{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:48px;align-items:start;padding-top:32px;padding-bottom:48px}
+.esl .hero img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;border:1px solid var(--ln)}
+.esl .proof{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--ln);border-top:none;background:#fff}""",
+     """/* Hero: Bild zuerst (Überschrift auf dem Bild), daneben der Konfigurator; mobil Bild → Konfigurator → Belege */
+.esl .hero{border-bottom:1px solid var(--ln)}
+.esl .hero .c{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);grid-template-rows:minmax(0,1fr) auto;grid-template-areas:"hv hc" "proof hc";gap:0 48px;align-items:start;padding-top:24px;padding-bottom:48px}
+.esl .hv{grid-area:hv;position:relative;align-self:stretch;min-height:440px;display:flex;flex-direction:column;justify-content:flex-end;background:var(--ink);border:1px solid var(--ln);overflow:hidden}
+.esl .hv__img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.esl .hv__tx{position:relative;padding:140px 28px 28px;background:linear-gradient(180deg,rgba(27,31,29,0) 0%,rgba(27,31,29,.55) 40%,rgba(27,31,29,.9) 100%)}
+.esl .hv__tx .k{color:#A9DBBE;margin-bottom:8px}
+.esl .hv__tx h1{color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.35)}
+.esl .hv__tx .lead{color:rgba(255,255,255,.92);margin-top:10px;text-shadow:0 1px 2px rgba(0,0,0,.35)}
+.esl .hc{grid-area:hc;min-width:0}
+.esl .proof{grid-area:proof;display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--ln);border-top:none;background:#fff}"""),
+    (".esl .ehx{margin-top:24px}", ".esl .ehx{margin-top:0}"),
+    (".esl .cat{display:flex;flex-direction:column;min-width:0;border:1px solid var(--ln);",
+     ".esl .cat{display:flex;flex-direction:column;min-width:0;container-type:inline-size;border:1px solid var(--ln);"),
+    (".esl .cat h3{font-weight:800;line-height:1.25;hyphens:auto;-webkit-hyphens:auto;overflow-wrap:anywhere}",
+     "/* Titel/Link skalieren mit der Kachelbreite, damit sie möglichst einzeilig bleiben; keine Silbentrennung */\n.esl .cat h3{font-weight:800;line-height:1.25;font-size:clamp(14px,6.4cqi,18px);hyphens:manual;-webkit-hyphens:manual;overflow-wrap:normal;text-wrap:balance}"),
+    (".esl .cat .l{margin-top:auto;padding-top:8px;font-weight:700;color:var(--g6);display:inline-flex;gap:6px;align-items:center;font-size:15px;white-space:nowrap}",
+     ".esl .cat .l{margin-top:auto;padding-top:8px;font-weight:700;color:var(--g6);display:inline-flex;gap:6px;align-items:center;font-size:clamp(13px,5.6cqi,15px);white-space:nowrap}"),
+    (""".esl .hero .c{grid-template-columns:1fr;gap:24px}
+.esl .cats,.esl .steps,.esl .prods{grid-template-columns:repeat(2,minmax(0,1fr))}""",
+     """.esl .hero .c{grid-template-columns:1fr;grid-template-rows:auto;grid-template-areas:"hv" "hc" "proof";gap:20px 0}
+.esl .hv{min-height:0;aspect-ratio:3/2;align-self:auto}
+.esl .hv__tx{padding:80px 20px 20px}
+.esl .cats,.esl .steps,.esl .prods{grid-template-columns:repeat(2,minmax(0,1fr))}"""),
+    (""".esl .hero .c{padding-top:12px;padding-bottom:24px;gap:20px}
+.esl .hero .k,.esl .lead{display:none}
+.esl .hero .c>div:last-child{margin:0 -16px}
+.esl .hero img{aspect-ratio:16/10;border-left:0;border-right:0}
+.esl .proof{border-left:0;border-right:0}""",
+     """.esl .hero .c{padding-top:0;padding-bottom:24px;gap:16px 0}
+.esl .hv{margin:0 -16px;border-left:0;border-right:0;aspect-ratio:4/3}
+.esl .hv__tx{padding:56px 16px 16px}
+.esl .hv__tx .lead{display:none}
+.esl .proof{border-left:0;border-right:0;margin:0 -16px}"""),
+    (".esl .ehx{margin:12px -16px 0}", ".esl .ehx{margin:0 -16px}"),
+    (""".esl .cat h3{font-size:15px;min-height:2.5em}
+.esl .cat .l{font-size:14px;gap:4px;white-space:normal;line-height:1.3}""",
+     """.esl .cat .l{gap:4px}"""),
+])
+
+# ---------------------------------------------------------------- Startseite: Überschriften möglichst einzeilig (Belege, Tabs, Trust-Leiste, H2, Kacheln ≤ 359 px)
+patch('sections/es-landing.liquid', [
+    ("""<div class="proof"><div><b>{{ s.proof1_t }}</b>{{ s.proof1_s }}</div><div><b>{{ s.proof2_t }}</b>{{ s.proof2_s }}</div>""",
+     """<div class="proof"><div>{{ ic_check }}<b>{{ s.proof1_t }}</b><span>{{ s.proof1_s }}</span></div><div>{{ ic_check }}<b>{{ s.proof2_t }}</b><span>{{ s.proof2_s }}</span></div>"""),
+    ("""<div>{%- if jc > 0 -%}<b>{{ jr | replace: '.', ',' }} ★ aus {{ jc }} Bewertungen</b>{%- else -%}<b>{{ s.proof3_t }}</b>{%- endif -%}{{ s.proof3_s }}</div></div>""",
+     """<div>{{ ic_check }}{%- if jc > 0 -%}<b>{{ jr | replace: '.', ',' }} ★ aus {{ jc }} Bewertungen</b>{%- else -%}<b>{{ s.proof3_t }}</b>{%- endif -%}<span>{{ s.proof3_s }}</span></div></div>"""),
+])
+
+patch('snippets/es-landing-css.liquid', [
+    # Belege: Zeilen statt drei schmaler Spalten – der Titel bleibt immer einzeilig, der Zusatz rückt bei Platzmangel darunter
+    (""".esl .proof{grid-area:proof;display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--ln);border-top:none;background:#fff}
+.esl .proof div{padding:14px 16px;border-right:1px solid var(--ln);font-size:14px;line-height:1.4;color:var(--mu)}
+.esl .proof div:last-child{border-right:none}
+.esl .proof b{display:block;color:var(--ink);font-size:15px;margin-bottom:2px}""",
+     """.esl .proof{grid-area:proof;display:grid;grid-template-columns:1fr;border:1px solid var(--ln);border-top:none;background:#fff}
+.esl .proof div{display:flex;flex-wrap:wrap;align-items:baseline;gap:0 8px;padding:9px 16px;border-bottom:1px solid var(--ln);font-size:14px;line-height:1.4;color:var(--mu)}
+.esl .proof div:last-child{border-bottom:none}
+.esl .proof svg{color:var(--g);flex:none;width:16px;height:16px;align-self:center;margin-right:2px}
+.esl .proof b{display:inline;white-space:nowrap;color:var(--ink);font-size:15px}"""),
+    (""".esl .proof{border-left:0;border-right:0;margin:0 -16px}
+.esl .proof div{padding:10px 8px;font-size:12px;line-height:1.35}
+.esl .proof b{font-size:13px;line-height:1.25}""",
+     """.esl .proof{border-left:0;border-right:0;margin:0 -16px}
+.esl .proof div{padding:8px 16px;font-size:13px;line-height:1.35}
+.esl .proof b{font-size:14px}"""),
+    # Tabs: Breite nach Beschriftung verteilen, damit „Terrassendach konfigurieren" auch bei 1000–1100 px und auf Handys einzeilig bleibt
+    (""".esl .ehx__tabs{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--ln);border-bottom:0;background:var(--bg2)}
+.esl .ehx__tab{display:flex;flex-direction:column;""",
+     """.esl .ehx__tabs{display:flex;border:1px solid var(--ln);border-bottom:0;background:var(--bg2)}
+.esl .ehx__tab{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;"""),
+    (".esl .ehx__tab small{font-size:12px;font-weight:500;color:var(--mu)}",
+     ".esl .ehx__tab small{display:block;width:0;min-width:100%;font-size:12px;font-weight:500;color:var(--mu)}"),
+    (".esl .ehx__tab{padding:8px 12px;font-size:14px}.esl .ehx__tab small{display:none}",
+     ".esl .ehx__tab{padding:8px 10px;font-size:14px;align-items:center;text-align:center}.esl .ehx__tab small{display:none}"),
+    # Trust-Leiste auf Handys einspaltig (Titel nowrap, Zusatz daneben oder darunter); H2 und Kacheln bei sehr schmalen Geräten
+    ("@media(max-width:380px){.esl h1{font-size:24px}}",
+     """@media(max-width:480px){
+.esl .trust .c{grid-template-columns:1fr}
+.esl .trust .c>div{padding:10px 16px}
+.esl .trust span{display:flex;flex-wrap:wrap;align-items:baseline;gap:0 8px}
+.esl .trust b{white-space:nowrap}
+.esl .trust span span{margin-top:0}
+}
+@media(max-width:380px){.esl h1{font-size:24px}.esl h2{font-size:22px}}
+@media(max-width:359px){
+.esl .ehx__tab{font-size:13px;padding:8px 6px}
+.esl .cats{grid-template-columns:1fr;gap:10px}
+.esl .cat{flex-direction:row}
+.esl .cat .es-cimg{width:104px;flex:none;aspect-ratio:auto;border-bottom:0;border-right:1px solid var(--ln)}
+.esl .cat .tx{justify-content:center;gap:4px;padding:10px 12px}
+.esl .cat h3{font-size:16px}
+.esl .cat .l{margin-top:0;padding-top:2px;font-size:14px}
+}"""),
+])
+
 # ---------------------------------------------------------------- index.json: Trust-Text, Farbmuster
 p = B / 'new/templates/index.json'
 raw = p.read_text(encoding='utf-8')
@@ -282,6 +427,9 @@ d = json.loads(raw[len(head):])
 L = d['sections']['es_landing']
 L['blocks']['t2']['settings'] = {'title': 'Zuschnitt millimetergenau', 'text': 'rechtwinklig, Kanten entgratet, Kammern staubfrei'}
 L['settings']['muster_url'] = '/products/farbmuster'
+L['blocks']['c1']['settings'].update({'title': 'Stegplatten', 'text': 'Doppelstegplatten 4,5–16 mm, Polycarbonat oder Acrylglas – millimetergenau zugeschnitten.'})
+L['blocks']['c2']['settings']['title'] = 'Terrassendächer'
+L['blocks']['c4']['settings']['cta'] = 'Nach Stärke'
 L['settings']['fin_alt'] = L['settings']['fin_alt'].replace('</p>', ' · Unsicher bei der Farbe? <a href="/products/farbmuster">Farbmuster bestellen</a></p>')
 p.write_text(head + json.dumps(d, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
 

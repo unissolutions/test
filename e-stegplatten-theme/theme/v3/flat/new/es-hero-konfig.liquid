@@ -1,0 +1,119 @@
+{%- comment -%}e-Stegplatten: Hero-Konfigurator Terrassendach (Rahmen, Eindeckung, Breite, Tiefe, LED → Preis → Produkt mit Variante). Parameter: kc (Kollektion mit den Geschwister-Produkten), lz (Lieferzeit-Text), mu (Link Farbmuster, optional). Zweite Zeile unter dem Preis: Farbmuster + Angebot anfordern (öffnet das Angebotsformular der Produktseite). Hero-Layout/Reihenfolge: snippets/es-landing-css.{%- endcomment -%}
+{%- liquid
+  assign dw = '5,00 Meter'
+  assign dd = '3,00 Meter'
+  assign p0 = kc.products.first
+  for p in kc.products
+    if p.title contains 'Weiß Alu' or p.title contains 'Alu weiß' or p.title contains 'Alu Weiß'
+      continue
+    endif
+    if p.title contains 'opal' or p.title contains 'graphit'
+      continue
+    endif
+    assign p0 = p
+    break
+  endfor
+  assign wi = 0
+  assign di = 1
+  for o in p0.options_with_values
+    if o.name == 'Breite'
+      assign wi = forloop.index0
+    elsif o.name == 'Tiefe' or o.name == 'Länge'
+      assign di = forloop.index0
+    endif
+  endfor
+  assign v0 = nil
+  for x in p0.variants
+    if x.options[wi] == dw and x.options[di] == dd
+      assign v0 = x
+    endif
+  endfor
+  if v0 == nil
+    assign v0 = p0.selected_or_first_available_variant
+    assign dw = v0.options[wi]
+    assign dd = v0.options[di]
+  endif
+  assign aw = dw | remove: ' Meter' | replace: ',', '.' | times: 1.0
+  assign ad = dd | remove: ' Meter' | replace: ',', '.' | times: 1.0
+  assign area = aw | times: ad
+  assign lw = dw | remove: ',00' | replace: ',50', ',5' | replace: ' Meter', ' m'
+  assign ld = dd | remove: ',00' | replace: ',50', ',5' | replace: ' Meter', ' m'
+  assign led = all_products['led-spots-terrassenueberdachung']
+-%}
+{%- if p0 != blank -%}
+<style>
+.esl .ehk{margin-top:24px;background:#fff;border:1px solid var(--ln,#DCE3DE);padding:16px 24px 20px;color:var(--tx,#272D2A);container-type:inline-size}
+.esl .ehk__row2{display:grid;grid-template-columns:minmax(0,1fr);gap:0 12px}
+@container (min-width:520px){.esl .ehk__row2{grid-template-columns:minmax(0,2fr) minmax(0,3fr)}}
+.esl .ehk__o{margin:0 0 12px}
+.esl .ehk__l{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin:0 0 8px;font-size:15px}.esl .ehk__l b{color:var(--ink,#1B1F1D);font-weight:700}.esl .ehk__l span{color:var(--mu,#5E6863);font-size:13px;text-align:right}
+.esl .ehk__p{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:8px}
+.esl .ehk .ehk__pill{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:var(--es-h-m,48px);min-width:0;padding:0 8px;margin:0;border:1px solid var(--ln2,#C9CFCB);background:#fff;color:var(--ink,#1B1F1D);font:inherit;font-weight:600;font-size:15px;line-height:1.2;cursor:pointer;white-space:nowrap;transition:border-color .12s,background .12s}
+.esl .ehk .ehk__pill:hover{border-color:var(--ink,#1B1F1D)}
+.esl .ehk .ehk__pill.is-on{border-color:var(--g,#338258);box-shadow:inset 0 0 0 1px var(--g,#338258);background:var(--gl,#E8F2EC)}
+.esl .ehk .ehk__pill.is-na{color:#8C9792;text-decoration:line-through}
+.esl .ehk .ehk__dot{width:16px;height:16px;border:1px solid #9AA39E;flex:none}
+.esl .ehk .ehk__dot--a{background:#33383B;border-color:#33383B}.esl .ehk .ehk__dot--w{background:#fff}
+.esl .ehk .ehk__sw{width:16px;height:16px;border:1px solid #AEB7B2;flex:none}
+.esl .ehk .ehk__sw--klar{background:linear-gradient(135deg,#F3F8FC,#CFE2F0)}.esl .ehk .ehk__sw--opal{background:linear-gradient(135deg,#fff,#E4E6E4)}.esl .ehk .ehk__sw--graphit{background:linear-gradient(135deg,#6E747A,#34393D);border-color:#34393D}
+.esl .ehk__ft{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;border-top:1px solid var(--ln,#DCE3DE);padding-top:18px;margin-top:4px}
+.esl .ehk__price{font-stretch:125%;font-weight:800;font-size:clamp(32px,3vw,40px);line-height:1.05;color:var(--ink,#1B1F1D);letter-spacing:-.01em}
+.esl .ehk__sub{font-size:13px;color:var(--mu,#5E6863);margin-top:6px}
+.esl .ehk__lz{font-size:13px;color:var(--mu,#5E6863);margin-top:2px}.esl .ehk__lz b{color:var(--g6,#2A6C49);font-weight:700}
+.esl .ehk .ehk__go{display:inline-flex;align-items:center;justify-content:center;height:var(--es-h-l,56px);padding:0 24px;background:var(--g,#338258);color:#fff!important;font-weight:700;font-size:17px;text-decoration:none!important;transition:background .12s;white-space:nowrap}
+.esl .ehk .ehk__go:hover{background:var(--g6,#2A6C49)}
+.esl .ehk__alt{font-size:13px;color:var(--mu,#5E6863);margin:14px 0 0}.esl .ehk__alt+.ehk__alt{margin-top:6px}.esl .ehk__alt a{font-weight:700;color:var(--g6,#2A6C49)}
+@media(max-width:749px){
+.esl .ehk{margin-top:16px;padding:16px}
+.esl .ehk__p{gap:6px}
+.esl .ehk .ehk__pill{min-height:44px;padding:0 4px;font-size:14px;gap:6px;letter-spacing:-.01em}
+.esl .ehk__l{font-size:14px;margin-bottom:4px}.esl .ehk__l span{font-size:12px}
+.esl .ehk__o{margin-bottom:8px}
+.esl .ehk__row2 .ehk__o{display:grid;grid-template-columns:96px minmax(0,1fr);align-items:center;gap:8px}.esl .ehk__row2 .ehk__l{margin:0}
+.esl .ehk__ft{flex-direction:column;align-items:stretch;gap:10px;padding-top:12px}
+.esl .ehk__price{font-size:32px}
+.esl .ehk .ehk__go{padding:0 16px}
+}
+@media(max-width:380px){.esl .ehk{padding:12px}.esl .ehk__row2 .ehk__o{grid-template-columns:92px minmax(0,1fr)}.esl .ehk__row2 .ehk__l{font-size:13px}.esl .ehk__p{gap:4px}.esl .ehk .ehk__pill{font-size:13px;gap:4px}.esl .ehk .ehk__dot,.esl .ehk .ehk__sw{width:14px;height:14px}}
+</style>
+<div class="ehk" data-ehk>
+<div class="ehk__row2">
+<div class="ehk__o"><div class="ehk__l"><b>Rahmenfarbe</b></div><div class="ehk__p"><button type="button" class="ehk__pill is-on" data-f="Anthrazit"><i class="ehk__dot ehk__dot--a"></i>Anthrazit</button><button type="button" class="ehk__pill" data-f="Weiß"><i class="ehk__dot ehk__dot--w"></i>Weiß</button></div></div>
+<div class="ehk__o"><div class="ehk__l"><b>Eindeckung</b></div><div class="ehk__p"><button type="button" class="ehk__pill is-on" data-c="Klar"><i class="ehk__sw ehk__sw--klar"></i>Klar</button><button type="button" class="ehk__pill" data-c="Opal"><i class="ehk__sw ehk__sw--opal"></i>Opal</button><button type="button" class="ehk__pill" data-c="Graphit"><i class="ehk__sw ehk__sw--graphit"></i>Graphit</button></div></div>
+</div>
+<div class="ehk__o"><div class="ehk__l"><b>Breite</b><span>entlang der Hauswand</span></div><div class="ehk__p">{%- for val in p0.options_with_values[wi].values -%}<button type="button" class="ehk__pill{% if val == dw %} is-on{% endif %}" data-w="{{ val | escape }}">{{ val | remove: ',00' | replace: ',50', ',5' | replace: ' Meter', ' m' }}</button>{%- endfor -%}</div></div>
+<div class="ehk__o"><div class="ehk__l"><b>Tiefe</b><span>von der Wand nach vorn</span></div><div class="ehk__p">{%- for val in p0.options_with_values[di].values -%}<button type="button" class="ehk__pill{% if val == dd %} is-on{% endif %}" data-d="{{ val | escape }}">{{ val | remove: ',00' | replace: ',50', ',5' | replace: ' Meter', ' m' }}</button>{%- endfor -%}</div></div>
+{%- if led.id != blank and led.available -%}<div class="ehk__o"><div class="ehk__l"><b>LED-Spots</b><span data-klp>vormontiert, optional</span></div><div class="ehk__p"><button type="button" class="ehk__pill is-on" data-led="0" data-lc="0">Ohne</button>{%- for lv in led.variants -%}{%- if lv.available -%}{%- assign lcnt = lv.title | split: 'er' | first | strip -%}<button type="button" class="ehk__pill" data-led="{{ lcnt }}" data-lc="{{ lv.price }}">{{ lcnt }}er</button>{%- endif -%}{%- endfor -%}</div></div>{%- endif -%}
+<div class="ehk__ft"><div><div class="ehk__price" data-kp>{{ v0.price | money_without_currency }} €</div><div class="ehk__sub"><span data-ks>{%- if area > 0 -%}{%- assign sqm = v0.price | divided_by: area | round -%}{{ sqm | money_without_currency }} €/m²{%- endif -%}</span> · inkl. MwSt., zzgl. Versand</div><div class="ehk__lz">Lieferzeit <b>{{ lz | default: 'ca. 10–40 Werktage' }}</b></div></div><a class="ehk__go" data-kgo href="{{ p0.url }}?variant={{ v0.id }}">Weiter mit <span data-kl>&nbsp;{{ lw }} × {{ ld }}</span></a></div>
+<p class="ehk__alt">{%- if mu != blank -%}Unsicher bei der Farbe? <a href="{{ mu }}">Farbmuster bestellen</a> · {% endif -%}Lieber ein persönliches Angebot? <a data-kao href="{{ p0.url }}?variant={{ v0.id }}&amp;angebot=1">Angebot anfordern</a></p>
+<p class="ehk__alt">Nur Platten gesucht? <a href="/collections/doppelstegplatten">Stegplatten nach Stärke</a> · <a href="/collections/doppelstegplatten-komplettset-dachhaut">Komplettsets</a></p>
+<script type="application/json" data-k-json>[{%- for p in kc.products -%}{%- liquid
+  assign sf = 'Anthrazit'
+  if p.title contains 'Weiß Alu' or p.title contains 'Alu weiß' or p.title contains 'Alu Weiß'
+    assign sf = 'Weiß'
+  endif
+  assign sc = 'Klar'
+  if p.title contains 'opal'
+    assign sc = 'Opal'
+  elsif p.title contains 'graphit'
+    assign sc = 'Graphit'
+  endif
+-%}{"f":{{ sf | json }},"c":{{ sc | json }},"u":{{ p.url | json }},"v":{ {%- for x in p.variants -%}{{ x.options[wi] | append: '|' | append: x.options[di] | json }}:[{{ x.id }},{{ x.price }},{{ x.available }}]{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%} }}{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%}]</script>
+</div>
+<script>(function(){var R=document.querySelector('[data-ehk]');if(!R)return;var P=JSON.parse(R.querySelector('[data-k-json]').textContent),st={f:'Anthrazit',c:'Klar',w:{{ dw | json }},d:{{ dd | json }},l:'0',lc:0};
+function n(s){var m=String(s).match(/[0-9]+(?:[.,][0-9]+)?/);return m?parseFloat(m[0].replace(',','.')):0}
+function eur(c){return (c/100).toLocaleString('de-DE',{minimumFractionDigits:2,maximumFractionDigits:2})+' €'}
+function lb(s){return s.replace(',00','').replace(',50',',5').replace(' Meter',' m')}
+function pr(f,c){for(var i=0;i<P.length;i++)if(P[i].f===f&&P[i].c===c)return P[i];return null}
+var kp=R.querySelector('[data-kp]'),ks=R.querySelector('[data-ks]'),go=R.querySelector('[data-kgo]'),kl=R.querySelector('[data-kl]'),kao=R.querySelector('[data-kao]');
+function upd(){var p=pr(st.f,st.c);
+R.querySelectorAll('[data-f]').forEach(function(b){b.classList.toggle('is-on',b.dataset.f===st.f)});
+R.querySelectorAll('[data-c]').forEach(function(b){b.classList.toggle('is-on',b.dataset.c===st.c);b.classList.toggle('is-na',!pr(st.f,b.dataset.c))});
+R.querySelectorAll('[data-w]').forEach(function(b){b.classList.toggle('is-on',b.dataset.w===st.w)});
+R.querySelectorAll('[data-d]').forEach(function(b){var v=p&&p.v[st.w+'|'+b.dataset.d];b.classList.toggle('is-on',b.dataset.d===st.d);b.classList.toggle('is-na',!(v&&v[2]))});
+R.querySelectorAll('[data-led]').forEach(function(b){b.classList.toggle('is-on',b.dataset.led===st.l)});var lp=R.querySelector('[data-klp]');if(lp)lp.textContent=st.lc?'+ '+eur(st.lc)+' · vormontiert':'vormontiert, optional';
+var v=p&&p.v[st.w+'|'+st.d];kl.textContent=' '+lb(st.w)+' × '+lb(st.d);
+if(v){kp.textContent=eur(v[1]+st.lc);var a=n(st.w)*n(st.d);ks.textContent=(a?eur(Math.round(v[1]/a))+'/m²'+(st.lc?' Dach':''):'')+(st.lc?' · inkl. LED-Spots':'');go.setAttribute('href',p.u+'?variant='+v[0]+(st.l!=='0'?'&led='+st.l:''));if(kao)kao.setAttribute('href',p.u+'?variant='+v[0]+(st.l!=='0'?'&led='+st.l:'')+'&angebot=1')}else{kp.textContent='–';ks.textContent='Maß auf Anfrage';go.setAttribute('href',p?p.u:'/collections/terrassenuberdachung');if(kao)kao.setAttribute('href',(p?p.u:'/collections/terrassenuberdachung')+'?angebot=1')}
+try{localStorage.setItem('es-sz',JSON.stringify([st.w,st.d]))}catch(e){}}
+R.addEventListener('click',function(e){var b=e.target.closest('button');if(!b||!R.contains(b))return;['f','c','w','d'].forEach(function(k){if(b.dataset[k]!==undefined)st[k]=b.dataset[k]});if(b.dataset.led!==undefined){st.l=b.dataset.led;st.lc=+b.dataset.lc||0}upd()});upd()})();</script>
+{%- endif -%}

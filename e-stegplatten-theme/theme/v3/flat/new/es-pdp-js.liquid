@@ -1,0 +1,91 @@
+{%- comment -%}e-Stegplatten: Daten + Logik der Terrassendach-Produktseite (Sticky-Bar erst, wenn der Preis aus dem Bild ist und der Warenkorb-Button nicht sichtbar ist; Montage mit PLZ-Prüfung; Angebot/Teilen-Panels){%- endcomment -%}
+<script type="application/json" data-v-json>[{%- for x in p.variants -%}[{{ x.options[wi] | json }},{{ x.options[di] | json }},{{ x.id }},{{ x.price }},{{ x.compare_at_price | default: 0 }},{{ x.available }},{{ x.sku | json }}]{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%}]</script>
+<script type="application/json" data-sib-json>[{%- for sp in sib_col.products -%}{%- assign kv = pl[forloop.index0] | split: '>' -%}{"k":{{ kv[0] | json }},"u":{{ sp.url | json }},"v":{ {%- for sv in sp.variants -%}{{ sv.options[wi] | append: '|' | append: sv.options[di] | json }}:{{ sv.id }}{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%} }}{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%}]</script>
+{%- if mo_on -%}<script type="application/json" data-mo-json>{"zones":{{ marea | default: '' | json }},"v":{ {%- for mv in mo.variants -%}{{ mv.options[mwi] | append: '|' | append: mv.options[mdi] | append: '|' | append: mv.options[mli] | json }}:[{{ mv.id }},{{ mv.price }},{{ mv.available }}]{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%} }}</script>{%- endif -%}
+<script>(function(){
+var R=document.getElementById('es-pdp-{{ sid }}');if(!R)return;
+function q(s){return R.querySelector(s)}function qa(s){return Array.prototype.slice.call(R.querySelectorAll(s))}
+var V=JSON.parse(q('[data-v-json]').textContent),S=[];try{S=JSON.parse(q('[data-sib-json]').textContent)}catch(e){}
+var TT={{ p.title | json }},FR={{ frame | json }},CV={{ cover | json }},st={w:{{ cw | json }},d:{{ cd | json }}};
+var FILL={Klar:'#D4E5F1',Opal:'#F3F4F2',Graphit:'#6B7177'},LINE={Anthrazit:'#3B4043','Weiß':'#A9B1B4'};
+function n(s){var m=String(s).match(/[0-9]+(?:[.,][0-9]+)?/);return m?parseFloat(m[0].replace(',','.')):0}
+function eur(c){return (c/100).toLocaleString('de-DE',{minimumFractionDigits:2,maximumFractionDigits:2})+' €'}
+function dm(x){return x.toLocaleString('de-DE',{minimumFractionDigits:2,maximumFractionDigits:2})}
+function sm(x){return x.toLocaleString('de-DE',{maximumFractionDigits:2})}
+function cur(){for(var i=0;i<V.length;i++)if(V[i][0]===st.w&&V[i][1]===st.d)return V[i];return null}
+function plan(w,d){var g=q('[data-plan]');if(!g)return;var s=30,W=w*s,D=d*s,x=(440-W)/2,y=36,k=Math.max(2,Math.round(w/0.98)),c=LINE[FR]||'#3B4043',G='#338258',h='';
+h+='<text x="220" y="14" text-anchor="middle" font-size="11" fill="#6B7570">Hauswand</text><rect x="'+(x-36)+'" y="22" width="'+(W+72)+'" height="6" fill="#BCC4BF"/>';
+h+='<rect x="'+x+'" y="'+y+'" width="'+W+'" height="'+D+'" fill="'+(FILL[CV]||'#D4E5F1')+'" stroke="'+c+'" stroke-width="2.5"/>';
+for(var i=1;i<k;i++){var lx=(x+W*i/k).toFixed(1);h+='<line x1="'+lx+'" y1="'+y+'" x2="'+lx+'" y2="'+(y+D)+'" stroke="'+c+'" stroke-opacity=".45" stroke-width="1.5"/>'}
+h+='<rect x="'+(x-3)+'" y="'+(y+D-4)+'" width="8" height="8" fill="'+c+'"/><rect x="'+(x+W-5)+'" y="'+(y+D-4)+'" width="8" height="8" fill="'+c+'"/>';
+var by=y+D+22,rx=x+W+20;
+h+='<path d="M'+x+' '+by+'H'+(x+W)+'M'+x+' '+(by-6)+'V'+(by+6)+'M'+(x+W)+' '+(by-6)+'V'+(by+6)+'" stroke="'+G+'" stroke-width="1.5" fill="none"/><text x="'+(x+W/2)+'" y="'+(by+20)+'" text-anchor="middle" font-size="13" font-weight="700" fill="#1B1F1D">'+dm(w)+' m</text>';
+h+='<path d="M'+rx+' '+y+'V'+(y+D)+'M'+(rx-6)+' '+y+'H'+(rx+6)+'M'+(rx-6)+' '+(y+D)+'H'+(rx+6)+'" stroke="'+G+'" stroke-width="1.5" fill="none"/><text x="'+(rx+12)+'" y="'+(y+D/2+4)+'" font-size="13" font-weight="700" fill="#1B1F1D">'+dm(d)+' m</text>';
+g.setAttribute('viewBox','0 0 440 '+(by+30));g.innerHTML=h;var l=q('[data-plan-l]');if(l)l.textContent=sm(w)+' m × '+sm(d)+' m = '+sm(w*d)+' m²'}
+var btn=q('[data-atc]'),spr=q('[data-sticky-price]'),idIn=q('[data-id]');
+function tot(){var x=cur();if(!x)return;var qty=Math.max(1,parseInt(qi.value,10)||1),s=x[3]*qty,ex=0;qa('[data-addon]').forEach(function(c){if(c.checked)ex+=(+c.dataset.cents||0)*((c.dataset.led||c.dataset.per)?qty:1)});var t=q('[data-tot]');if(t){t.hidden=!ex;if(ex)q('[data-tot-v]').textContent=eur(s+ex)}if(spr)spr.textContent=eur(s+ex);fill()}
+function upd(push){var x=cur();
+qa('[data-w]').forEach(function(b){var on=b.dataset.w===st.w;b.classList.toggle('is-on',on);b.setAttribute('aria-pressed',on)});
+qa('[data-d]').forEach(function(b){var on=b.dataset.d===st.d;b.classList.toggle('is-on',on);b.setAttribute('aria-pressed',on);b.classList.toggle('is-na',!V.some(function(y){return y[0]===st.w&&y[1]===b.dataset.d&&y[5]}))});
+if(x){q('[data-price]').textContent=eur(x[3]);var a=n(x[0])*n(x[1]);q('[data-sqm]').textContent=a?eur(Math.round(x[3]/a))+'/m²':'';idIn.value=x[2];
+var ok=!!x[6]&&x[6].indexOf('-')>-1&&x[6].length<30;q('[data-sku-wrap]').hidden=!ok;if(ok)q('[data-sku]').textContent=x[6];
+var sk=q('[data-stock]');sk.classList.toggle('is-out',!x[5]);sk.querySelector('b').textContent=x[5]?'Auf Lager':'Derzeit nicht verfügbar';
+btn.disabled=!x[5];btn.textContent=x[5]?'In den Warenkorb':'Nicht verfügbar';moUpd();tot();
+if(push&&history.replaceState){var u=new URL(location.href);u.searchParams.set('variant',x[2]);history.replaceState(history.state,'',u.toString())}}
+else{btn.disabled=true;btn.textContent='Maß nicht lieferbar'}
+qa('[data-sib]').forEach(function(el){for(var i=0;i<S.length;i++)if(S[i].k===el.dataset.sib){var id=S[i].v[st.w+'|'+st.d];el.setAttribute('href',S[i].u+(id?'?variant='+id:''));break}});
+plan(n(st.w),n(st.d))}
+qa('[data-w]').forEach(function(b){b.addEventListener('click',function(){st.w=b.dataset.w;upd(true)})});
+qa('[data-d]').forEach(function(b){b.addEventListener('click',function(){st.d=b.dataset.d;upd(true)})});
+var tr=q('[data-track]'),th=qa('[data-th]'),ct=q('[data-count]');
+if(tr){th.forEach(function(t){t.addEventListener('click',function(){tr.scrollTo({left:tr.clientWidth*(+t.dataset.th),behavior:'smooth'})})});var tk;tr.addEventListener('scroll',function(){cancelAnimationFrame(tk);tk=requestAnimationFrame(function(){var i=Math.round(tr.scrollLeft/tr.clientWidth);th.forEach(function(t){t.classList.toggle('is-on',+t.dataset.th===i)});if(ct)ct.textContent=(i+1)+' / '+tr.children.length})},{passive:true})}
+var qi=q('[data-qty]');qa('[data-qd]').forEach(function(b){b.addEventListener('click',function(){qi.value=Math.max(1,(parseInt(qi.value,10)||1)+(+b.dataset.qd));tot()})});qi.addEventListener('input',tot);qa('[data-addon],[data-led]').forEach(function(c){c.addEventListener('change',tot)});
+try{var L=new URLSearchParams(location.search).get('led');if(L)qa('[data-led]').forEach(function(c){if(c.dataset.led===L)c.checked=true})}catch(e){}
+var form=q('[data-form]'),msg=q('[data-msg]');
+form.addEventListener('submit',function(e){e.preventDefault();var x=cur();if(!x||!x[5])return;var qty=Math.max(1,parseInt(qi.value,10)||1),items=[{id:x[2],quantity:qty}];
+if(moR&&moR.checked&&!moR.dataset.ok){msg.className='es-pdp__msg is-err';msg.textContent=!moSt.plz?'Bitte die Postleitzahl des Montageorts eingeben.':moSt.z==='out'?'Montage für diese PLZ nur per Angebot. Bitte „Selbstmontage“ wählen oder ein Angebot anfordern.':'Für dieses Maß und diese PLZ können wir die Montage nicht direkt buchen. Bitte ein Angebot anfordern.';msg.hidden=false;if(moP)moP.focus();return}
+var ref=TT+' – '+sm(n(st.w))+' × '+sm(n(st.d))+' m';
+qa('[data-addon]').forEach(function(c){if(!c.checked||!c.value)return;var it={id:+c.value,quantity:(c.dataset.led||c.dataset.per)?qty:1};if(c.dataset.led)it.properties={'Für Überdachung':ref};if(c.dataset.mo)it.properties={'Für Überdachung':ref,'Montageort':moOrt()};items.push(it)});
+btn.disabled=true;btn.textContent='Wird hinzugefügt …';msg.hidden=true;
+fetch(((window.routes&&window.routes.cartAddUrl)||'/cart/add')+'.js',{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify({items:items})})
+.then(function(r){return r.json().then(function(j){if(!r.ok)throw j;return j})})
+.then(function(){if(window.theme&&window.theme.cartType==='page'){location.href=(window.routes&&window.routes.cartUrl)||'/cart';return}
+document.documentElement.dispatchEvent(new CustomEvent('cart:refresh',{bubbles:true,detail:{scrollToTop:false,openMiniCart:true}}));
+btn.textContent='✓ Im Warenkorb';msg.className='es-pdp__msg';msg.innerHTML='Hinzugefügt. <a href="'+((window.routes&&window.routes.cartUrl)||'/cart')+'">Zum Warenkorb →</a>';msg.hidden=false;setTimeout(function(){btn.disabled=false;btn.textContent='In den Warenkorb'},2200)})
+.catch(function(err){btn.disabled=false;btn.textContent='In den Warenkorb';msg.className='es-pdp__msg is-err';msg.textContent=(err&&(err.description||err.message))||'Konnte nicht hinzugefügt werden. Bitte erneut versuchen.';msg.hidden=false})});
+var MO=null;try{MO=JSON.parse(q('[data-mo-json]').textContent)}catch(e){}
+var moR=q('[data-mo="1"]'),moP=q('[data-mo-plz]'),moH=q('[data-mo-hint]'),moPr=q('[data-mo-price]'),moPan=q('[data-mo-panel]'),moLd=q('[data-mo-land]'),moSt={z:null,plz:''},ZN=[];
+if(MO)String(MO.zones||'').split(/\r?\n/).forEach(function(l){var f=l.split('|');if(f.length<2||!f[0].trim())return;var z={n:f[0].trim(),l:(f[2]||'').trim(),at:false,r:[]};f[1].split(',').forEach(function(s){s=s.trim();if(/^AT$/i.test(s)){z.at=true;return}var m=s.match(/^(\d{2})(?:-(\d{2}))?$/);if(m)z.r.push([+m[1],+(m[2]||m[1])])});ZN.push(z)});
+function moZone(z){var i;if(/^\d{4}$/.test(z)){for(i=0;i<ZN.length;i++)if(ZN[i].at)return ZN[i];return 'out'}if(/^\d{5}$/.test(z)){var p=+z.slice(0,2);for(i=0;i<ZN.length;i++)if(ZN[i].r.some(function(r){return p>=r[0]&&p<=r[1]}))return ZN[i];return 'out'}return null}
+function moOrt(){var z=moSt.z;return z&&z.at?'Österreich, PLZ '+moSt.plz:'PLZ '+moSt.plz+(z&&z!=='out'?', '+z.n:'')}
+function moUpd(){if(!MO||!moR)return;var on=moR.checked;if(moPan)moPan.hidden=!on;moSt.plz=(moP.value||'').replace(/\D/g,'').slice(0,5);if(moP.value!==moSt.plz)moP.value=moSt.plz;moSt.z=moZone(moSt.plz);var z=moSt.z,zl=z&&z!=='out'?(z.at?'Österreich':z.n+(z.l?' · '+z.l:'')):'';
+var v=z&&z!=='out'?MO.v[st.w+'|'+st.d+'|'+z.n]:null,ok=!!(v&&v[2]);
+moR.value=ok?v[0]:'';moR.dataset.cents=ok?v[1]:0;moR.dataset.ok=ok?'1':'';
+if(moLd)moLd.textContent=zl;
+var h;if(!moSt.plz)h='PLZ eingeben – wir prüfen sofort, ob Ihr Ort im Montagegebiet liegt.';else if(!z)h='Bitte eine gültige PLZ eingeben (Deutschland 5-stellig, Österreich 4-stellig).';else if(z==='out')h='Außerhalb unseres Montagegebiets. Fragen Sie gern ein Angebot an – wir prüfen, ob wir Ihren Ort anfahren können.';else if(!ok)h='Für dieses Maß nennen wir den Montagepreis im persönlichen Angebot.';else h='Montage in '+(z.at?'Österreich':'PLZ '+moSt.plz)+' ('+zl+'): '+eur(v[1])+' inkl. MwSt. – Termin nach Bestellung.';
+if(moH){moH.textContent=h;moH.classList.toggle('is-err',on&&!!moSt.plz&&!ok)}
+if(moPr)moPr.textContent=ok?'+ '+eur(v[1]):(z==='out'?'auf Anfrage':'Preis nach PLZ');
+try{if(moSt.plz)localStorage.setItem('es-plz',moSt.plz)}catch(e){}}
+if(moR){moR.dataset.mo='1';qa('[data-mo]').forEach(function(r){r.addEventListener('change',function(){moUpd();tot();if(moR.checked&&moP&&!moP.value)moP.focus()})});moP.addEventListener('input',function(){moUpd();tot()});
+try{var SPm=new URLSearchParams(location.search),MP=SPm.get('mp')||localStorage.getItem('es-plz');if(MP)moP.value=MP;if(SPm.get('mp'))moR.checked=true}catch(e){}}
+var shT=q('[data-share-tg]'),shP=q('[data-share]'),ofT=q('[data-offer-tg]'),ofP=q('[data-offer]');
+function ledTxt(){var c=qa('[data-led]').filter(function(x){return x.checked})[0];return c&&c.dataset.led!=='0'?'LED-Spots '+c.dataset.led+'er-Set':'ohne LED'}
+function moTxt(){if(!moR||!moR.checked)return 'Selbstmontage';return (moR.dataset.ok?'Montage durch e-Stegplatten':'Montage angefragt')+(moSt.plz?' ('+moOrt()+')':'')}
+function shareUrl(){var x=cur(),u=new URL(location.pathname,location.href);if(x)u.searchParams.set('variant',x[2]);var c=qa('[data-led]').filter(function(y){return y.checked})[0];if(c&&c.dataset.led!=='0')u.searchParams.set('led',c.dataset.led);if(moR&&moR.checked&&moSt.plz)u.searchParams.set('mp',moSt.plz);return u.toString()}
+function cfgText(){var x=cur(),qty=Math.max(1,parseInt(qi.value,10)||1),ex=0;qa('[data-addon]').forEach(function(c){if(c.checked&&c.value)ex+=(+c.dataset.cents||0)*((c.dataset.led||c.dataset.per)?qty:1)});
+return [TT,'Maß: '+sm(n(st.w))+' × '+sm(n(st.d))+' m','Rahmen: '+FR+' · Dachplatte: '+CV,'Beleuchtung: '+ledTxt(),'Montage: '+moTxt(),'Menge: '+qty,x?'Preis Dach: '+eur(x[3]*qty)+(ex?' · Gesamt mit Auswahl: '+eur(x[3]*qty+ex):''):'','Link: '+shareUrl()].filter(Boolean).join('\n')}
+function fill(){if(shP&&!shP.hidden){var u=shareUrl(),t=cfgText();q('[data-share-url]').value=u;q('[data-share-sum]').textContent=t.split('\n').slice(0,6).join(' · ');q('[data-share-wa]').href='https://wa.me/?text='+encodeURIComponent(t);q('[data-share-mail]').href='mailto:?subject='+encodeURIComponent('Terrassendach-Konfiguration: '+TT)+'&body='+encodeURIComponent(t)}
+if(ofP&&!ofP.hidden){var cf=q('[data-offer-cfg]'),ta=q('[data-offer-body]'),pz=q('[data-offer-plz]');if(cf)cf.value=cfgText();if(ta&&!ta.dataset.touched)ta.value='Bitte senden Sie mir ein Angebot für diese Konfiguration:\n\n'+cfgText();if(pz&&!pz.value&&moSt.plz)pz.value=moSt.plz}}
+function pane(p,t,open){if(!p)return;p.hidden=!open;if(t)t.setAttribute('aria-expanded',open?'true':'false');if(open){if(p===ofP&&shP)pane(shP,shT,false);if(p===shP&&ofP)pane(ofP,ofT,false);fill()}}
+if(shT)shT.addEventListener('click',function(){pane(shP,shT,shP.hidden)});
+if(ofT)ofT.addEventListener('click',function(){pane(ofP,ofT,ofP.hidden);if(!ofP.hidden)ofP.scrollIntoView({block:'nearest',behavior:'smooth'})});
+var ta0=q('[data-offer-body]');if(ta0)ta0.addEventListener('input',function(){ta0.dataset.touched='1'});
+var cp=q('[data-share-copy]');if(cp)cp.addEventListener('click',function(){var inp=q('[data-share-url]');function done(){cp.textContent='Kopiert ✓';setTimeout(function(){cp.textContent='Link kopieren'},1800)}if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(inp.value).then(done,function(){inp.select()});else{inp.select();try{document.execCommand('copy');done()}catch(e){}}});
+var pr=q('[data-share-print]');if(pr)pr.addEventListener('click',function(){window.print()});
+try{var SPo=new URLSearchParams(location.search);if(SPo.get('angebot')==='1'||SPo.get('contact_posted')==='true'||location.hash==='#es-offer-form'){pane(ofP,ofT,true);setTimeout(function(){ofP.scrollIntoView({block:'start',behavior:'smooth'})},200)}}catch(e){}
+var sb=q('[data-sticky]'),go=q('[data-sticky-go]'),mode='pick',pb=q('.es-pdp__pr'),vB=false,vP=!!pb;
+function stk(){sb.classList.toggle('is-on',!vB&&!vP)}
+if(sb&&'IntersectionObserver' in window){new IntersectionObserver(function(es){var e=es[0];vB=e.isIntersecting;if(!vB){mode=e.boundingClientRect.top<0?'buy':'pick';go.textContent=mode==='buy'?'In den Warenkorb':'Maße wählen'}stk()}).observe(btn);
+if(pb)new IntersectionObserver(function(es){var e=es[0];vP=e.isIntersecting||e.boundingClientRect.top>0;stk()}).observe(pb);
+go.addEventListener('click',function(){if(mode==='buy'){if(form.requestSubmit)form.requestSubmit();else btn.click()}else{var o=q('[data-opts]');window.scrollTo({top:o.getBoundingClientRect().top+window.scrollY-90,behavior:'smooth'})}})}
+upd(false)})();</script>

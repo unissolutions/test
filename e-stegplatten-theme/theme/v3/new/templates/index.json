@@ -160,8 +160,8 @@
           "type": "category",
           "settings": {
             "image": "shopify://shop_images/3-fachstrukturgraphitanthrazit.jpg",
-            "title": "Stegplatten nach Maß",
-            "text": "4,5–16 mm, Polycarbonat oder Acrylglas, klar bis anthrazit.",
+            "title": "Stegplatten",
+            "text": "Doppelstegplatten 4,5–16 mm, Polycarbonat oder Acrylglas – millimetergenau zugeschnitten.",
             "cta": "Stärke wählen",
             "url": "/collections/doppelstegplatten"
           }
@@ -170,7 +170,7 @@
           "type": "category",
           "settings": {
             "image": "shopify://shop_images/Grosse_Terrassenueberdachung.webp",
-            "title": "Terrassenüberdachung Alu",
+            "title": "Terrassendächer",
             "text": "Bis 7 m Breite, mit Stegplatten oder VSG-Glas, anthrazit oder weiß.",
             "cta": "Modelle ansehen",
             "url": "/collections/terrassenuberdachung"
@@ -192,7 +192,7 @@
             "image": "shopify://shop_images/Profile_und_Zubehoer.webp",
             "title": "Profile & Zubehör",
             "text": "Nach Plattenstärke sortiert, damit alles zusammenpasst.",
-            "cta": "Nach Stärke wählen",
+            "cta": "Nach Stärke",
             "url": "/collections/profile-zubehor-fur-16mm"
           }
         },

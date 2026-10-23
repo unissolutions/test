@@ -1,0 +1,34 @@
+{%- comment -%}e-Stegplatten: Stärke-Finder (Hero-Modus „finder“). Parameter: s, blocks, sid, ic_arrow, lz (Lieferzeit-Text){%- endcomment -%}
+<style>
+.esl .fin{margin-top:24px;border:1px solid var(--ln);background:#fff}
+.esl .fin__h{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:14px 20px;border-bottom:1px solid var(--ln);background:var(--bg2,#F0F4F1)}
+.esl .fin__h b{font-size:15px;color:var(--ink)}.esl .fin__h span{font-size:13px;color:var(--mu)}
+.esl .fin__step{padding:16px 20px;border-bottom:1px solid var(--ln)}
+.esl .fin__l{display:flex;gap:4px 10px;align-items:baseline;flex-wrap:wrap;margin-bottom:10px;font-size:13px;color:var(--mu)}.esl .fin__l b{color:var(--ink);font-size:15px}
+.esl .fin__n{display:inline-flex;width:22px;height:22px;align-items:center;justify-content:center;background:var(--ink);color:#fff;font-size:12px;font-weight:700;flex:none;align-self:center}
+.esl .fin__opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.esl .fin__opt{display:flex;flex-direction:column;justify-content:center;gap:2px;min-height:56px;min-width:0;padding:8px 12px;border:1px solid var(--ln2,#C9CFCB);background:#fff;color:var(--ink);font:inherit;font-weight:700;font-size:15px;line-height:1.25;cursor:pointer;text-align:left}
+.esl .fin__opt small{font-weight:500;font-size:12px;color:var(--mu)}.esl .fin__opt:hover{border-color:var(--ink)}
+.esl .fin__opt.on{border-color:var(--g);background:var(--gl,#E8F2EC);box-shadow:inset 0 0 0 1px var(--g)}.esl .fin__opt.on small{color:var(--g6)}
+.esl .fin__res{display:flex;flex-direction:column;align-items:stretch;gap:12px;padding:16px 20px;background:var(--bg2,#F0F4F1)}
+.esl .fin__res p{margin:0;font-size:15px;color:var(--tx)}.esl .fin__res p b{color:var(--ink)}.esl .fin__res .btn{width:100%}
+.esl .fin__res .fin__lz{font-size:13px;color:var(--mu)}.esl .fin__res .fin__lz b{color:var(--g6)}
+.esl .fin__alt{font-size:13px;color:var(--mu);padding:12px 20px 14px;border-top:1px solid var(--ln)}.esl .fin__alt a{font-weight:700;color:var(--g6)}.esl .fin__alt p{margin:0}
+@media(max-width:749px){.esl .fin{margin-top:16px}.esl .fin__h,.esl .fin__step,.esl .fin__res,.esl .fin__alt{padding-left:16px;padding-right:16px}.esl .fin__step{padding-top:12px;padding-bottom:12px}.esl .fin__l>span:not(.fin__n){display:none}.esl .fin__opt{font-size:14px;padding:6px 10px;min-height:52px}.esl .fin__opt small{white-space:normal;line-height:1.35}}
+</style>
+<div class="fin" data-finder>
+<div class="fin__h"><b>{{ s.fin_title }}</b><span>{{ s.fin_sub }}</span></div>
+<div class="fin__step"><div class="fin__l"><span class="fin__n">1</span><b>Wofür brauchen Sie die Platten?</b></div>
+<div class="fin__opts">{%- for b in blocks -%}{%- if b.type == 'use' -%}{%- assign col = collections[b.settings.collection] -%}<button type="button" class="fin__opt" data-use data-rec="{{ b.settings.rec | escape }}" data-why="{{ b.settings.why | escape }}" data-url="{% if col != blank %}{{ col.url }}{% else %}{{ b.settings.url }}{% endif %}" data-tags="{% if col != blank %}1{% endif %}" {{ b.shopify_attributes }}>{{ b.settings.title }}<small>{{ b.settings.sub }}</small></button>{%- endif -%}{%- endfor -%}</div></div>
+<div class="fin__step"><div class="fin__l"><span class="fin__n">2</span><b>Welche Farbe?</b> <span>Entscheidet über Licht und Hitze darunter</span></div>
+<div class="fin__opts">{%- for b in blocks -%}{%- if b.type == 'farbe' -%}<button type="button" class="fin__opt" data-color data-label="{{ b.settings.title | escape }}" data-tag="{{ b.settings.tag | handleize }}" {{ b.shopify_attributes }}>{{ b.settings.title }}<small>{{ b.settings.hint }}</small></button>{%- endif -%}{%- endfor -%}</div></div>
+<div class="fin__res"><p data-res>Wählen Sie oben Einsatz und Farbe – wir zeigen die passende Stärke.</p><a class="btn" data-go href="{{ s.fin_fallback_url }}">{{ s.fin_cta }} {{ ic_arrow }}</a><p class="fin__lz">Lieferzeit <b>{{ lz | default: '5–8 Werktage' }}</b> · Zuschnitt nach Maß</p></div>
+<div class="fin__alt">{{ s.fin_alt }}</div>
+</div>
+<script>(function(){var r=document.getElementById('esl-{{ sid }}');if(!r)return;var f=r.querySelector('[data-finder]');if(!f)return;var use=null,col=null,res=f.querySelector('[data-res]'),go=f.querySelector('[data-go]'),fb=go.getAttribute('href');
+function upd(){f.querySelectorAll('[data-use]').forEach(function(b){b.classList.toggle('on',b===use)});f.querySelectorAll('[data-color]').forEach(function(b){b.classList.toggle('on',b===col)});
+if(!use){res.textContent='Wählen Sie oben Einsatz und Farbe – wir zeigen die passende Stärke.';go.setAttribute('href',fb);return}
+var u=use.dataset.url||fb;if(col&&use.dataset.tags&&col.dataset.tag)u=u.replace(/\/$/,'')+'/'+col.dataset.tag;go.setAttribute('href',u);
+res.innerHTML='Empfehlung: <b>'+use.dataset.rec+'</b>'+(col?' in <b>'+col.dataset.label+'</b>':'')+' – '+use.dataset.why}
+f.querySelectorAll('[data-use]').forEach(function(b){b.addEventListener('click',function(){use=(use===b)?null:b;upd()})});
+f.querySelectorAll('[data-color]').forEach(function(b){b.addEventListener('click',function(){col=(col===b)?null:b;upd()})});})();</script>
