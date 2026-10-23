@@ -17,7 +17,12 @@ assert '{% schema %}' not in body_src
 idx = read_index()
 L = idx['sections']['es_landing']
 settings = {**defaults, **L['settings']}
-settings['hero_image'] = {'alt': '', 'width': 1400, 'height': 1050, 'hero': True}
+hd, hm = S / 'content/hero/hero-desktop.jpg', S / 'content/hero/hero-mobile.jpg'
+settings['hero_image'] = {'alt': '', 'width': 1536, 'height': 1024, 'src': hd.as_uri()} if hd.exists() else {'alt': '', 'width': 1400, 'height': 1050, 'hero': True}
+if hm.exists():
+    settings['hero_image_m'] = {'alt': '', 'width': 1024, 'height': 768, 'src': hm.as_uri()}
+else:
+    settings.pop('hero_image_m', None)
 blocks = [{'type': L['blocks'][k]['type'], 'settings': L['blocks'][k]['settings'], 'shopify_attributes': ''} for k in L['block_order']]
 kh = settings.get('konfig_handle') or 'terrassenuberdachung-alu-mit-stegplatten'
 

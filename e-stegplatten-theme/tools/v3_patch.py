@@ -286,7 +286,7 @@ patch('sections/es-landing.liquid', [
      """<section class="hero" data-screen-label="Hero">
 <div class="c">
 <div class="hv">
-{%- if s.hero_image != blank -%}<img class="hv__img" src="{{ s.hero_image | image_url: width: 1400 }}" srcset="{{ s.hero_image | image_url: width: 700 }} 700w, {{ s.hero_image | image_url: width: 1000 }} 1000w, {{ s.hero_image | image_url: width: 1400 }} 1400w" sizes="(max-width:999px) 100vw, 660px" alt="{{ s.hero_image.alt | default: s.hero_title | escape }}" width="{{ s.hero_image.width | default: 1400 }}" height="{{ s.hero_image.height | default: 1050 }}" fetchpriority="high">{%- endif -%}
+{%- if s.hero_image != blank -%}<picture>{%- if s.hero_image_m -%}<source media="(max-width:749px)" srcset="{{ s.hero_image_m | image_url: width: 480 }} 480w, {{ s.hero_image_m | image_url: width: 720 }} 720w, {{ s.hero_image_m | image_url: width: 960 }} 960w, {{ s.hero_image_m | image_url: width: 1200 }} 1200w" sizes="100vw">{%- endif -%}<img class="hv__img" src="{{ s.hero_image | image_url: width: 1400 }}" srcset="{{ s.hero_image | image_url: width: 700 }} 700w, {{ s.hero_image | image_url: width: 1000 }} 1000w, {{ s.hero_image | image_url: width: 1400 }} 1400w" sizes="(max-width:999px) 100vw, 660px" alt="{{ s.hero_image.alt | default: s.hero_title | escape }}" width="{{ s.hero_image.width | default: 1400 }}" height="{{ s.hero_image.height | default: 1050 }}" fetchpriority="high"></picture>{%- endif -%}
 <div class="hv__tx">
 {%- if s.kicker != blank -%}<p class="k">{{ s.kicker }}</p>{%- endif -%}
 <h1>{{ s.hero_title }}</h1>
@@ -314,6 +314,8 @@ patch('sections/es-landing.liquid', [
 </div>
 </section>
 <section class="trust" data-screen-label="Vertrauen">"""),
+    ('{"type":"image_picker","id":"hero_image","label":"Bild"},',
+     '{"type":"image_picker","id":"hero_image","label":"Bild"},{"type":"image_picker","id":"hero_image_m","label":"Bild für Handys (optional, 4:3 – Dach oben, ruhige Fläche unten)","info":"Ohne Auswahl wird das Bild oben auch auf Handys verwendet."},'),
     ("""<h3>{{ b.settings.title | escape | replace: 'Terrassenüberdachung', 'Terrassen&shy;überdachung' | replace: 'Stegplatten', 'Steg&shy;platten' }}</h3>""",
      """<h3>{{ b.settings.title | escape }}</h3>"""),
 ])
@@ -401,6 +403,7 @@ patch('snippets/es-landing-css.liquid', [
     # Trust-Leiste auf Handys einspaltig (Titel nowrap, Zusatz daneben oder darunter); H2 und Kacheln bei sehr schmalen Geräten
     ("@media(max-width:380px){.esl h1{font-size:24px}}",
      """@media(max-width:480px){
+.esl .hv__tx .k{font-size:11px;letter-spacing:.07em}
 .esl .trust .c{grid-template-columns:1fr}
 .esl .trust .c>div{padding:10px 16px}
 .esl .trust span{display:flex;flex-wrap:wrap;align-items:baseline;gap:0 8px}
@@ -427,6 +430,9 @@ d = json.loads(raw[len(head):])
 L = d['sections']['es_landing']
 L['blocks']['t2']['settings'] = {'title': 'Zuschnitt millimetergenau', 'text': 'rechtwinklig, Kanten entgratet, Kammern staubfrei'}
 L['settings']['muster_url'] = '/products/farbmuster'
+# Hero-Bilder (Higgsfield-Generate, Quelle content/hero/*.jpg) – Dateien müssen vor dem Theme-Upload in Shopify > Inhalte > Dateien liegen
+L['settings']['hero_image'] = 'shopify://shop_images/hero-terrassendach-stegplatten.jpg'
+L['settings']['hero_image_m'] = 'shopify://shop_images/hero-terrassendach-stegplatten-mobil.jpg'
 L['blocks']['c1']['settings'].update({'title': 'Stegplatten', 'text': 'Doppelstegplatten 4,5–16 mm, Polycarbonat oder Acrylglas – millimetergenau zugeschnitten.'})
 L['blocks']['c2']['settings']['title'] = 'Terrassendächer'
 L['blocks']['c4']['settings']['cta'] = 'Nach Stärke'

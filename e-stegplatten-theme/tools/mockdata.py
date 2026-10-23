@@ -109,7 +109,7 @@ def load_snippet(name):
 def make_env(snippets):
     env = Environment(loader=DictLoader(snippets))
     env.add_filter('json', lambda v: json.dumps(v, ensure_ascii=False))
-    env.add_filter('image_url', lambda v, width=None: HERO if isinstance(v, dict) and v.get('hero') else PH)
+    env.add_filter('image_url', lambda v, width=None: v['src'] if isinstance(v, dict) and v.get('src') else (HERO if isinstance(v, dict) and v.get('hero') else PH))
     env.add_filter('money_without_currency', money)
     env.add_filter('money', lambda v: money(v) + ' €')
     env.add_filter('handle', handle)

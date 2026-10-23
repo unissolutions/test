@@ -3,7 +3,7 @@ const { chromium } = require('playwright');
 const D = '/tmp/claude-0/-home-user-test/beef7815-2c55-57f0-9ec2-48630e491a1b/scratchpad/design-review/v3/';
 let pass = 0, fail = 0;
 const eq = (n, g, w) => { const ok = JSON.stringify(g) === JSON.stringify(w); ok ? pass++ : fail++; console.log(`${ok ? '✓' : '✗'} ${n}${ok ? '' : `\n    erwartet ${JSON.stringify(w)}\n    erhalten ${JSON.stringify(g)}`}`); };
-const SEL = { 'Kachel-Titel': '.esl .cat h3', 'Kachel-Link': '.esl .cat .l', 'Trust-Titel': '.esl .trust b', 'Finder-Option': '.esl .fin__opt b, .esl .fin__opt strong', 'H2': '.esl h2', 'Tab': '.esl .ehx__tab span', 'Beleg': '.esl .proof b' };
+const SEL = { 'Kachel-Titel': '.esl .cat h3', 'Kachel-Link': '.esl .cat .l', 'Trust-Titel': '.esl .trust b', 'Finder-Option': '.esl .fin__opt b, .esl .fin__opt strong', 'H2': '.esl h2', 'Tab': '.esl .ehx__tab span', 'Beleg': '.esl .proof b', 'Kicker': '.esl .hv__tx .k' };
 const wraps = (pg) => pg.evaluate((SEL) => {
   const out = {};
   for (const [name, sel] of Object.entries(SEL)) {
