@@ -1,0 +1,76 @@
+{%- comment -%}e-Stegplatten Header (global, passt sections/header.liquid an, Layout „condensed“):
+Alle: weißer Grund, 1px Linie unten, kein Schatten, Archivo, Icons 20px in Tinte, Zähler grün 16px.
+Handy ≤640: eine 60px-Zeile – Menü links · Logo mittig (max. 36px hoch) · Suche/Konto/Warenkorb rechts, Tippflächen 44×44 px. Nur Symbole, keine Textlinks.
+Tablet 641–999: gleiche Zeile mit „Menü“-Button links (Logo max. 44px), Suchleiste darunter wie im Theme.
+Desktop ≥1000: „Menü“-Button als 44px-Feld, Suchleiste 44px mit DS-Rahmen + grünem Such-Button, Konto/Warenkorb mit Icon + Text.
+Wichtig: Die Theme-Helfer .hidden-pocket/.hidden-lap/.hidden-desk werden hier mit höherer Spezifität erzwungen, damit keine Display-Regel aus diesem Snippet sie aushebelt (früherer Fehler: Textlink „Konto“ war mobil sichtbar).{%- endcomment -%}
+<style id="es-header-m">
+html body .shopify-section__header .header:not(#_){background:#fff!important;box-shadow:none!important;border-bottom:1px solid #E1E5E2!important;font-family:Archivo,system-ui,sans-serif!important}
+html body .header .header__inner *:not(#_):not(svg):not(path){font-family:Archivo,system-ui,sans-serif!important}
+html body .header__cart-count:not(#_){min-width:16px!important;height:16px!important;padding:0 4px!important;font-size:10px!important;line-height:16px!important;font-weight:700!important;background:#338258!important;color:#fff!important;border:0!important;box-shadow:none!important;border-radius:8px!important}
+html body .header .header__inner svg:not(#_){color:#1B1F1D}
+html body .header__logo-link:not(#_){display:inline-block;line-height:0}
+html body .header__logo-image:not(#_){display:block;height:auto}
+/* Sichtbarkeits-Helfer des Themes erzwingen (gewinnen gegen jede Display-Regel unten) */
+@media(max-width:999px){html body .header .hidden-pocket:not(#_){display:none!important}}
+@media(min-width:1000px) and (max-width:1279px){html body .header .hidden-lap:not(#_){display:none!important}}
+@media(min-width:1000px){html body .header .hidden-lap-and-up:not(#_){display:none!important}}
+@media(min-width:641px){html body .header .hidden-tablet-and-up:not(#_){display:none!important}}
+@media(min-width:1280px){html body .header .hidden-desk:not(#_){display:none!important}}
+@media(max-width:999px){
+html body .header .container:not(#_){padding-left:12px!important;padding-right:12px!important}
+html body .header__inner:not(#_){display:grid!important;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr)!important;align-items:center!important;column-gap:8px;min-height:60px;padding:0!important}
+html body .header__inner > .header__mobile-nav:not(#_),html body .header__inner > .header__desktop-nav:not(#_){grid-column:1;grid-row:1;justify-self:start;margin:0!important;display:flex;align-items:center}
+html body .header__inner > .header__logo:not(#_){grid-column:2;grid-row:1;justify-self:center;margin:0!important;padding:0!important;text-align:center;flex:none!important;line-height:0}
+html body .header__logo-image:not(#_){margin:0 auto!important;max-height:36px;width:auto!important}
+html body .header__inner > .header__action-list:not(#_){grid-column:3;grid-row:1;justify-self:end;margin:0!important;display:flex!important;align-items:center;gap:0!important}
+html body .header__action-item:not(#_){margin:0!important;padding:0!important;display:flex;align-items:center}
+html body .header__action-item-title:not(#_){display:none!important}
+html body .header__action-item-content:not(#_){display:flex;align-items:center}
+html body .header__mobile-nav-toggle:not(#_),html body .header__action-list .header__action-item-link:not(.hidden-pocket):not(#_){display:flex!important;align-items:center;justify-content:center;width:44px!important;height:44px!important;min-width:44px;padding:0!important;margin:0!important;color:#1B1F1D!important;position:relative;line-height:0}
+html body .header__mobile-nav-toggle:not(#_){margin-left:-8px!important}
+html body .header__action-list .header__action-item-link:not(.hidden-pocket):not(#_){margin:0 -2px!important}
+html body .header__action-list .header__action-item--cart .header__action-item-link:not(#_){margin-right:-8px!important}
+html body .header__mobile-nav-toggle svg:not(#_){width:22px!important;height:16px!important}
+html body .header__action-list svg:not(#_){width:22px!important;height:22px!important}
+html body .header__cart-icon:not(#_){position:relative;display:flex;align-items:center;justify-content:center;line-height:0}
+html body .header__cart-icon .icon-state__primary:not(#_){display:flex;align-items:center;justify-content:center}
+html body .header__cart-count:not(#_){position:absolute!important;top:-6px!important;right:-8px!important;left:auto!important;transform:none!important}
+html body .header__action-item--cart .header__action-item-content > span:not(.header__cart-icon):not(#_){display:none!important}
+}
+@media(max-width:374px){html body .header__logo-image:not(#_){max-height:32px}}
+@media(min-width:641px) and (max-width:999px){
+html body .header__inner:not(#_){min-height:68px}
+html body .header__logo-image:not(#_){max-height:44px}
+html body .header__desktop-nav-toggle:not(#_){display:flex;align-items:center;gap:8px;height:44px;padding:0 12px!important;border:1px solid #DCE3DE!important;background:#fff;font-size:14px!important;font-weight:700!important;color:#1B1F1D!important;text-transform:none!important;letter-spacing:0!important}
+html body .header__desktop-nav-toggle > span:not(#_){display:inline-flex;align-items:center;gap:8px}
+html body .header__desktop-nav-toggle svg:not(#_){width:16px!important;height:12px!important}
+html body .header__search-bar-wrapper .search-bar__top:not(#_){border:1px solid #DCE3DE!important;box-shadow:none!important;background:#F7F8F7!important}
+html body .search-bar__submit:not(#_){background:#338258!important;color:#fff!important;border:0!important}
+html body .search-bar__submit svg:not(#_){color:#fff!important}
+}
+@media(min-width:1000px){
+html body .header__inner:not(#_){min-height:76px;align-items:center!important;gap:20px}
+html body .header__logo-image:not(#_){max-height:54px;width:auto!important}
+html body .header__desktop-nav-toggle:not(#_){display:flex!important;align-items:center;gap:8px;height:44px;padding:0 16px!important;border:1px solid #DCE3DE!important;background:#fff!important;font-size:15px!important;font-weight:700!important;color:#1B1F1D!important;text-transform:none!important;letter-spacing:0!important}
+html body .header__desktop-nav-toggle:not(#_):hover{border-color:#338258!important;color:#2A6C49!important}
+html body .header__desktop-nav-toggle svg:not(#_){width:16px!important;height:12px!important}
+html body .header__search-bar-wrapper .search-bar__top:not(#_){height:44px!important;border:1px solid #DCE3DE!important;box-shadow:none!important;background:#F7F8F7!important}
+html body .header__search-bar-wrapper .search-bar__top:focus-within:not(#_){border-color:#338258!important;background:#fff!important}
+html body .search-bar__input:not(#_){height:42px!important;font-size:15px!important;color:#1B1F1D!important;background:none!important}
+html body .search-bar__input:not(#_)::placeholder{color:#5E6863!important}
+html body .search-bar__filter:not(#_){border-left:1px solid #DCE3DE!important;height:42px}
+html body .search-bar__filter-label:not(#_){font-size:13.5px!important;color:#3A423E!important;font-weight:600!important}
+html body .search-bar__submit:not(#_){width:48px!important;height:42px!important;background:#338258!important;color:#fff!important;border:0!important;margin:0!important}
+html body .search-bar__submit svg:not(#_){width:18px!important;height:18px!important;color:#fff!important}
+html body .search-bar__submit:not(#_):hover{background:#2A6C49!important}
+html body .header__action-list:not(#_){gap:20px!important}
+html body .header__action-item-title:not(#_){font-size:12px!important;color:#5E6863!important;font-weight:500!important;letter-spacing:0!important;white-space:nowrap}
+html body .header__action-item-link:not(#_){font-size:14.5px!important;font-weight:700!important;color:#1B1F1D!important}
+html body .header__action-item-link:not(#_):hover{color:#2A6C49!important}
+html body .header__action-item--cart .header__action-item-content:not(#_){display:flex;align-items:center;gap:8px}
+html body .header__cart-icon svg:not(#_){width:22px!important;height:22px!important}
+html body .header__cart-icon:not(#_){position:relative}
+html body .header__cart-count:not(#_){position:absolute!important;top:-7px!important;right:-9px!important;left:auto!important}
+}
+</style>

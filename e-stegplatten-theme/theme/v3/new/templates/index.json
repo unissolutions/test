@@ -15,7 +15,7 @@
         "kicker": "Direkt vom Fachhändler aus Gelsenkirchen",
         "hero_title": "Stegplatten & Terrassendächer nach Maß",
         "hero_text": "Stegplatten 4–16 mm und Alu-Terrassendächer bis 7 m Breite – jede Bestellung prüfen wir vor dem Versand.",
-        "hero_image": "shopify://shop_images/hero-terrassendach-stegplatten.jpg",
+        "hero_image": "shopify://shop_images/hero-terrassendach-stegplatten.png",
         "hero_mode": "both",
         "hero_default_tab": "konfig",
         "tab1_label": "Terrassendach konfigurieren",
@@ -54,7 +54,7 @@
         "email": "info@e-stegplatten.de",
         "hours": "Mo–Fr 8–17 Uhr · Rückruf am selben Werktag",
         "muster_url": "/products/farbmuster",
-        "hero_image_m": "shopify://shop_images/hero-terrassendach-stegplatten-mobil.jpg",
+        "hero_image_m": "shopify://shop_images/hero-terrassendach-stegplatten-mobil.png",
         "hero_link_text": "Alle Terrassenüberdachungen vergleichen",
         "hero_link_url": "/collections/terrassenuberdachung"
       },

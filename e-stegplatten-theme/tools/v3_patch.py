@@ -112,7 +112,7 @@ patch('sections/es-pdp-terrasse.liquid', [
 ],""",
      """{"type":"text","id":"led_note","label":"Hinweis unter der LED-Auswahl","default":"Unsere vormontierten LED-Spots werden optimal auf die Anzahl der Träger abgestimmt."},
 {"type":"header","content":"Farbmuster"},
-{"type":"url","id":"muster_url","label":"Link Farbmuster-Produkt","info":"Leer = kein Link bei „Dachplatte“.","default":"/products/farbmuster"},
+{"type":"text","id":"muster_url","label":"Link Farbmuster-Produkt","info":"Pfad oder URL, z. B. /products/farbmuster. Leer = kein Link bei „Dachplatte“.","default":"/products/farbmuster"},
 {"type":"header","content":"Montage"},
 {"type":"checkbox","id":"montage_on","label":"Montage anbieten","default":true},
 {"type":"product","id":"montage_steg","label":"Montage-Produkt für Stegplatten-Dächer","info":"Leer = Handle montage-terrassendach-stegplatten. Varianten: Breite × Tiefe × Zone (Werte wie beim Dach, Zonennamen wie unten)."},
@@ -588,8 +588,8 @@ L = d['sections']['es_landing']
 L['blocks']['t2']['settings'] = {'title': 'Zuschnitt millimetergenau', 'text': 'rechtwinklig, Kanten entgratet, Kammern staubfrei'}
 L['settings']['muster_url'] = '/products/farbmuster'
 # Hero-Bilder (Higgsfield-Generate, Quelle content/hero/*.jpg) – Dateien müssen vor dem Theme-Upload in Shopify > Inhalte > Dateien liegen
-L['settings']['hero_image'] = 'shopify://shop_images/hero-terrassendach-stegplatten.jpg'
-L['settings']['hero_image_m'] = 'shopify://shop_images/hero-terrassendach-stegplatten-mobil.jpg'
+L['settings']['hero_image'] = 'shopify://shop_images/hero-terrassendach-stegplatten.png'
+L['settings']['hero_image_m'] = 'shopify://shop_images/hero-terrassendach-stegplatten-mobil.png'
 L['settings']['hero_link_text'] = 'Alle Terrassenüberdachungen vergleichen'
 L['settings']['tab2_sub'] = 'Stärke in 2 Fragen'
 L['settings']['hero_link_url'] = '/collections/terrassenuberdachung'

@@ -1,0 +1,72 @@
+[
+ {
+  "path": "assets/es-mobile.css",
+  "new_md5": "87411644554a512c76f356236fb1c039",
+  "size": 7326
+ },
+ {
+  "path": "sections/es-collection-chips.liquid",
+  "new_md5": "7bc5a8fd85137578d5ac7e6dbf6ab510",
+  "size": 12773
+ },
+ {
+  "path": "sections/es-landing.liquid",
+  "new_md5": "13df5f43bea0b536835e9162bbd7e8a0",
+  "size": 18867
+ },
+ {
+  "path": "sections/es-pdp-terrasse.liquid",
+  "new_md5": "0c374c53992eeb4f2667801c437b9b6d",
+  "size": 22645
+ },
+ {
+  "path": "snippets/es-hero-konfig.liquid",
+  "new_md5": "52f9daf971648b20cb6a41e19d72da71",
+  "size": 12085
+ },
+ {
+  "path": "snippets/es-landing-css.liquid",
+  "new_md5": "677343930b7fb176b18805f61c3eb057",
+  "size": 16961
+ },
+ {
+  "path": "snippets/es-led-guard.liquid",
+  "new_md5": "656c1673dbfe3e18bda29ae303467f61",
+  "size": 2101
+ },
+ {
+  "path": "snippets/es-overrides.liquid",
+  "new_md5": "3a42c2e66dd5d49ed208b9cf4eaa9f90",
+  "size": 12820
+ },
+ {
+  "path": "snippets/es-pdp-css.liquid",
+  "new_md5": "ba26e61b391c6c3c388520c998b1bf00",
+  "size": 15464
+ },
+ {
+  "path": "snippets/es-pdp-js.liquid",
+  "new_md5": "8005519ca8f2c81308c7b776b5d283a1",
+  "size": 15457
+ },
+ {
+  "path": "snippets/es-steg-zubehoer.liquid",
+  "new_md5": "5cac05e557f5e4ac7b24fa3755d3a7f8",
+  "size": 15440
+ },
+ {
+  "path": "snippets/es-zuschnitt.liquid",
+  "new_md5": "1c117b60e7a6117d93ab3e4f5302c319",
+  "size": 12213
+ },
+ {
+  "path": "snippets/product-variant-selector.liquid",
+  "new_md5": "5641e2e4133eb2a8b2f94155a4cde724",
+  "size": 83284
+ },
+ {
+  "path": "templates/index.json",
+  "new_md5": "22328d542cbeeb6e4a91659c41f2147c",
+  "size": 13967
+ }
+]

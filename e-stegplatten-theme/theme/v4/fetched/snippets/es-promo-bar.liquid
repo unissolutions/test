@@ -1,0 +1,7 @@
+{%- comment -%}e-Stegplatten: Rabattcode-Banner deaktiviert. Rendert global es-reviews + es-desktop-menu + es-header-m (Handy-Header, Logo mittig) + es-wa, auf der Startseite es-hero-br, auf Produktseiten es-pdp-buy, es-pdp-full, es-pdp-ds, es-pdp-tel, es-pdp-tax, es-pdp-qty, es-pdp-dachhaut, es-steg-zubehoer und es-variant-sync.{%- endcomment -%}
+{% render 'es-reviews' %}
+{% render 'es-desktop-menu' %}
+{% render 'es-header-m' %}
+{%- if request.page_type == 'index' -%}{% render 'es-hero-br' %}{%- endif -%}
+{%- if request.page_type == 'product' -%}{% render 'es-pdp-buy' %}{% render 'es-pdp-full' %}{% render 'es-pdp-ds' %}{% render 'es-pdp-tel' %}{% render 'es-pdp-tax' %}{% render 'es-pdp-qty' %}{% render 'es-pdp-dachhaut' %}{% render 'es-steg-zubehoer', product: product %}{% render 'es-variant-sync', product: product %}{%- endif -%}
+{% render 'es-wa' %}

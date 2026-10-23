@@ -1,0 +1,47 @@
+{%- comment -%}e-Stegplatten: Desktop-Navigation im Look des mobilen Menüs (DS: Archivo, kantig, 1px #DCE3DE, Grün #338258). Dropdowns/Mega-Menü bekommen oben Schnellzugriff-Kacheln + unten Vertrauen & Beratung wie mobil. Korrigiert zudem die Vertrauenszeile im mobilen Menü (kein „Versandkostenfrei ab 500 €“ / „Rechnung“).{%- endcomment -%}
+<style id="es-desktop-menu">
+@media(min-width:1000px){
+html body .nav-bar:not(#_){background:#fff!important;border-top:1px solid #DCE3DE!important;border-bottom:1px solid #DCE3DE!important;box-shadow:none!important}
+html body .nav-bar__inner:not(#_){padding:0!important}
+html body .nav-bar__linklist:not(#_){display:flex!important;gap:0!important}
+html body .nav-bar__item:not(#_){margin:0!important;padding:0!important}
+html body .nav-bar__link:not(#_){display:flex!important;align-items:center;gap:6px;height:48px;padding:0 16px!important;font-family:Archivo,sans-serif!important;font-weight:600!important;font-size:15px!important;color:#1B1F1D!important;text-transform:none!important;letter-spacing:0!important;border-bottom:2px solid transparent;margin-bottom:-1px}
+html body .nav-bar__item:hover>.nav-bar__link:not(#_),html body .nav-bar__link[aria-expanded="true"]:not(#_){color:#2A6C49!important;border-bottom-color:#338258}
+html body .nav-bar__link svg:not(#_){width:10px;height:10px;color:currentColor}
+html body .nav-dropdown:not(#_),html body .mega-menu:not(#_){background:#fff!important;border:1px solid #DCE3DE!important;box-shadow:0 12px 32px -16px rgba(27,31,29,.25)!important;font-family:Archivo,sans-serif!important}
+html body .nav-dropdown:not(#_){padding:6px 0!important;min-width:260px}
+html body .nav-dropdown>svg:not(#_),html body .nav-bar svg.icon--nav-triangle-borderless:not(#_){display:none!important}
+html body .nav-dropdown__link:not(#_){display:flex!important;align-items:center;justify-content:space-between;min-height:44px;padding:0 18px!important;font-size:15px!important;font-weight:500!important;color:#1B1F1D!important;border-bottom:1px solid #EEF1EF}
+html body .nav-dropdown__item:last-child>.nav-dropdown__link:not(#_){border-bottom:0}
+html body .nav-dropdown__link:not(#_):hover,html body .nav-dropdown__link[aria-expanded="true"]:not(#_){background:#F1F6F3!important;color:#2A6C49!important}
+html body .nav-dropdown__link svg:not(#_){width:8px;height:8px;color:#75807A}
+html body .mega-menu:not(#_){padding:0!important}
+html body .mega-menu__inner:not(#_){padding:24px 28px!important;gap:28px}
+html body .mega-menu__title:not(#_){font-family:Archivo,sans-serif!important;font-size:12px!important;font-weight:700!important;letter-spacing:.08em!important;text-transform:uppercase!important;color:#6B7570!important;margin:0 0 10px!important}
+html body .mega-menu__link:not(#_){display:block;padding:7px 0!important;font-size:15px!important;color:#1B1F1D!important}
+html body .mega-menu__link:not(#_):hover{color:#2A6C49!important}
+html body .es-dm-q:not(#_){display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;padding:14px;border-bottom:1px solid #DCE3DE;background:#F7F8F7}
+html body .nav-dropdown .es-dm-q:not(#_){grid-template-columns:1fr 1fr;min-width:420px;margin-top:-6px}
+html body .es-dm-q a:not(#_){display:flex;flex-direction:column;gap:2px;padding:12px 14px;background:#fff;border:1px solid #DCE3DE;text-decoration:none}
+html body .es-dm-q a:not(#_):hover{border-color:#338258}
+html body .es-dm-q a.cta:not(#_){background:#338258;border-color:#338258}
+html body .es-dm-q b:not(#_){font-size:15px;font-weight:800;color:#1B1F1D}
+html body .es-dm-q span:not(#_){font-size:13px;color:#6B7570}
+html body .es-dm-q a.cta b:not(#_),html body .es-dm-q a.cta span:not(#_){color:#fff}
+html body .es-dm-f:not(#_){display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:12px 18px;border-top:1px solid #DCE3DE;background:#F7F8F7;font-size:13px;color:#3A423E}
+html body .nav-dropdown .es-dm-f:not(#_){margin-bottom:-6px}
+html body .es-dm-f .t:not(#_){display:flex;gap:14px;flex-wrap:wrap}
+html body .es-dm-f .t span:not(#_)::before{content:"✓ ";color:#338258;font-weight:700}
+html body .es-dm-f a:not(#_){color:#1B1F1D;font-weight:700;text-decoration:none;white-space:nowrap}
+html body .es-dm-f a:not(#_):hover{color:#2A6C49}
+}
+</style>
+<script>document.addEventListener('DOMContentLoaded',function(){
+var T=['10 Jahre Garantie','Zuschnitt nach Wunschmaß','Zahlen bei Lieferung','Klarna & PayPal'];
+var mt=document.querySelector('.es-mm-trust');if(mt)mt.innerHTML=T.map(function(t){return '<span>✓ '+t+'</span>'}).join('');
+var ph='0209 513 078 34',tel=(document.querySelector('.es-mm-call')||{}).getAttribute?document.querySelector('.es-mm-call').getAttribute('href'):'tel:020951307834';var phx=document.querySelector('.es-mm-call b');if(phx)ph=phx.textContent.trim();
+var Q='<div class="es-dm-q"><a class="cta" href="/collections/terrassenuberdachung"><b>Terrassendächer</b><span>Alu bis 7 m, nach Maß</span></a><a href="/collections/doppelstegplatten-16mm"><b>Stegplatten</b><span>4–16 mm, Zuschnitt</span></a><a href="/collections/doppelstegplatten-komplettset-dachhaut"><b>Komplettsets</b><span>Platten + Profile</span></a><a href="/collections/profile-zubehor-fur-16mm"><b>Profile & Zubehör</b><span>Passend zur Platte</span></a></div>';
+var F='<div class="es-dm-f"><div class="t">'+T.map(function(t){return '<span>'+t+'</span>'}).join('')+'</div><a href="'+tel+'">☎ '+ph+' · Mo–Fr 8–17 Uhr</a></div>';
+document.querySelectorAll('.nav-bar__item>.mega-menu,.nav-bar__item>.nav-dropdown').forEach(function(d){if(d.dataset.esdm)return;d.dataset.esdm=1;
+if(d.classList.contains('mega-menu')){d.insertAdjacentHTML('afterbegin',Q);d.insertAdjacentHTML('beforeend',F)}
+else{var a=document.createElement('li');a.className='es-dm-li';a.innerHTML=Q;d.insertBefore(a,d.firstChild);var z=document.createElement('li');z.className='es-dm-li';z.innerHTML=F;d.appendChild(z)}})});</script>

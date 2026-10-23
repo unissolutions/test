@@ -20,9 +20,9 @@ Stand: 23.10.2026. Dieser Ordner sichert die Arbeitsdateien. Maßgeblich ist der
 3. **Kategorieseiten:** SEO-Titel/-Beschreibung **live** für 9 Kollektionen; Metafelder `custom.intro`, `custom.seo_text`, `custom.seo_faq`; Section `es-collection-seo` in `collection.json` + `collection.stegplatten.json` (`theme/cat`). Texte: `content/kategorien`.
 4. **Ratgeber:** 6 Artikel als **Entwurf** mit SEO-Feldern, FAQ/HowTo-Metafeldern (`custom.seo_faq`, `custom.howto`); Section `es-article-faq` in `article.json` (`theme/art`). Alle 6 gemeinsam veröffentlichen (verlinken sich gegenseitig). Offene Fachfragen: `content/ratgeber/README.md`.
 
-## Lokal fertig, noch NICHT hochgeladen: `theme/v3` (11 Dateien)
+## Hochgeladen und byte-genau verifiziert: `theme/v3` (14 Dateien) und `theme/v4` (Header)
 
-Shopify-Verbindung war weg (Shop-Wechsel beim Lesen der TerrassenPost-Preise hat den Zugang zurückgesetzt; Connector muss neu verbunden werden). Tests grün: `tools/pdp_test.js` 61/61, `tools/guard_test.js` 12/12, `tools/led_test.js` 26/26, `tools/shoot_home.js` 13/13 (Startseite: vollflächiger Hero mit Karte und Maßlinien, Handy-Umbau; alle Überschriften von 320 bis 1280 px einzeilig), `tools/shoot_cards.js` 35/35 (Produktkarten + Icon-Leiste im Mock `tools/render_cards.py`). Screenshots: `screenshots/pdp-390-*.png`, `pdp-1280-montage-offer.png`, `hero-390.png`, `screenshots/v3/home-*.png`.
+`theme/v3` (Hero mit Foto, Produktkarten, Icon-Leiste, Chips, Komplettset-Rechner, Wunschmaß-Bestätigung in `snippets/es-zuschnitt.liquid` und `snippets/product-variant-selector.liquid`, Terrassen-PDP mit Montage/Angebot) ist im Theme 207286141265 – alle 14 Dateien MD5-gleich (`tools/upload.py verify`). Die Einstellung `muster_url` der Terrassen-PDP ist vom Typ `text` (ein `url`-Setting darf in Shopify keinen Default haben). Hero-Bilder liegen in Shopify als `hero-terrassendach-stegplatten.png` / `…-mobil.png` (Dateinamen in `templates/index.json`). Tests grün: `tools/pdp_test.js` 61/61, `tools/guard_test.js` 12/12, `tools/led_test.js` 26/26, `tools/shoot_home.js` 13/13 (Startseite: vollflächiger Hero mit Karte und Maßlinien, Handy-Umbau; alle Überschriften von 320 bis 1280 px einzeilig), `tools/shoot_cards.js` 35/35 (Produktkarten + Icon-Leiste im Mock `tools/render_cards.py`). Screenshots: `screenshots/pdp-390-*.png`, `pdp-1280-montage-offer.png`, `hero-390.png`, `screenshots/v3/home-*.png`.
 
 | Datei | Änderung |
 |---|---|
@@ -37,12 +37,26 @@ Shopify-Verbindung war weg (Shop-Wechsel beim Lesen der TerrassenPost-Preise hat
 | `sections/es-collection-chips.liquid` + `assets/es-mobile.css` | Filter-Chips (Stärke, Plattenfarbe) auf Handys/Editor-Vorschau in **einer Reihe**: Chips liegen in `.es-chips__list`, die bis 749 px seitlich scrollt (randlos, ohne Scrollbalken, Snap); ab 750 px wie bisher. Mock: `tools/render_chips.py`, Screenshots `screenshots/v3/chips-*.png`. |
 | `templates/index.json` | Hero-Bilder `hero_image` = `shopify://shop_images/hero-terrassendach-stegplatten.jpg`, `hero_image_m` = `…-mobil.jpg` (siehe unten); Trust-Leiste: „Zuschnitt millimetergenau – rechtwinklig, Kanten entgratet, Kammern staubfrei“; Kacheln „Stegplatten“ / „Terrassendächer“, CTA „Nach Stärke“; Farbmuster-Link im Finder; `muster_url`. |
 
-**Vor dem Theme-Upload – Hero-Bilder in Shopify anlegen (Inhalte → Dateien):** `content/hero/hero-desktop.jpg` (1600×1063, Desktop/Tablet) und `content/hero/hero-mobile.jpg` (1200×896, 4:3 für Handys: Dach oben, ruhige Fläche unten für die Überschrift). Beide mit Higgsfield (GPT Image 2.5) generiert – Konstruktion nach den echten Produktfotos als Referenz (Pfosten bündig unter dem Rinnenprofil), Bildstil wie bei Tuinmaximaal (erhöhte Gartenperspektive, bewohnte Terrasse). Die Originale (PNG 2048×1360 bzw. 2336×1744) liegen unter
+**Hero-Bilder (bereits in Shopify angelegt, Quelle):** `content/hero/hero-desktop.jpg` (1600×1063, Desktop/Tablet) und `content/hero/hero-mobile.jpg` (1200×896, 4:3 für Handys: Dach oben, ruhige Fläche unten für die Überschrift). Beide mit Higgsfield (GPT Image 2.5) generiert – Konstruktion nach den echten Produktfotos als Referenz (Pfosten bündig unter dem Rinnenprofil), Bildstil wie bei Tuinmaximaal (erhöhte Gartenperspektive, bewohnte Terrasse). Die Originale (PNG 2048×1360 bzw. 2336×1744) liegen unter
 `https://d8j0ntlcm91z4.cloudfront.net/user_38rBUK7GWLxdZvf7m1Da0aQIqoE/hf_20261023_091917_c38e2fb6-8ff4-4ae7-a7e3-413ad4db5a98.png` (Desktop) und
 `https://d8j0ntlcm91z4.cloudfront.net/user_38rBUK7GWLxdZvf7m1Da0aQIqoE/hf_20261023_091918_faad351d-093b-48c5-8356-691a31a58856.png` (mobil). Abendstimmungs-Variante (Jobs `c909d147…` Desktop, `eba34077…` mobil) liegt in der Higgsfield-Bibliothek.
 Anlegen per `fileCreate` (`originalSource` = die CDN-URL oder Staged Upload der JPEGs, `contentType: IMAGE`, `filename` = `hero-terrassendach-stegplatten.jpg` / `hero-terrassendach-stegplatten-mobil.jpg`, Alt-Text „Alu-Terrassenüberdachung anthrazit mit 16 mm Stegplatten“). Vergibt Shopify einen anderen Dateinamen, vorher `hero_image`/`hero_image_m` in `theme/v3/new/templates/index.json` anpassen – sonst zeigt der Hero kein Bild. Ältere Varianten ohne Produktreferenz sind verworfen.
 
-**Upload:** `python3 tools/upload.py stage theme/v3` → stagedUploadsCreate → `put` → `upsert` → Job abwarten → `verify` (Manifest aus `theme/v3/new` erzeugen).
+**Upload-Weg (für weitere Änderungen):** `python3 tools/upload.py stage theme/vN` → stagedUploadsCreate → `put` → `upsert` → Job abwarten → `verify`.
+
+## `theme/v4` – Header, Logo, Sprachdatei (hochgeladen, byte-genau)
+
+Auslöser: Nutzer-Screenshot des Handy-Headers („sieht nicht wie ein Shopify-Shop aus“). Ursache: `snippets/es-header-m.liquid` erzwang `display:flex` auf allen `.header__action-item-link` und hebelte damit die Theme-Helfer `.hidden-pocket` aus – der Textlink „Konto“ wurde mobil sichtbar (Icon + Text untereinander, Header 115 px hoch); außerdem hatte die Logo-Datei viel Leerraum (sichtbare Marke nur ~17 px hoch). Alles an der echten Vorschau (`?preview_theme_id=207286141265`) mit Playwright geprüft (360/390/768/1024/1280/1440 px, Menü, Warenkorb, Kategorie, Produktseite).
+
+| Datei | Änderung |
+|---|---|
+| `snippets/es-header-m.liquid` | Neu: Theme-Helfer `.hidden-pocket/-lap/-desk/-tablet-and-up` werden mit höherer Spezifität erzwungen; Handy = eine 60-px-Zeile (Menü links, Logo mittig max. 36 px, Suche/Konto/Warenkorb 44×44 rechts, nur Symbole); Tablet 68 px, Logo 44 px; Desktop Logo 54 px, Konto-Titel `nowrap` („Einloggen / Registrieren“ brach um). |
+| `sections/header-group.json` | Logo → `shopify://shop_images/e-stegplatten-logo.png` (beschnittene Version der Original-Webp, 806×231, Shopify-Datei `gid://shopify/MediaImage/72020831109457`, Repo-Kopie `content/logo/e-stegplatten-logo.png` ist farbreduziert), `logo_max_width` 190, `mobile_logo_max_width` 140. |
+| `config/settings_data.json` | `cart_show_free_shipping_threshold: false` – der Mini-Warenkorb zeigte „Gib noch €500,00 aus und erhalte kostenlosen Versand!“ (gibt es im Shop nicht). Shopify serialisiert die Datei beim Speichern neu (MD5 weicht deshalb ab, Inhalt geprüft). |
+| `snippets/es-overrides.liquid` | Produktseite: Spar-Label auf dem Bild und Badge unter dem Titel ausgeblendet (zeigten je nach Variante verschiedene Beträge, „Einsparung €8,40“ vs. „€8,60“); „Sie sparen …“ am Preis bleibt. |
+| `locales/de.json` | Warehouse-Übersetzung komplett in **Sie-Form** (vorher Du/Sie-Mischung: Footer „Deine Email“ neben „Melden Sie sich an“), „Menu“ → „Menü“, Breadcrumb „Home“ → „Startseite“, E-Mail, Konto, Kasse, Kategorie; Tippfehler (Prudukte, Ergenisse, Keien, Verfübgar, Vorwärt …) behoben. Alle 370 Schlüssel und Platzhalter unverändert (`tools/locale_check.py`), erzeugt und dreifach gegengeprüft per Workflow (`theme/v4/work/`). |
+
+Shopify-eigene Cookie-Leiste und Editor-Leiste sind kein Theme-Bestandteil.
 
 ## Nach dem Upload in Shopify anlegen
 
@@ -52,11 +66,10 @@ Anlegen per `fileCreate` (`originalSource` = die CDN-URL oder Staged Upload der 
 2. **Farbmuster-Produkt:** `productSet` mit `content/farbmuster/productset.json` (0 €, Tag `Farbmuster`, Handle `farbmuster`), veröffentlichen. Versand 6,90 € per Regel in Advanced Shipping Rules (Tag `Farbmuster`).
 3. **LocalBusiness + Breadcrumb-Fix:** `snippets/microdata-schema.liquid` aus dem Theme laden, `python3 tools/localbusiness_patch.py <orig> <neu>` ausführen, hochladen. Maps-Link (`hasMap`) ergänzen, sobald er vorliegt. Straßenschreibweise prüfen („Magdeburger Straße 37“).
 4. **og:image:** `snippets/social-meta-tags.liquid` prüfen (Fallback-Bild für Startseite setzen).
-5. **Wunschmaß-Bestätigung (Zuschnitt-Konfigurator):** Theme-Datei mit `id="save-z-btn"` („Zuschnitte übernehmen“, vermutlich `snippets/es-zuschnitt.liquid`) laden und `python3 tools/zuschnitt_patch.py <orig> <neu>` ausführen, hochladen. Ergebnis: Pflicht-Checkbox „Ich habe alle Maße selbst geprüft …“, ohne Häkchen ist „Zuschnitte übernehmen“ gesperrt, Warenkorb-Eigenschaft „Maße bestätigt: Ja – vom Kunden geprüft (Datum)“, nach „Bearbeiten“ muss neu bestätigt werden. Das Skript wurde gegen die gerenderte Live-Produktseite getestet (alle 6 Fundstellen eindeutig).
 
 ## Danach
 
-- **Versand (#15):** nach Umstellung der App auf „höchste Rate“ und AU→AT die 26 Testkörbe erneut rechnen (`draftOrderCalculate`), zusätzlich „Dach + Montage“ (DE 99 €, AT 199 €) und „Farbmuster allein“ (6,90 €). Dann Versandrichtlinie (`shopPolicyUpdate`) und Theme-Texte angleichen, Theme-Einstellung „Gratisversand ab 500 €“ entfernen.
+- **Versand (#15):** nach Umstellung der App auf „höchste Rate“ und AU→AT die 26 Testkörbe erneut rechnen (`draftOrderCalculate`), zusätzlich „Dach + Montage“ (DE 99 €, AT 199 €) und „Farbmuster allein“ (6,90 €). Dann Versandrichtlinie (`shopPolicyUpdate`) und Theme-Texte angleichen (die Theme-Einstellung „Gratisversand ab 500 €“ ist bereits aus).
 - **Komplett-Check (#14):** MD5 aller Dateien, Liquid-Syntax, Funktionstests, Screenshots, Schema (FAQ, HowTo, LocalBusiness, Breadcrumb), Accessibility, Datenstand, unabhängiger Review-Agent, Go-live-Liste.
 
 ## Go-live-Checkliste (für den Shop-Betreiber)

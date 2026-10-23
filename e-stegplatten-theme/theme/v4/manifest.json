@@ -1,0 +1,22 @@
+[
+ {
+  "path": "snippets/es-header-m.liquid",
+  "new_md5": "530fe55af6a70db8839d0f067fbf70c7",
+  "size": 8578
+ },
+ {
+  "path": "snippets/es-overrides.liquid",
+  "new_md5": "457d67f44ef3982194875ae82c4c2a92",
+  "size": 13179
+ },
+ {
+  "path": "sections/header-group.json",
+  "new_md5": "1d283353d3f6eac64bce4c867d64eda3",
+  "size": 1303
+ },
+ {
+  "path": "config/settings_data.json",
+  "new_md5": "f76c6ddf5761645d5ef56e66276376d4",
+  "size": 4517
+ }
+]
