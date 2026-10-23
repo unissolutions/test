@@ -284,16 +284,16 @@ patch('sections/es-landing.liquid', [
 {%- if s.hero_text != blank -%}<p class="lead">{{ s.hero_text }}</p>{%- endif -%}
 {%- assign kh""",
      """<section class="hero" data-screen-label="Hero">
+<div class="hb" aria-hidden="true">{%- if s.hero_image != blank -%}<picture>{%- if s.hero_image_m -%}<source media="(max-width:749px)" srcset="{{ s.hero_image_m | image_url: width: 480 }} 480w, {{ s.hero_image_m | image_url: width: 720 }} 720w, {{ s.hero_image_m | image_url: width: 960 }} 960w, {{ s.hero_image_m | image_url: width: 1200 }} 1200w" sizes="100vw">{%- endif -%}<img class="hb__img" src="{{ s.hero_image | image_url: width: 1600 }}" srcset="{{ s.hero_image | image_url: width: 1000 }} 1000w, {{ s.hero_image | image_url: width: 1600 }} 1600w, {{ s.hero_image | image_url: width: 2200 }} 2200w" sizes="100vw" alt="" width="{{ s.hero_image.width | default: 1600 }}" height="{{ s.hero_image.height | default: 1063 }}" fetchpriority="high"></picture>{%- endif -%}<div class="hb__shade"></div></div>
 <div class="c">
-<div class="hv">
-{%- if s.hero_image != blank -%}<picture>{%- if s.hero_image_m -%}<source media="(max-width:749px)" srcset="{{ s.hero_image_m | image_url: width: 480 }} 480w, {{ s.hero_image_m | image_url: width: 720 }} 720w, {{ s.hero_image_m | image_url: width: 960 }} 960w, {{ s.hero_image_m | image_url: width: 1200 }} 1200w" sizes="100vw">{%- endif -%}<img class="hv__img" src="{{ s.hero_image | image_url: width: 1400 }}" srcset="{{ s.hero_image | image_url: width: 700 }} 700w, {{ s.hero_image | image_url: width: 1000 }} 1000w, {{ s.hero_image | image_url: width: 1400 }} 1400w" sizes="(max-width:999px) 100vw, 660px" alt="{{ s.hero_image.alt | default: s.hero_title | escape }}" width="{{ s.hero_image.width | default: 1400 }}" height="{{ s.hero_image.height | default: 1050 }}" fetchpriority="high"></picture>{%- endif -%}
-<div class="hv__tx">
+<div class="hdim" aria-hidden="true"><span class="hdim__d"><b data-ehb-d>Tiefe</b></span><span class="hdim__w"><b data-ehb-w>Breite</b></span></div>
+<div class="ht">
 {%- if s.kicker != blank -%}<p class="k">{{ s.kicker }}</p>{%- endif -%}
 <h1>{{ s.hero_title }}</h1>
 {%- if s.hero_text != blank -%}<p class="lead">{{ s.hero_text }}</p>{%- endif -%}
+{%- if s.hero_link_text != blank and s.hero_link_url != blank -%}<a class="ht__link" href="{{ s.hero_link_url }}">{{ s.hero_link_text }}</a>{%- endif -%}
 </div>
-</div>
-<div class="hc">
+<div class="hc"><div class="hcard">
 {%- assign kh"""),
     ("""{% render 'es-hero-konfig', kc: kc, lz: s.lz_terrassen, mu: s.muster_url %}
 {%- endif -%}
@@ -303,7 +303,7 @@ patch('sections/es-landing.liquid', [
 <div class="proof">""",
      """{% render 'es-hero-konfig', kc: kc, lz: s.lz_terrassen, mu: s.muster_url %}
 {%- endif -%}
-</div>
+</div></div>
 <div class="proof">"""),
     ("""
 </div>
@@ -315,7 +315,7 @@ patch('sections/es-landing.liquid', [
 </section>
 <section class="trust" data-screen-label="Vertrauen">"""),
     ('{"type":"image_picker","id":"hero_image","label":"Bild"},',
-     '{"type":"image_picker","id":"hero_image","label":"Bild"},{"type":"image_picker","id":"hero_image_m","label":"Bild für Handys (optional, 4:3 – Dach oben, ruhige Fläche unten)","info":"Ohne Auswahl wird das Bild oben auch auf Handys verwendet."},'),
+     '{"type":"image_picker","id":"hero_image","label":"Bild (vollflächig hinter Text und Konfigurator)"},{"type":"image_picker","id":"hero_image_m","label":"Bild für Handys (optional, 4:3 – Dach oben, ruhige Fläche unten)","info":"Ohne Auswahl wird das Bild oben auch auf Handys verwendet."},{"type":"text","id":"hero_link_text","label":"Link unter dem Text","default":"Alle Terrassenüberdachungen vergleichen"},{"type":"url","id":"hero_link_url","label":"Link-Ziel"},'),
     ("""<h3>{{ b.settings.title | escape | replace: 'Terrassenüberdachung', 'Terrassen&shy;überdachung' | replace: 'Stegplatten', 'Steg&shy;platten' }}</h3>""",
      """<h3>{{ b.settings.title | escape }}</h3>"""),
 ])
@@ -326,16 +326,42 @@ patch('snippets/es-landing-css.liquid', [
 .esl .hero .c{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:48px;align-items:start;padding-top:32px;padding-bottom:48px}
 .esl .hero img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;border:1px solid var(--ln)}
 .esl .proof{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--ln);border-top:none;background:#fff}""",
-     """/* Hero: Bild zuerst (Überschrift auf dem Bild), daneben der Konfigurator; mobil Bild → Konfigurator → Belege */
-.esl .hero{border-bottom:1px solid var(--ln)}
-.esl .hero .c{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);grid-template-rows:minmax(0,1fr) auto;grid-template-areas:"hv hc" "proof hc";gap:0 48px;align-items:start;padding-top:24px;padding-bottom:48px}
-.esl .hv{grid-area:hv;position:relative;align-self:stretch;min-height:440px;display:flex;flex-direction:column;justify-content:flex-end;background:var(--ink);border:1px solid var(--ln);overflow:hidden}
-.esl .hv__img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
-.esl .hv__tx{position:relative;padding:140px 28px 28px;background:linear-gradient(180deg,rgba(27,31,29,0) 0%,rgba(27,31,29,.55) 40%,rgba(27,31,29,.9) 100%)}
-.esl .hv__tx .k{color:#A9DBBE;margin-bottom:8px}
-.esl .hv__tx h1{color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.35)}
-.esl .hv__tx .lead{color:rgba(255,255,255,.92);margin-top:10px;text-shadow:0 1px 2px rgba(0,0,0,.35)}
-.esl .hc{grid-area:hc;min-width:0}
+     """/* Hero: vollflächiges Foto, Text links, Konfigurator als weiße Karte rechts, Maßlinien für Breite/Tiefe */
+.esl .hero{position:relative;background:var(--ink);color:#fff;border-bottom:1px solid var(--ln);overflow:hidden}
+.esl .hb{position:absolute;inset:0}
+.esl .hb__img{width:100%;height:100%;object-fit:cover;object-position:50% 42%;display:block}
+.esl .hb__shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(18,22,20,.84) 0%,rgba(18,22,20,.62) 40%,rgba(18,22,20,.32) 68%,rgba(18,22,20,.18) 100%)}
+.esl .hero .c{position:relative;display:grid;grid-template-columns:minmax(0,1fr) 420px;grid-template-rows:auto auto;grid-template-areas:"ht hc" "proof hc";gap:26px 56px;align-items:center;min-height:600px;padding-top:40px;padding-bottom:64px}
+.esl .ht{grid-area:ht;align-self:end;padding-left:64px;max-width:640px}
+.esl .ht .k{color:#A9DBBE;margin-bottom:10px}
+.esl .ht h1{color:#fff;font-size:clamp(34px,4.2vw,56px);line-height:1.04;text-shadow:0 1px 2px rgba(0,0,0,.3)}
+.esl .ht .lead{color:rgba(255,255,255,.9);font-size:17px;max-width:48ch;text-shadow:0 1px 2px rgba(0,0,0,.3)}
+.esl .ht__link{display:inline-block;margin-top:18px;color:#fff;font-weight:700;font-size:15px;text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:2px}
+.esl .ht__link:hover{color:#A9DBBE}
+.esl .hc{grid-area:hc;min-width:0;align-self:center}
+.esl .hcard{background:#fff;color:var(--ink);box-shadow:0 24px 60px rgba(0,0,0,.35)}
+.esl .hcard .ehx{margin:0}
+/* Karte kompakt (nur Desktop): kleinere Pills und Abstände, damit Hero und Karte in den sichtbaren Bereich passen */
+@media(min-width:1001px){
+.esl .hcard .ehx__tab{min-height:52px;padding:6px 14px}
+.esl .hcard .ehx__tab small{white-space:nowrap}
+.esl .hcard .ehk{padding:16px 20px 20px}
+.esl .hcard .ehk__o{margin-bottom:10px}
+.esl .hcard .ehk__l{font-size:14px;margin-bottom:6px}
+.esl .hcard .ehk__pill{min-height:40px;font-size:14px;padding:0 6px}
+.esl .hcard .ehk__ft{padding-top:14px;margin-top:2px}
+.esl .hcard .ehk__price{font-size:32px}
+.esl .hcard .ehk__go{height:50px;font-size:16px;padding:0 20px}
+}
+.esl .hdim{position:absolute;inset:0;pointer-events:none}
+.esl .hdim__d{position:absolute;left:18px;top:15%;bottom:26%;width:0;border-left:1px solid rgba(255,255,255,.75)}
+.esl .hdim__w{position:absolute;left:64px;right:520px;bottom:30px;height:0;border-top:1px solid rgba(255,255,255,.75)}
+.esl .hdim__d::before,.esl .hdim__d::after{content:"";position:absolute;left:-6px;width:12px;height:0;border-top:1px solid rgba(255,255,255,.75)}
+.esl .hdim__d::before{top:0}.esl .hdim__d::after{bottom:0}
+.esl .hdim__w::before,.esl .hdim__w::after{content:"";position:absolute;top:-6px;height:12px;width:0;border-left:1px solid rgba(255,255,255,.75)}
+.esl .hdim__w::before{left:0}.esl .hdim__w::after{right:0}
+.esl .hdim b{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:var(--g);color:#fff;font-size:13px;font-weight:700;line-height:1.2;padding:5px 10px;white-space:nowrap}
+.esl .hdim__d b{transform:translate(-50%,-50%) rotate(-90deg)}
 .esl .proof{grid-area:proof;display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--ln);border-top:none;background:#fff}"""),
     (".esl .ehx{margin-top:24px}", ".esl .ehx{margin-top:0}"),
     (".esl .cat{display:flex;flex-direction:column;min-width:0;border:1px solid var(--ln);",
@@ -346,21 +372,29 @@ patch('snippets/es-landing-css.liquid', [
      ".esl .cat .l{margin-top:auto;padding-top:8px;font-weight:700;color:var(--g6);display:inline-flex;gap:6px;align-items:center;font-size:clamp(13px,5.6cqi,15px);white-space:nowrap}"),
     (""".esl .hero .c{grid-template-columns:1fr;gap:24px}
 .esl .cats,.esl .steps,.esl .prods{grid-template-columns:repeat(2,minmax(0,1fr))}""",
-     """.esl .hero .c{grid-template-columns:1fr;grid-template-rows:auto;grid-template-areas:"hv" "hc" "proof";gap:20px 0}
-.esl .hv{min-height:0;aspect-ratio:3/2;align-self:auto}
-.esl .hv__tx{padding:80px 20px 20px}
+     """.esl .hero{display:grid;grid-template-columns:100%;grid-template-rows:auto auto auto}
+.esl .hb{grid-area:1/1;position:relative;inset:auto;aspect-ratio:16/9}
+.esl .hb__shade{background:linear-gradient(180deg,rgba(18,22,20,0) 0%,rgba(18,22,20,.3) 40%,rgba(18,22,20,.86) 100%)}
+.esl .hero .c{display:contents}
+.esl .ht{grid-area:1/1;align-self:end;z-index:1;padding:0 24px 24px;max-width:none}
+.esl .ht h1{font-size:clamp(28px,5vw,40px)}
+.esl .hc{grid-area:2/1;padding:24px 24px 0}
+.esl .hcard{box-shadow:none}
+.esl .proof{grid-area:3/1;padding:16px 24px 24px}
+.esl .hdim{display:none}
 .esl .cats,.esl .steps,.esl .prods{grid-template-columns:repeat(2,minmax(0,1fr))}"""),
     (""".esl .hero .c{padding-top:12px;padding-bottom:24px;gap:20px}
 .esl .hero .k,.esl .lead{display:none}
 .esl .hero .c>div:last-child{margin:0 -16px}
 .esl .hero img{aspect-ratio:16/10;border-left:0;border-right:0}
 .esl .proof{border-left:0;border-right:0}""",
-     """.esl .hero .c{padding-top:0;padding-bottom:24px;gap:16px 0}
-.esl .hv{margin:0 -16px;border-left:0;border-right:0;aspect-ratio:4/3}
-.esl .hv__tx{padding:56px 16px 16px}
-.esl .hv__tx .lead{display:none}
+     """.esl .hb{aspect-ratio:4/3}
+.esl .ht{padding:0 16px 14px}
+.esl .ht .lead{display:none}
+.esl .ht__link{margin-top:8px;font-size:14px}
+.esl .hc{padding:12px 0 0}
 .esl .proof{border-left:0;border-right:0;margin:0 -16px}"""),
-    (".esl .ehx{margin:12px -16px 0}", ".esl .ehx{margin:0 -16px}"),
+    (".esl .ehx{margin:12px -16px 0}", ".esl .ehx{margin:0}"),
     (""".esl .cat h3{font-size:15px;min-height:2.5em}
 .esl .cat .l{font-size:14px;gap:4px;white-space:normal;line-height:1.3}""",
      """.esl .cat .l{gap:4px}"""),
@@ -380,17 +414,16 @@ patch('snippets/es-landing-css.liquid', [
 .esl .proof div{padding:14px 16px;border-right:1px solid var(--ln);font-size:14px;line-height:1.4;color:var(--mu)}
 .esl .proof div:last-child{border-right:none}
 .esl .proof b{display:block;color:var(--ink);font-size:15px;margin-bottom:2px}""",
-     """.esl .proof{grid-area:proof;display:grid;grid-template-columns:1fr;border:1px solid var(--ln);border-top:none;background:#fff}
-.esl .proof div{display:flex;flex-wrap:wrap;align-items:baseline;gap:0 8px;padding:9px 16px;border-bottom:1px solid var(--ln);font-size:14px;line-height:1.4;color:var(--mu)}
-.esl .proof div:last-child{border-bottom:none}
-.esl .proof svg{color:var(--g);flex:none;width:16px;height:16px;align-self:center;margin-right:2px}
-.esl .proof b{display:inline;white-space:nowrap;color:var(--ink);font-size:15px}"""),
+     """.esl .proof{grid-area:proof;align-self:start;display:flex;flex-wrap:wrap;gap:8px 24px;padding-left:64px;border:0;background:none}
+.esl .proof div{display:flex;flex-wrap:wrap;align-items:baseline;gap:0 6px;padding:0;border:0;font-size:14px;line-height:1.4;color:rgba(255,255,255,.82)}
+.esl .proof svg{color:#A9DBBE;flex:none;width:16px;height:16px;align-self:center}
+.esl .proof b{display:inline;white-space:nowrap;color:#fff;font-size:14px;font-weight:700}"""),
     (""".esl .proof{border-left:0;border-right:0;margin:0 -16px}
 .esl .proof div{padding:10px 8px;font-size:12px;line-height:1.35}
 .esl .proof b{font-size:13px;line-height:1.25}""",
-     """.esl .proof{border-left:0;border-right:0;margin:0 -16px}
-.esl .proof div{padding:8px 16px;font-size:13px;line-height:1.35}
-.esl .proof b{font-size:14px}"""),
+     """.esl .proof{margin:0;padding:12px 16px 18px;gap:6px 14px}
+.esl .proof div span{display:none}
+.esl .proof b{font-size:13px}"""),
     # Tabs: Breite nach Beschriftung verteilen, damit „Terrassendach konfigurieren" auch bei 1000–1100 px und auf Handys einzeilig bleibt
     (""".esl .ehx__tabs{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--ln);border-bottom:0;background:var(--bg2)}
 .esl .ehx__tab{display:flex;flex-direction:column;""",
@@ -403,7 +436,7 @@ patch('snippets/es-landing-css.liquid', [
     # Trust-Leiste auf Handys einspaltig (Titel nowrap, Zusatz daneben oder darunter); H2 und Kacheln bei sehr schmalen Geräten
     ("@media(max-width:380px){.esl h1{font-size:24px}}",
      """@media(max-width:480px){
-.esl .hv__tx .k{font-size:11px;letter-spacing:.07em}
+.esl .ht .k{font-size:11px;letter-spacing:.07em}
 .esl .trust .c{grid-template-columns:1fr}
 .esl .trust .c>div{padding:10px 16px}
 .esl .trust span{display:flex;flex-wrap:wrap;align-items:baseline;gap:0 8px}
@@ -476,6 +509,13 @@ html body .text-with-icons__dots:not(#_),html body .text-with-icons .flickity-pa
 </style>"""),
 ])
 
+
+# ---------------------------------------------------------------- Hero-Konfigurator: Maßlinien (Breite/Tiefe) im Hero mitführen
+patch('snippets/es-hero-konfig.liquid', [
+    ("kl.textContent='\u00a0'+lb(st.w)+' × '+lb(st.d);",
+     "kl.textContent='\u00a0'+lb(st.w)+' × '+lb(st.d);document.querySelectorAll('[data-ehb-w]').forEach(function(e){e.textContent='Breite '+String(st.w).replace(' Meter',' m')});document.querySelectorAll('[data-ehb-d]').forEach(function(e){e.textContent='Tiefe '+String(st.d).replace(' Meter',' m')});"),
+])
+
 # ---------------------------------------------------------------- index.json: Trust-Text, Farbmuster
 p = B / 'new/templates/index.json'
 raw = p.read_text(encoding='utf-8')
@@ -487,6 +527,9 @@ L['settings']['muster_url'] = '/products/farbmuster'
 # Hero-Bilder (Higgsfield-Generate, Quelle content/hero/*.jpg) – Dateien müssen vor dem Theme-Upload in Shopify > Inhalte > Dateien liegen
 L['settings']['hero_image'] = 'shopify://shop_images/hero-terrassendach-stegplatten.jpg'
 L['settings']['hero_image_m'] = 'shopify://shop_images/hero-terrassendach-stegplatten-mobil.jpg'
+L['settings']['hero_link_text'] = 'Alle Terrassenüberdachungen vergleichen'
+L['settings']['tab2_sub'] = 'Stärke in 2 Fragen'
+L['settings']['hero_link_url'] = '/collections/terrassenuberdachung'
 L['blocks']['c1']['settings'].update({'title': 'Stegplatten', 'text': 'Doppelstegplatten 4,5–16 mm, Polycarbonat oder Acrylglas – millimetergenau zugeschnitten.'})
 L['blocks']['c2']['settings']['title'] = 'Terrassendächer'
 L['blocks']['c4']['settings']['cta'] = 'Nach Stärke'

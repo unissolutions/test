@@ -21,7 +21,7 @@
         "tab1_label": "Terrassendach konfigurieren",
         "tab1_sub": "Preis in 4 Klicks",
         "tab2_label": "Stegplatten finden",
-        "tab2_sub": "Passende Stärke in 2 Fragen",
+        "tab2_sub": "Stärke in 2 Fragen",
         "proof1_t": "Fachhandel seit 2013",
         "proof1_s": "TSZ GmbH, Gelsenkirchen",
         "proof2_t": "Telefonische Prüfung",
@@ -54,7 +54,9 @@
         "email": "info@e-stegplatten.de",
         "hours": "Mo–Fr 8–17 Uhr · Rückruf am selben Werktag",
         "muster_url": "/products/farbmuster",
-        "hero_image_m": "shopify://shop_images/hero-terrassendach-stegplatten-mobil.jpg"
+        "hero_image_m": "shopify://shop_images/hero-terrassendach-stegplatten-mobil.jpg",
+        "hero_link_text": "Alle Terrassenüberdachungen vergleichen",
+        "hero_link_url": "/collections/terrassenuberdachung"
       },
       "blocks": {
         "u1": {

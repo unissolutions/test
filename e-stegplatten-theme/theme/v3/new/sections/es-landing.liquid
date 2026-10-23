@@ -6,16 +6,16 @@
 <div class="esl" id="esl-{{ section.id }}">
 {% render 'es-landing-css' %}
 <section class="hero" data-screen-label="Hero">
+<div class="hb" aria-hidden="true">{%- if s.hero_image != blank -%}<picture>{%- if s.hero_image_m -%}<source media="(max-width:749px)" srcset="{{ s.hero_image_m | image_url: width: 480 }} 480w, {{ s.hero_image_m | image_url: width: 720 }} 720w, {{ s.hero_image_m | image_url: width: 960 }} 960w, {{ s.hero_image_m | image_url: width: 1200 }} 1200w" sizes="100vw">{%- endif -%}<img class="hb__img" src="{{ s.hero_image | image_url: width: 1600 }}" srcset="{{ s.hero_image | image_url: width: 1000 }} 1000w, {{ s.hero_image | image_url: width: 1600 }} 1600w, {{ s.hero_image | image_url: width: 2200 }} 2200w" sizes="100vw" alt="" width="{{ s.hero_image.width | default: 1600 }}" height="{{ s.hero_image.height | default: 1063 }}" fetchpriority="high"></picture>{%- endif -%}<div class="hb__shade"></div></div>
 <div class="c">
-<div class="hv">
-{%- if s.hero_image != blank -%}<picture>{%- if s.hero_image_m -%}<source media="(max-width:749px)" srcset="{{ s.hero_image_m | image_url: width: 480 }} 480w, {{ s.hero_image_m | image_url: width: 720 }} 720w, {{ s.hero_image_m | image_url: width: 960 }} 960w, {{ s.hero_image_m | image_url: width: 1200 }} 1200w" sizes="100vw">{%- endif -%}<img class="hv__img" src="{{ s.hero_image | image_url: width: 1400 }}" srcset="{{ s.hero_image | image_url: width: 700 }} 700w, {{ s.hero_image | image_url: width: 1000 }} 1000w, {{ s.hero_image | image_url: width: 1400 }} 1400w" sizes="(max-width:999px) 100vw, 660px" alt="{{ s.hero_image.alt | default: s.hero_title | escape }}" width="{{ s.hero_image.width | default: 1400 }}" height="{{ s.hero_image.height | default: 1050 }}" fetchpriority="high"></picture>{%- endif -%}
-<div class="hv__tx">
+<div class="hdim" aria-hidden="true"><span class="hdim__d"><b data-ehb-d>Tiefe</b></span><span class="hdim__w"><b data-ehb-w>Breite</b></span></div>
+<div class="ht">
 {%- if s.kicker != blank -%}<p class="k">{{ s.kicker }}</p>{%- endif -%}
 <h1>{{ s.hero_title }}</h1>
 {%- if s.hero_text != blank -%}<p class="lead">{{ s.hero_text }}</p>{%- endif -%}
+{%- if s.hero_link_text != blank and s.hero_link_url != blank -%}<a class="ht__link" href="{{ s.hero_link_url }}">{{ s.hero_link_text }}</a>{%- endif -%}
 </div>
-</div>
-<div class="hc">
+<div class="hc"><div class="hcard">
 {%- assign kh = s.konfig_handle | default: 'terrassenuberdachung-alu-mit-stegplatten' -%}{%- assign kc = collections[kh] -%}
 {%- if s.hero_mode == 'finder' -%}
 {% render 'es-landing-finder', s: s, blocks: section.blocks, sid: section.id, ic_arrow: ic_arrow, lz: s.lz_default %}
@@ -36,7 +36,7 @@ T.forEach(function(t,i){t.addEventListener('click',function(){sel(t)});t.addEven
 {%- else -%}
 {% render 'es-hero-konfig', kc: kc, lz: s.lz_terrassen, mu: s.muster_url %}
 {%- endif -%}
-</div>
+</div></div>
 <div class="proof"><div>{{ ic_check }}<b>{{ s.proof1_t }}</b><span>{{ s.proof1_s }}</span></div><div>{{ ic_check }}<b>{{ s.proof2_t }}</b><span>{{ s.proof2_s }}</span></div>{%- assign jc = shop.metafields.judgeme.all_reviews_count | plus: 0 -%}{%- assign jr = shop.metafields.judgeme.all_reviews_rating | times: 1.0 | round: 1 -%}<div>{{ ic_check }}{%- if jc > 0 -%}<b>{{ jr | replace: '.', ',' }} ★ aus {{ jc }} Bewertungen</b>{%- else -%}<b>{{ s.proof3_t }}</b>{%- endif -%}<span>{{ s.proof3_s }}</span></div></div>
 </div>
 </section>
@@ -111,7 +111,7 @@ T.forEach(function(t,i){t.addEventListener('click',function(){sel(t)});t.addEven
 {"type":"text","id":"kicker","label":"Kicker","default":"Stegplatten & Terrassenüberdachungen aus Gelsenkirchen"},
 {"type":"text","id":"hero_title","label":"Überschrift","default":"Stegplatten & Terrassendächer nach Maß"},
 {"type":"textarea","id":"hero_text","label":"Text"},
-{"type":"image_picker","id":"hero_image","label":"Bild"},{"type":"image_picker","id":"hero_image_m","label":"Bild für Handys (optional, 4:3 – Dach oben, ruhige Fläche unten)","info":"Ohne Auswahl wird das Bild oben auch auf Handys verwendet."},
+{"type":"image_picker","id":"hero_image","label":"Bild (vollflächig hinter Text und Konfigurator)"},{"type":"image_picker","id":"hero_image_m","label":"Bild für Handys (optional, 4:3 – Dach oben, ruhige Fläche unten)","info":"Ohne Auswahl wird das Bild oben auch auf Handys verwendet."},{"type":"text","id":"hero_link_text","label":"Link unter dem Text","default":"Alle Terrassenüberdachungen vergleichen"},{"type":"url","id":"hero_link_url","label":"Link-Ziel"},
 {"type":"select","id":"hero_mode","label":"Hero-Auswahl","options":[{"value":"konfig","label":"Terrassendach-Konfigurator"},{"value":"finder","label":"Stegplatten-Stärke-Finder"},{"value":"both","label":"Beides (Umschalter mit zwei Tabs)"}],"default":"konfig"},
 {"type":"select","id":"hero_default_tab","label":"Umschalter: Standard-Tab","options":[{"value":"konfig","label":"Terrassendach"},{"value":"finder","label":"Stegplatten"}],"default":"konfig"},
 {"type":"text","id":"tab1_label","label":"Tab 1 (Terrassendach)","default":"Terrassendach konfigurieren"},{"type":"text","id":"tab1_sub","label":"Tab 1 Zusatz","default":"Preis in 4 Klicks"},
