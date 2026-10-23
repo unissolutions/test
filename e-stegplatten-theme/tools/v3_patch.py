@@ -5,7 +5,7 @@ import json, pathlib, re, shutil
 
 B = pathlib.Path('/tmp/claude-0/-home-user-test/beef7815-2c55-57f0-9ec2-48630e491a1b/scratchpad/theme/v3')
 FILES = ['sections/es-pdp-terrasse.liquid', 'sections/es-landing.liquid', 'snippets/es-pdp-js.liquid',
-         'snippets/es-pdp-css.liquid', 'snippets/es-hero-konfig.liquid', 'snippets/es-led-guard.liquid', 'snippets/es-landing-css.liquid', 'templates/index.json', 'snippets/es-overrides.liquid']
+         'snippets/es-pdp-css.liquid', 'snippets/es-hero-konfig.liquid', 'snippets/es-led-guard.liquid', 'snippets/es-landing-css.liquid', 'templates/index.json', 'snippets/es-overrides.liquid', 'sections/es-collection-chips.liquid', 'assets/es-mobile.css']
 for f in FILES:
     shutil.copy(B / 'orig' / f, B / 'new' / f)
 
@@ -516,6 +516,35 @@ patch('snippets/es-hero-konfig.liquid', [
      "kl.textContent='\u00a0'+lb(st.w)+' × '+lb(st.d);document.querySelectorAll('[data-ehb-w]').forEach(function(e){e.textContent='Breite '+String(st.w).replace(' Meter',' m')});document.querySelectorAll('[data-ehb-d]').forEach(function(e){e.textContent='Tiefe '+String(st.d).replace(' Meter',' m')});"),
 ])
 
+
+# ---------------------------------------------------------------- Kollektions-Chips: auf Handys eine scrollbare Reihe statt Umbruch
+patch('sections/es-collection-chips.liquid', [
+    ("""<div class="es-chips__row" {{ blk.shopify_attributes }}>{%- if blk.settings.label != blank -%}<span class="es-chips__label">{{ blk.settings.label }}</span>{%- endif -%}
+{%- for ln in lines -%}""",
+     """<div class="es-chips__row" {{ blk.shopify_attributes }}>{%- if blk.settings.label != blank -%}<span class="es-chips__label">{{ blk.settings.label }}</span>{%- endif -%}<div class="es-chips__list">
+{%- for ln in lines -%}"""),
+    ("""{%- if is_on -%}<a class="es-chip is-active" href="{{ collection.url }}" title="Filter entfernen">{{ lbl }} ×</a>{%- else -%}<a class="es-chip" href="{{ collection.url }}/{{ th }}">{{ lbl }}</a>{%- endif -%}
+{%- endif -%}{%- endfor -%}
+</div>""",
+     """{%- if is_on -%}<a class="es-chip is-active" href="{{ collection.url }}" title="Filter entfernen">{{ lbl }} ×</a>{%- else -%}<a class="es-chip" href="{{ collection.url }}/{{ th }}">{{ lbl }}</a>{%- endif -%}
+{%- endif -%}{%- endfor -%}
+</div></div>"""),
+])
+patch('assets/es-mobile.css', [
+    (""".es-chips__row{flex-wrap:wrap;gap:6px;overflow:visible;margin:0;padding:0}
+.es-chips__label{min-width:0;width:100%}
+.es-chip{min-height:44px;padding:0 12px;font-size:13px;font-weight:600;flex:none}""",
+     """.es-chips__row{flex-wrap:wrap;gap:6px 0;overflow:visible;margin:0;padding:0}
+.es-chips__label{min-width:0;width:100%}
+/* Chips in einer Reihe: seitlich scrollbar (randlos), kein Umbruch */
+.es-chips__list{display:flex;flex-wrap:nowrap;gap:6px;width:calc(100% + 32px);margin:0 -16px;padding:0 16px 4px;overflow-x:auto;scroll-snap-type:x proximity;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.es-chips__list::-webkit-scrollbar{display:none}
+.es-chip{min-height:44px;padding:0 12px;font-size:13px;font-weight:600;flex:none;scroll-snap-align:start}"""),
+])
+# Desktop: die Liste löst sich auf (Label + Chips wie bisher in einer Zeile)
+m = B / 'new/assets/es-mobile.css'
+m.write_text(m.read_text(encoding='utf-8') + '\n@media (min-width: 750px){.es-chips__list{display:contents}}\n', encoding='utf-8')
+
 # ---------------------------------------------------------------- index.json: Trust-Text, Farbmuster
 p = B / 'new/templates/index.json'
 raw = p.read_text(encoding='utf-8')
@@ -547,6 +576,6 @@ for f in FILES:
         m = re.search(r'{% schema %}(.*){% endschema %}', t, re.S)
         if m:
             json.loads(m.group(1))
-    else:
+    elif f.endswith('.json'):
         json.loads(t[len(head):])
     print('ok', f, len(t.encode('utf-8')))
