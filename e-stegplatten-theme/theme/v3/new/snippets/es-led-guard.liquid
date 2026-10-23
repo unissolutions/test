@@ -1,0 +1,20 @@
+{%- comment -%}e-Stegplatten: LED-Spots und Montage gibt es nur zusammen mit einem Terrassendach. Entfernt diese Zusatzpositionen aus dem Warenkorb, sobald kein Dach mehr darin liegt, und leitet ihre Produktseiten zu den Terrassenüberdachungen um. Handles hier und in ADD pflegen.{%- endcomment -%}
+{%- assign es_addons = 'led-spots-terrassenueberdachung,montage-terrassendach-stegplatten,montage-terrassendach-vsg-glas' | split: ',' -%}
+{%- if request.page_type == 'product' and es_addons contains product.handle -%}<script>location.replace({{ routes.collections_url | append: '/terrassenuberdachung' | json }})</script>{%- endif -%}
+<script>(function(){
+var ADD=['led-spots-terrassenueberdachung','montage-terrassendach-stegplatten','montage-terrassendach-vsg-glas'],base=(window.routes&&window.routes.rootUrlWithoutSlash)||'',F=window.fetch.bind(window),busy=false;
+function add(i){return ADD.indexOf(i.handle)>-1}
+function roof(i){return !add(i)&&(i.product_type==='Terrassenüberdachung'||/terrassendach|terrassenüberdachung/i.test(i.product_title||''))}
+function chk(){if(busy)return;busy=true;
+F(base+'/cart.js',{headers:{Accept:'application/json'}}).then(function(r){return r.json()}).then(function(c){
+var has=c.items.some(roof),u={},n=0;
+c.items.forEach(function(i){if(add(i)&&!has){u[i.key]=0;n++}});
+if(!n){busy=false;return}
+return F(base+'/cart/update.js',{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify({updates:u})}).then(function(){busy=false;
+if(window.theme&&window.theme.pageType==='cart'){location.reload();return}
+document.documentElement.dispatchEvent(new CustomEvent('cart:refresh',{bubbles:true,detail:{scrollToTop:false}}))})})
+.catch(function(){busy=false})}
+window.fetch=function(u){var p=F.apply(window,arguments);try{if(RegExp('/cart/(change|update|clear)').test(String(u&&u.url||u)))p.then(function(){setTimeout(chk,300)},function(){})}catch(e){}return p};
+document.documentElement.addEventListener('cart:refresh',function(){setTimeout(chk,300)});
+if(window.theme&&window.theme.cartCount>0)chk();
+})();</script>

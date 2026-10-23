@@ -1,0 +1,1759 @@
+{
+ "input": {
+  "title": "Montage Terrassendach mit VSG-Glas",
+  "handle": "montage-terrassendach-vsg-glas",
+  "productType": "Montage",
+  "vendor": "e-Stegplatten",
+  "status": "ACTIVE",
+  "tags": [
+   "Montage",
+   "Nicht einzeln kaufbar"
+  ],
+  "descriptionHtml": "<p>Montage Ihrer Alu-Terrassenüberdachung mit 8-mm-VSG-Glas durch unser eigenes Montageteam – im Umkreis von ca. 300 km um Gelsenkirchen sowie in Österreich. Der Preis richtet sich nach Dachgröße und Land und wird auf der Produktseite des Daches nach Eingabe der Postleitzahl angezeigt.</p><p>Die Montage ist nur zusammen mit einem Terrassendach buchbar. Den Termin stimmen wir nach der Bestellung mit Ihnen ab. Fundamente und Wanddübel sind nicht enthalten.</p>",
+  "productOptions": [
+   {
+    "name": "Breite",
+    "position": 1,
+    "values": [
+     {
+      "name": "3,00 Meter"
+     },
+     {
+      "name": "4,00 Meter"
+     },
+     {
+      "name": "5,00 Meter"
+     },
+     {
+      "name": "6,00 Meter"
+     },
+     {
+      "name": "7,00 Meter"
+     }
+    ]
+   },
+   {
+    "name": "Tiefe",
+    "position": 2,
+    "values": [
+     {
+      "name": "2,00 Meter"
+     },
+     {
+      "name": "2,50 Meter"
+     },
+     {
+      "name": "3,00 Meter"
+     },
+     {
+      "name": "3,50 Meter"
+     },
+     {
+      "name": "4,00 Meter"
+     },
+     {
+      "name": "4,50 Meter"
+     },
+     {
+      "name": "5,00 Meter"
+     }
+    ]
+   },
+   {
+    "name": "Land",
+    "position": 3,
+    "values": [
+     {
+      "name": "Deutschland"
+     },
+     {
+      "name": "Österreich"
+     }
+    ]
+   }
+  ],
+  "variants": [
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "3,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "2,00 Meter"
+     },
+     {
+      "optionName": "Land",
+      "name": "Deutschland"
+     }
+    ],
+    "price": "582.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-VSG-300x200-DE"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "3,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "2,00 Meter"
+     },
+     {
+      "optionName": "Land",
+      "name": "Österreich"
+     }
+    ],
+    "price": "785.70",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-VSG-300x200-AT"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "3,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "2,50 Meter"
+     },
+     {
+      "optionName": "Land",
+      "name": "Deutschland"
+     }
+    ],
+    "price": "727.50",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-VSG-300x250-DE"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "3,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "2,50 Meter"
+     },
+     {
+      "optionName": "Land",
+      "name": "Österreich"
+     }
+    ],
+    "price": "982.13",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-VSG-300x250-AT"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "3,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "3,00 Meter"
+     },
+     {
+      "optionName": "Land",
+      "name": "Deutschland"
+     }
+    ],
+    "price": "873.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-VSG-300x300-DE"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "3,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "3,00 Meter"
+     },
+     {
+      "optionName": "Land",
+      "name": "Österreich"
+     }
+    ],
+    "price": "1178.55",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-VSG-300x300-AT"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "3,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "3,50 Meter"
+     },
+     {
+      "optionName": "Land",
+      "name": "Deutschland"
+     }
+    ],
+    "price": "1018.50",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-VSG-300x350-DE"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "3,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "3,50 Meter"
+     },
+     {
+      "optionName": "Land",
+      "name": "Österreich"
+     }
+    ],
+    "price": "1374.98",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-VSG-300x350-AT"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "3,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "4,00 Meter"
+     },
+     {
+      "optionName": "Land",
+      "name": "Deutschland"
+     }
+    ],
+    "price": "1164.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-VSG-300x400-DE"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "3,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "4,00 Meter"
+     },
+     {
+      "optionName": "Land",
+      "name": "Österreich"
+     }
+    ],
+    "price": "1571.40",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-VSG-300x400-AT"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "3,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "4,50 Meter"
+     },
+     {
+      "optionName": "Land",
+      "name": "Deutschland"
+     }
+    ],
+    "price": "1309.50",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-VSG-300x450-DE"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "3,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "4,50 Meter"
+     },
+     {
+      "optionName": "Land",
+      "name": "Österreich"
+     }
+    ],
+    "price": "1767.83",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-VSG-300x450-AT"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "3,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "5,00 Meter"
+     },
+     {
+      "optionName": "Land",
+      "name": "Deutschland"
+     }
+    ],
+    "price": "1455.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-VSG-300x500-DE"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "3,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "5,00 Meter"
+     },
+     {
+      "optionName": "Land",
+      "name": "Österreich"
+     }
+    ],
+    "price": "1964.25",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-VSG-300x500-AT"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "4,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "2,00 Meter"
+     },
+     {
+      "optionName": "Land",
+      "name": "Deutschland"
+     }
+    ],
+    "price": "776.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-VSG-400x200-DE"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "4,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "2,00 Meter"
+     },
+     {
+      "optionName": "Land",
+      "name": "Österreich"
+     }
+    ],
+    "price": "1047.60",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-VSG-400x200-AT"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "4,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "2,50 Meter"
+     },
+     {
+      "optionName": "Land",
+      "name": "Deutschland"
+     }
+    ],
+    "price": "970.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-VSG-400x250-DE"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "4,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "2,50 Meter"
+     },
+     {
+      "optionName": "Land",
+      "name": "Österreich"
+     }
+    ],
+    "price": "1309.50",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-VSG-400x250-AT"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "4,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "3,00 Meter"
+     },
+     {
+      "optionName": "Land",
+      "name": "Deutschland"
+     }
+    ],
+    "price": "1164.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-VSG-400x300-DE"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "4,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "3,00 Meter"
+     },
+     {
+      "optionName": "Land",
+      "name": "Österreich"
+     }
+    ],
+    "price": "1571.40",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-VSG-400x300-AT"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "4,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "3,50 Meter"
+     },
+     {
+      "optionName": "Land",
+      "name": "Deutschland"
+     }
+    ],
+    "price": "1358.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-VSG-400x350-DE"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "4,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "3,50 Meter"
+     },
+     {
+      "optionName": "Land",
+      "name": "Österreich"
+     }
+    ],
+    "price": "1833.30",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-VSG-400x350-AT"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "4,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "4,00 Meter"
+     },
+     {
+      "optionName": "Land",
+      "name": "Deutschland"
+     }
+    ],
+    "price": "1552.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-VSG-400x400-DE"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "4,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "4,00 Meter"
+     },
+     {
+      "optionName": "Land",
+      "name": "Österreich"
+     }
+    ],
+    "price": "2095.20",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-VSG-400x400-AT"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "4,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "4,50 Meter"
+     },
+     {
+      "optionName": "Land",
+      "name": "Deutschland"
+     }
+    ],
+    "price": "1746.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-VSG-400x450-DE"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "4,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "4,50 Meter"
+     },
+     {
+      "optionName": "Land",
+      "name": "Österreich"
+     }
+    ],
+    "price": "2357.10",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-VSG-400x450-AT"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "4,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "5,00 Meter"
+     },
+     {
+      "optionName": "Land",
+      "name": "Deutschland"
+     }
+    ],
+    "price": "1940.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-VSG-400x500-DE"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "4,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "5,00 Meter"
+     },
+     {
+      "optionName": "Land",
+      "name": "Österreich"
+     }
+    ],
+    "price": "2619.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-VSG-400x500-AT"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "5,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "2,00 Meter"
+     },
+     {
+      "optionName": "Land",
+      "name": "Deutschland"
+     }
+    ],
+    "price": "970.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-VSG-500x200-DE"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "5,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "2,00 Meter"
+     },
+     {
+      "optionName": "Land",
+      "name": "Österreich"
+     }
+    ],
+    "price": "1309.50",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-VSG-500x200-AT"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "5,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "2,50 Meter"
+     },
+     {
+      "optionName": "Land",
+      "name": "Deutschland"
+     }
+    ],
+    "price": "1212.50",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-VSG-500x250-DE"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "5,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "2,50 Meter"
+     },
+     {
+      "optionName": "Land",
+      "name": "Österreich"
+     }
+    ],
+    "price": "1636.88",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-VSG-500x250-AT"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "5,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "3,00 Meter"
+     },
+     {
+      "optionName": "Land",
+      "name": "Deutschland"
+     }
+    ],
+    "price": "1455.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-VSG-500x300-DE"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "5,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "3,00 Meter"
+     },
+     {
+      "optionName": "Land",
+      "name": "Österreich"
+     }
+    ],
+    "price": "1964.25",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-VSG-500x300-AT"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "5,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "3,50 Meter"
+     },
+     {
+      "optionName": "Land",
+      "name": "Deutschland"
+     }
+    ],
+    "price": "1697.50",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-VSG-500x350-DE"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "5,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "3,50 Meter"
+     },
+     {
+      "optionName": "Land",
+      "name": "Österreich"
+     }
+    ],
+    "price": "2291.63",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-VSG-500x350-AT"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "5,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "4,00 Meter"
+     },
+     {
+      "optionName": "Land",
+      "name": "Deutschland"
+     }
+    ],
+    "price": "1940.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-VSG-500x400-DE"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "5,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "4,00 Meter"
+     },
+     {
+      "optionName": "Land",
+      "name": "Österreich"
+     }
+    ],
+    "price": "2619.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-VSG-500x400-AT"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "5,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "4,50 Meter"
+     },
+     {
+      "optionName": "Land",
+      "name": "Deutschland"
+     }
+    ],
+    "price": "2182.50",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-VSG-500x450-DE"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "5,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "4,50 Meter"
+     },
+     {
+      "optionName": "Land",
+      "name": "Österreich"
+     }
+    ],
+    "price": "2946.38",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-VSG-500x450-AT"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "5,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "5,00 Meter"
+     },
+     {
+      "optionName": "Land",
+      "name": "Deutschland"
+     }
+    ],
+    "price": "2425.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-VSG-500x500-DE"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "5,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "5,00 Meter"
+     },
+     {
+      "optionName": "Land",
+      "name": "Österreich"
+     }
+    ],
+    "price": "3273.75",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-VSG-500x500-AT"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "6,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "2,00 Meter"
+     },
+     {
+      "optionName": "Land",
+      "name": "Deutschland"
+     }
+    ],
+    "price": "1164.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-VSG-600x200-DE"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "6,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "2,00 Meter"
+     },
+     {
+      "optionName": "Land",
+      "name": "Österreich"
+     }
+    ],
+    "price": "1571.40",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-VSG-600x200-AT"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "6,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "2,50 Meter"
+     },
+     {
+      "optionName": "Land",
+      "name": "Deutschland"
+     }
+    ],
+    "price": "1455.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-VSG-600x250-DE"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "6,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "2,50 Meter"
+     },
+     {
+      "optionName": "Land",
+      "name": "Österreich"
+     }
+    ],
+    "price": "1964.25",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-VSG-600x250-AT"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "6,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "3,00 Meter"
+     },
+     {
+      "optionName": "Land",
+      "name": "Deutschland"
+     }
+    ],
+    "price": "1746.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-VSG-600x300-DE"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "6,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "3,00 Meter"
+     },
+     {
+      "optionName": "Land",
+      "name": "Österreich"
+     }
+    ],
+    "price": "2357.10",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-VSG-600x300-AT"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "6,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "3,50 Meter"
+     },
+     {
+      "optionName": "Land",
+      "name": "Deutschland"
+     }
+    ],
+    "price": "2037.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-VSG-600x350-DE"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "6,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "3,50 Meter"
+     },
+     {
+      "optionName": "Land",
+      "name": "Österreich"
+     }
+    ],
+    "price": "2749.95",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-VSG-600x350-AT"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "6,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "4,00 Meter"
+     },
+     {
+      "optionName": "Land",
+      "name": "Deutschland"
+     }
+    ],
+    "price": "2328.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-VSG-600x400-DE"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "6,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "4,00 Meter"
+     },
+     {
+      "optionName": "Land",
+      "name": "Österreich"
+     }
+    ],
+    "price": "3142.80",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-VSG-600x400-AT"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "6,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "4,50 Meter"
+     },
+     {
+      "optionName": "Land",
+      "name": "Deutschland"
+     }
+    ],
+    "price": "2619.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-VSG-600x450-DE"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "6,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "4,50 Meter"
+     },
+     {
+      "optionName": "Land",
+      "name": "Österreich"
+     }
+    ],
+    "price": "3535.65",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-VSG-600x450-AT"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "6,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "5,00 Meter"
+     },
+     {
+      "optionName": "Land",
+      "name": "Deutschland"
+     }
+    ],
+    "price": "2910.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-VSG-600x500-DE"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "6,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "5,00 Meter"
+     },
+     {
+      "optionName": "Land",
+      "name": "Österreich"
+     }
+    ],
+    "price": "3928.50",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-VSG-600x500-AT"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "7,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "2,00 Meter"
+     },
+     {
+      "optionName": "Land",
+      "name": "Deutschland"
+     }
+    ],
+    "price": "1358.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-VSG-700x200-DE"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "7,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "2,00 Meter"
+     },
+     {
+      "optionName": "Land",
+      "name": "Österreich"
+     }
+    ],
+    "price": "1833.30",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-VSG-700x200-AT"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "7,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "2,50 Meter"
+     },
+     {
+      "optionName": "Land",
+      "name": "Deutschland"
+     }
+    ],
+    "price": "1697.50",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-VSG-700x250-DE"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "7,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "2,50 Meter"
+     },
+     {
+      "optionName": "Land",
+      "name": "Österreich"
+     }
+    ],
+    "price": "2291.63",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-VSG-700x250-AT"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "7,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "3,00 Meter"
+     },
+     {
+      "optionName": "Land",
+      "name": "Deutschland"
+     }
+    ],
+    "price": "2037.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-VSG-700x300-DE"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "7,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "3,00 Meter"
+     },
+     {
+      "optionName": "Land",
+      "name": "Österreich"
+     }
+    ],
+    "price": "2749.95",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-VSG-700x300-AT"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "7,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "3,50 Meter"
+     },
+     {
+      "optionName": "Land",
+      "name": "Deutschland"
+     }
+    ],
+    "price": "2376.50",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-VSG-700x350-DE"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "7,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "3,50 Meter"
+     },
+     {
+      "optionName": "Land",
+      "name": "Österreich"
+     }
+    ],
+    "price": "3208.28",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-VSG-700x350-AT"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "7,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "4,00 Meter"
+     },
+     {
+      "optionName": "Land",
+      "name": "Deutschland"
+     }
+    ],
+    "price": "2716.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-VSG-700x400-DE"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "7,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "4,00 Meter"
+     },
+     {
+      "optionName": "Land",
+      "name": "Österreich"
+     }
+    ],
+    "price": "3666.60",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-VSG-700x400-AT"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "7,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "4,50 Meter"
+     },
+     {
+      "optionName": "Land",
+      "name": "Deutschland"
+     }
+    ],
+    "price": "3055.50",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-VSG-700x450-DE"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "7,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "4,50 Meter"
+     },
+     {
+      "optionName": "Land",
+      "name": "Österreich"
+     }
+    ],
+    "price": "4124.93",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-VSG-700x450-AT"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "7,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "5,00 Meter"
+     },
+     {
+      "optionName": "Land",
+      "name": "Deutschland"
+     }
+    ],
+    "price": "3395.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-VSG-700x500-DE"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "7,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "5,00 Meter"
+     },
+     {
+      "optionName": "Land",
+      "name": "Österreich"
+     }
+    ],
+    "price": "4583.25",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-VSG-700x500-AT"
+   }
+  ]
+ },
+ "synchronous": true
+}

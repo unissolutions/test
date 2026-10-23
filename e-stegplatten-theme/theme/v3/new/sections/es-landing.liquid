@@ -1,0 +1,164 @@
+{%- comment -%}e-Stegplatten Startseite v3. Styles: snippets/es-landing-css · Hero (Einstellung hero_mode): konfig = snippets/es-hero-konfig (Terrassendach), finder = snippets/es-landing-finder (Stärke-Finder), both = Umschalter mit zwei Tabs (Standard-Tab: hero_default_tab). Alle Texte sind Settings/Blocks.{%- endcomment -%}
+{%- assign s = section.settings -%}
+{%- assign tel = s.phone | remove: ' ' -%}
+{%- capture ic_arrow -%}<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>{%- endcapture -%}
+{%- capture ic_check -%}<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg>{%- endcapture -%}
+<div class="esl" id="esl-{{ section.id }}">
+{% render 'es-landing-css' %}
+<section class="hero" data-screen-label="Hero">
+<div class="c">
+<div>
+{%- if s.kicker != blank -%}<p class="k">{{ s.kicker }}</p>{%- endif -%}
+<h1>{{ s.hero_title }}</h1>
+{%- if s.hero_text != blank -%}<p class="lead">{{ s.hero_text }}</p>{%- endif -%}
+{%- assign kh = s.konfig_handle | default: 'terrassenuberdachung-alu-mit-stegplatten' -%}{%- assign kc = collections[kh] -%}
+{%- if s.hero_mode == 'finder' -%}
+{% render 'es-landing-finder', s: s, blocks: section.blocks, sid: section.id, ic_arrow: ic_arrow, lz: s.lz_default %}
+{%- elsif s.hero_mode == 'both' -%}
+{%- assign t2on = false -%}{%- if s.hero_default_tab == 'finder' -%}{%- assign t2on = true -%}{%- endif -%}
+<div class="ehx" data-ehx>
+<div class="ehx__tabs" role="tablist" aria-label="Was möchten Sie planen?"><button type="button" class="ehx__tab" role="tab" id="ehx-t1-{{ section.id }}" aria-controls="ehx-p1-{{ section.id }}" aria-selected="{% if t2on %}false{% else %}true{% endif %}" tabindex="{% if t2on %}-1{% else %}0{% endif %}"><span>{{ s.tab1_label | default: 'Terrassendach konfigurieren' }}</span>{%- if s.tab1_sub != blank -%}<small>{{ s.tab1_sub }}</small>{%- endif -%}</button><button type="button" class="ehx__tab" role="tab" id="ehx-t2-{{ section.id }}" aria-controls="ehx-p2-{{ section.id }}" aria-selected="{% if t2on %}true{% else %}false{% endif %}" tabindex="{% if t2on %}0{% else %}-1{% endif %}"><span>{{ s.tab2_label | default: 'Stegplatten finden' }}</span>{%- if s.tab2_sub != blank -%}<small>{{ s.tab2_sub }}</small>{%- endif -%}</button></div>
+<div class="ehx__panel" role="tabpanel" id="ehx-p1-{{ section.id }}" aria-labelledby="ehx-t1-{{ section.id }}"{% if t2on %} hidden{% endif %}>
+{% render 'es-hero-konfig', kc: kc, lz: s.lz_terrassen, mu: s.muster_url %}
+</div>
+<div class="ehx__panel" role="tabpanel" id="ehx-p2-{{ section.id }}" aria-labelledby="ehx-t2-{{ section.id }}"{% unless t2on %} hidden{% endunless %}>
+{% render 'es-landing-finder', s: s, blocks: section.blocks, sid: section.id, ic_arrow: ic_arrow, lz: s.lz_default %}
+</div>
+</div>
+<script>(function(){var r=document.querySelector('#esl-{{ section.id }} [data-ehx]');if(!r)return;var T=[].slice.call(r.querySelectorAll('[role="tab"]'));
+function sel(t,f){T.forEach(function(x){var on=x===t;x.setAttribute('aria-selected',on?'true':'false');x.tabIndex=on?0:-1;var p=document.getElementById(x.getAttribute('aria-controls'));if(p)p.hidden=!on});if(f)t.focus()}
+T.forEach(function(t,i){t.addEventListener('click',function(){sel(t)});t.addEventListener('keydown',function(e){var n=null;if(e.key==='ArrowRight')n=T[(i+1)%T.length];else if(e.key==='ArrowLeft')n=T[(i-1+T.length)%T.length];else if(e.key==='Home')n=T[0];else if(e.key==='End')n=T[T.length-1];if(n){e.preventDefault();sel(n,true)}})})})();</script>
+{%- else -%}
+{% render 'es-hero-konfig', kc: kc, lz: s.lz_terrassen, mu: s.muster_url %}
+{%- endif -%}
+</div>
+<div>
+{%- if s.hero_image != blank -%}<img src="{{ s.hero_image | image_url: width: 1200 }}" srcset="{{ s.hero_image | image_url: width: 700 }} 700w, {{ s.hero_image | image_url: width: 1200 }} 1200w" sizes="(max-width:1000px) 100vw, 600px" alt="{{ s.hero_image.alt | default: s.hero_title | escape }}" fetchpriority="high">{%- endif -%}
+<div class="proof"><div><b>{{ s.proof1_t }}</b>{{ s.proof1_s }}</div><div><b>{{ s.proof2_t }}</b>{{ s.proof2_s }}</div>{%- assign jc = shop.metafields.judgeme.all_reviews_count | plus: 0 -%}{%- assign jr = shop.metafields.judgeme.all_reviews_rating | times: 1.0 | round: 1 -%}<div>{%- if jc > 0 -%}<b>{{ jr | replace: '.', ',' }} ★ aus {{ jc }} Bewertungen</b>{%- else -%}<b>{{ s.proof3_t }}</b>{%- endif -%}{{ s.proof3_s }}</div></div>
+</div>
+</div>
+</section>
+<section class="trust" data-screen-label="Vertrauen">
+<div class="c">{%- for b in section.blocks -%}{%- if b.type == 'trust' -%}<div {{ b.shopify_attributes }}>{{ ic_check }}<span><b>{{ b.settings.title }}</b>{% if b.settings.text != blank %}<span>{{ b.settings.text }}</span>{% endif %}</span></div>{%- endif -%}{%- endfor -%}</div>
+</section>
+<section class="s" data-screen-label="Kategorien">
+<div class="c">
+<div class="head"><div><p class="k">Sortiment</p><h2>{{ s.cat_title }}</h2></div></div>
+<div class="cats">{%- for b in section.blocks -%}{%- if b.type == 'category' -%}<a class="cat" href="{{ b.settings.url }}" {{ b.shopify_attributes }}><div class="es-cimg">{%- if b.settings.image != blank -%}<img src="{{ b.settings.image | image_url: width: 640 }}" alt="{{ b.settings.title | escape }}" loading="lazy">{%- endif -%}</div><div class="tx"><h3>{{ b.settings.title | escape | replace: 'Terrassenüberdachung', 'Terrassen&shy;überdachung' | replace: 'Stegplatten', 'Steg&shy;platten' }}</h3><p>{{ b.settings.text }}</p><span class="l">{{ b.settings.cta }} {{ ic_arrow }}</span></div></a>{%- endif -%}{%- endfor -%}</div>
+{%- if s.more_links != blank -%}<div class="more">{%- for l in linklists[s.more_links].links -%}<a href="{{ l.url }}">{{ l.title }}</a>{%- endfor -%}</div>{%- endif -%}
+</div>
+</section>
+{%- assign bc = collections[s.best_collection] -%}
+{%- if bc != blank and bc.products.size > 0 -%}
+<section class="s" style="background:var(--sub);border-top:1px solid var(--ln);border-bottom:1px solid var(--ln)" data-screen-label="Bestseller">
+<div class="c">
+<div class="head"><div><p class="k">Bestseller</p><h2>{{ s.best_title }}</h2><p>{{ s.best_text }}</p></div><a class="btn o" href="{{ bc.url }}">Alle ansehen {{ ic_arrow }}</a></div>
+<div class="prods">
+{%- for p in bc.products limit: s.best_limit -%}
+{%- assign on_sale = false -%}{%- if p.compare_at_price > p.price -%}{%- assign on_sale = true -%}{%- endif -%}
+{%- assign mm = '' -%}{%- assign col = '' -%}{%- assign mat = '' -%}
+{%- for t in p.tags -%}{%- if t contains 'mm Stegplatten' and mm == '' -%}{%- assign mm = t | remove: ' Stegplatten' | replace: 'mm', ' mm' -%}{%- endif -%}{%- if t == 'Klar/Transparent' -%}{%- assign col = 'Klar' -%}{%- elsif t == 'Opal/Weiß' -%}{%- assign col = 'Opal' -%}{%- elsif t == 'Anthrazit/Graphit' -%}{%- assign col = 'Anthrazit' -%}{%- elsif t == 'Bronze' -%}{%- assign col = 'Bronze' -%}{%- endif -%}{%- if t == 'Polycarbonat' -%}{%- assign mat = 'Polycarbonat' -%}{%- elsif t == 'Glassysteme' -%}{%- assign mat = 'Acrylglas' -%}{%- endif -%}{%- endfor -%}
+{%- assign tl = p.title | downcase -%}{%- if tl contains 'opal' -%}{%- assign col = 'Opal' -%}{%- elsif tl contains 'graphit' -%}{%- assign col = 'Anthrazit' -%}{%- elsif tl contains 'bronze' -%}{%- assign col = 'Bronze' -%}{%- elsif tl contains 'klar' -%}{%- assign col = 'Klar' -%}{%- endif -%}
+{%- assign lz = s.lz_default -%}{%- if p.type contains 'Terrassen' -%}{%- assign lz = s.lz_terrassen -%}{%- endif -%}
+<article class="pc"><a class="pc__im" href="{{ p.url }}">{%- if p.featured_image -%}<img src="{{ p.featured_image | image_url: width: 600 }}" alt="{{ p.featured_image.alt | default: p.title | escape }}" loading="lazy">{%- endif -%}<div class="pc__bd">{%- if on_sale -%}<span class="sale">−{{ p.compare_at_price | minus: p.price | times: 100 | divided_by: p.compare_at_price }} %</span>{%- endif -%}{%- if p.tags contains 'Bestseller' -%}<span>Bestseller</span>{%- endif -%}</div></a>
+<div class="pc__bo">{%- if mm != '' or mat != '' or col != '' -%}<span class="pc__f">{{ mm }}{% if mat != '' %}{% if mm != '' %} · {% endif %}{{ mat }}{% endif %}{% if col != '' %} · {{ col }}{% endif %}</span>{%- endif -%}<h3 class="pc__t"><a href="{{ p.url }}">{{ p.title }}</a></h3>
+<div class="jdgm-widget jdgm-preview-badge" data-id="{{ p.id }}">{{ p.metafields.judgeme.badge }}</div>
+<span class="pc__lz">Lieferzeit <b>{{ lz }}</b></span>
+<div class="pc__pr">{%- if p.price_varies -%}<small>ab</small>{%- endif -%}<b class="{% if on_sale %}sale{% endif %}">{{ p.price_min | money }}</b>{%- if on_sale -%}<s>{{ p.compare_at_price | money }}</s>{%- endif -%}</div>
+<a class="pc__btn" href="{{ p.url }}">{% if p.has_only_default_variant %}Zum Produkt{% else %}Größe wählen{% endif %} {{ ic_arrow }}</a></div></article>
+{%- endfor -%}
+</div>
+</div>
+</section>
+{%- endif -%}
+<section class="s" data-screen-label="Ablauf">
+<div class="c">
+<div class="head"><div><p class="k">So läuft es</p><h2>{{ s.steps_title }}</h2><p>{{ s.steps_text }}</p></div></div>
+<div class="steps">{%- assign i = 0 -%}{%- for b in section.blocks -%}{%- if b.type == 'step' -%}{%- assign i = i | plus: 1 -%}<div class="step" {{ b.shopify_attributes }}><div class="n">SCHRITT {{ i }}</div><h3>{{ b.settings.title }}</h3><p>{{ b.settings.text }}</p></div>{%- endif -%}{%- endfor -%}</div>
+{%- if s.steps_note != blank -%}<div class="note">{{ ic_check }}<span>{{ s.steps_note }}</span></div>{%- endif -%}
+</div>
+</section>
+{%- assign has_app = false -%}{%- assign has_rev = false -%}
+{%- for b in section.blocks -%}{%- if b.type == '@app' -%}{%- assign has_app = true -%}{%- elsif b.type == 'review' -%}{%- assign has_rev = true -%}{%- endif -%}{%- endfor -%}
+{%- if has_app or has_rev -%}
+<section class="s" style="background:var(--sub);border-top:1px solid var(--ln);border-bottom:1px solid var(--ln)" data-screen-label="Bewertungen">
+<div class="c">
+<div class="head"><div><p class="k">Kundenstimmen</p><h2>{{ s.rev_title }}</h2><p>{{ s.rev_text }}</p></div></div>
+{%- for b in section.blocks -%}{%- if b.type == '@app' -%}<div {{ b.shopify_attributes }}>{% render b %}</div>{%- endif -%}{%- endfor -%}
+{%- if has_rev -%}<div class="revs">{%- for b in section.blocks -%}{%- if b.type == 'review' -%}<div class="rev" {{ b.shopify_attributes }}><span class="stars">★★★★★</span><blockquote>„{{ b.settings.quote }}“</blockquote><div class="who"><b>{{ b.settings.name }}</b>{{ b.settings.product }}</div></div>{%- endif -%}{%- endfor -%}</div>{%- endif -%}
+</div>
+</section>
+{%- endif -%}
+<section class="s" data-screen-label="FAQ">
+<div class="c faq">
+<div>
+<p class="k">Vor dem Kauf</p><h2 style="margin-bottom:20px">{{ s.faq_title }}</h2>
+{%- for b in section.blocks -%}{%- if b.type == 'faq' -%}<details {{ b.shopify_attributes }}{% if forloop.first %} open{% endif %}><summary>{{ b.settings.q }}</summary><div>{{ b.settings.a }}</div></details>{%- endif -%}{%- endfor -%}
+</div>
+<div class="help">
+<h3>{{ s.help_title }}</h3><p>{{ s.help_text }}</p>
+<div class="row"><a class="btn d" href="tel:{{ tel }}">{{ s.phone }}</a>{%- if s.whatsapp != blank -%}<a class="btn wa" href="https://wa.me/{{ s.whatsapp }}?text={{ s.whatsapp_text | url_encode }}" target="_blank" rel="noopener">WhatsApp schreiben</a>{%- endif -%}<a class="btn o" href="mailto:{{ s.email }}">{{ s.email }}</a></div>
+<small>{{ s.hours }}</small>
+</div>
+</div>
+</section>
+</div>
+{% schema %}
+{"name":"ES Startseite v2","tag":"section","class":"es-landing-v2","settings":[
+{"type":"header","content":"Hero"},
+{"type":"text","id":"kicker","label":"Kicker","default":"Stegplatten & Terrassenüberdachungen aus Gelsenkirchen"},
+{"type":"text","id":"hero_title","label":"Überschrift","default":"Stegplatten & Terrassendächer nach Maß"},
+{"type":"textarea","id":"hero_text","label":"Text"},
+{"type":"image_picker","id":"hero_image","label":"Bild"},
+{"type":"select","id":"hero_mode","label":"Hero-Auswahl","options":[{"value":"konfig","label":"Terrassendach-Konfigurator"},{"value":"finder","label":"Stegplatten-Stärke-Finder"},{"value":"both","label":"Beides (Umschalter mit zwei Tabs)"}],"default":"konfig"},
+{"type":"select","id":"hero_default_tab","label":"Umschalter: Standard-Tab","options":[{"value":"konfig","label":"Terrassendach"},{"value":"finder","label":"Stegplatten"}],"default":"konfig"},
+{"type":"text","id":"tab1_label","label":"Tab 1 (Terrassendach)","default":"Terrassendach konfigurieren"},{"type":"text","id":"tab1_sub","label":"Tab 1 Zusatz","default":"Preis in 4 Klicks"},
+{"type":"text","id":"tab2_label","label":"Tab 2 (Stegplatten)","default":"Stegplatten finden"},{"type":"text","id":"tab2_sub","label":"Tab 2 Zusatz","default":"Passende Stärke in 2 Fragen"},
+{"type":"text","id":"konfig_handle","label":"Konfigurator: Kollektions-Handle","default":"terrassenuberdachung-alu-mit-stegplatten"},
+{"type":"text","id":"proof1_t","label":"Beleg 1","default":"Fachhandel seit 2013"},{"type":"text","id":"proof1_s","label":"Beleg 1 Zusatz","default":"TSZ GmbH, Gelsenkirchen"},
+{"type":"text","id":"proof2_t","label":"Beleg 2","default":"Telefonische Prüfung"},{"type":"text","id":"proof2_s","label":"Beleg 2 Zusatz","default":"Maße & Zubehör vor dem Versand"},
+{"type":"text","id":"proof3_t","label":"Beleg 3 (Fallback, sonst Judge.me-Gesamtwertung)","default":"Echte Bewertungen"},{"type":"text","id":"proof3_s","label":"Beleg 3 Zusatz","default":"verifiziert über Judge.me"},
+{"type":"url","id":"muster_url","label":"Link Farbmuster-Produkt (Konfigurator)","info":"z. B. /products/farbmuster – leer = kein Link"},
+{"type":"header","content":"Stärke-Finder"},
+{"type":"text","id":"fin_title","label":"Titel","default":"Welche Stegplatte passt?"},
+{"type":"text","id":"fin_sub","label":"Untertitel","default":"2 Fragen, dann zur passenden Auswahl"},
+{"type":"text","id":"fin_cta","label":"Button","default":"Passende Platten zeigen"},
+{"type":"url","id":"fin_fallback_url","label":"Button-Ziel ohne Auswahl"},
+{"type":"richtext","id":"fin_alt","label":"Alternative"},
+{"type":"header","content":"Sortiment"},
+{"type":"text","id":"cat_title","label":"Titel","default":"Was möchten Sie bauen?"},
+{"type":"link_list","id":"more_links","label":"Weitere Kategorien (Menü)"},
+{"type":"header","content":"Bestseller"},
+{"type":"collection","id":"best_collection","label":"Kollektion"},
+{"type":"range","id":"best_limit","label":"Anzahl","min":4,"max":12,"step":4,"default":4},
+{"type":"text","id":"best_title","label":"Titel","default":"Am häufigsten gekauft"},
+{"type":"text","id":"best_text","label":"Text"},
+{"type":"text","id":"lz_default","label":"Lieferzeit Platten","default":"5–8 Werktage"},
+{"type":"text","id":"lz_terrassen","label":"Lieferzeit Terrassendächer","default":"ca. 10–40 Werktage"},
+{"type":"header","content":"Ablauf"},
+{"type":"text","id":"steps_title","label":"Titel","default":"So läuft Ihre Bestellung"},
+{"type":"text","id":"steps_text","label":"Text"},
+{"type":"text","id":"steps_note","label":"Hinweis (Versandkosten)"},
+{"type":"header","content":"Bewertungen"},
+{"type":"text","id":"rev_title","label":"Titel","default":"Das sagen Kunden"},
+{"type":"text","id":"rev_text","label":"Text"},
+{"type":"header","content":"FAQ & Beratung"},
+{"type":"text","id":"faq_title","label":"FAQ Titel","default":"Die Fragen, die vor dem Kauf kommen"},
+{"type":"text","id":"help_title","label":"Beratung Titel","default":"Lieber kurz anrufen?"},
+{"type":"textarea","id":"help_text","label":"Beratung Text"},
+{"type":"text","id":"phone","label":"Telefon","default":"0209 513 078 34"},
+{"type":"text","id":"whatsapp","label":"WhatsApp (nur Ziffern)","default":"491781199805"},
+{"type":"text","id":"whatsapp_text","label":"WhatsApp Vorlage"},
+{"type":"text","id":"email","label":"E-Mail","default":"info@e-stegplatten.de"},
+{"type":"text","id":"hours","label":"Zeiten","default":"Mo–Fr 8–17 Uhr"}
+],"blocks":[
+{"type":"use","name":"Finder: Einsatz","settings":[{"type":"text","id":"title","label":"Titel"},{"type":"text","id":"sub","label":"Zusatz"},{"type":"text","id":"rec","label":"Empfehlung (z. B. 16 mm)"},{"type":"text","id":"why","label":"Begründung"},{"type":"collection","id":"collection","label":"Ziel-Kollektion"},{"type":"url","id":"url","label":"Ziel-URL (falls keine Kollektion)"}]},
+{"type":"farbe","name":"Finder: Farbe","settings":[{"type":"text","id":"title","label":"Farbe"},{"type":"text","id":"hint","label":"Hinweis"},{"type":"text","id":"tag","label":"Produkt-Tag (z. B. Klar/Transparent)"}]},
+{"type":"trust","name":"Vertrauen","limit":4,"settings":[{"type":"text","id":"title","label":"Titel"},{"type":"text","id":"text","label":"Zusatz"}]},
+{"type":"category","name":"Kategorie","limit":4,"settings":[{"type":"image_picker","id":"image","label":"Bild"},{"type":"text","id":"title","label":"Titel"},{"type":"text","id":"text","label":"Text"},{"type":"text","id":"cta","label":"Link-Text","default":"Ansehen"},{"type":"url","id":"url","label":"Link"}]},
+{"type":"step","name":"Ablauf-Schritt","limit":4,"settings":[{"type":"text","id":"title","label":"Titel"},{"type":"textarea","id":"text","label":"Text"}]},
+{"type":"review","name":"Bewertung (manuell)","settings":[{"type":"textarea","id":"quote","label":"Zitat"},{"type":"text","id":"name","label":"Name"},{"type":"text","id":"product","label":"Produkt"}]},
+{"type":"faq","name":"FAQ","settings":[{"type":"text","id":"q","label":"Frage"},{"type":"textarea","id":"a","label":"Antwort"}]},
+{"type":"@app"}
+],"presets":[{"name":"ES Startseite v2"}]}
+{% endschema %}

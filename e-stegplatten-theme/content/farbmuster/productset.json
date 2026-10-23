@@ -1,0 +1,22 @@
+{
+ "synchronous": true,
+ "input": {
+  "title": "Farbmuster Stegplatten – kostenlos, nur 6,90 € Versand",
+  "handle": "farbmuster",
+  "productType": "Farbmuster",
+  "vendor": "e-Stegplatten",
+  "status": "ACTIVE",
+  "tags": ["Farbmuster"],
+  "descriptionHtml": "<p>Am Bildschirm wirken Farbtöne anders als über der Terrasse. Bestellen Sie deshalb vor dem Kauf ein <strong>Farbmuster unserer 16-mm-Stegplatten</strong> und halten Sie es bei Tageslicht über Ihren Sitzplatz.</p><ul><li>Muster ca. 10 × 10 cm, aus Original-Plattenmaterial (Polycarbonat, 16 mm)</li><li>Das Muster ist <strong>kostenlos</strong> – Sie zahlen nur <strong>6,90 € Versand</strong> je Bestellung, auch bei mehreren Mustern</li><li>Versand per Brief/GLS innerhalb von 1–3 Werktagen</li></ul><p>Tipp: Opal und Bronze halten deutlich mehr Hitze ab als Klar, Anthrazit beschattet am stärksten. Unsicher bei der Stärke? Rufen Sie uns an: 0209 513 078 34 (Mo–Fr 8–17 Uhr).</p>",
+  "productOptions": [
+   {"name": "Farbe", "position": 1, "values": [{"name": "Klar / farblos"}, {"name": "Opal / weiß"}, {"name": "Bronze"}, {"name": "Anthrazit / graphit"}]}
+  ],
+  "variants": [
+   {"optionValues": [{"optionName": "Farbe", "name": "Klar / farblos"}], "price": "0.00", "sku": "MUSTER-16-KLAR", "taxable": true, "inventoryPolicy": "CONTINUE", "inventoryItem": {"tracked": false, "requiresShipping": true}},
+   {"optionValues": [{"optionName": "Farbe", "name": "Opal / weiß"}], "price": "0.00", "sku": "MUSTER-16-OPAL", "taxable": true, "inventoryPolicy": "CONTINUE", "inventoryItem": {"tracked": false, "requiresShipping": true}},
+   {"optionValues": [{"optionName": "Farbe", "name": "Bronze"}], "price": "0.00", "sku": "MUSTER-16-BRONZE", "taxable": true, "inventoryPolicy": "CONTINUE", "inventoryItem": {"tracked": false, "requiresShipping": true}},
+   {"optionValues": [{"optionName": "Farbe", "name": "Anthrazit / graphit"}], "price": "0.00", "sku": "MUSTER-16-ANTHRAZIT", "taxable": true, "inventoryPolicy": "CONTINUE", "inventoryItem": {"tracked": false, "requiresShipping": true}}
+  ],
+  "seo": {"title": "Farbmuster Stegplatten kostenlos bestellen | e-Stegplatten", "description": "Farbmuster unserer 16-mm-Stegplatten in Klar, Opal, Bronze und Anthrazit – kostenlos, nur 6,90 € Versand. Farbe bei Tageslicht prüfen, dann bestellen."}
+ }
+}

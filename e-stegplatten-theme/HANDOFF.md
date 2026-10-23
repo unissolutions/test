@@ -1,6 +1,6 @@
 # e-stegplatten.de – Arbeitsstand Theme-Optimierung
 
-Stand: 22.10.2026. Dieser Ordner sichert die Arbeitsdateien. Maßgeblich ist der Stand in Shopify.
+Stand: 23.10.2026. Dieser Ordner sichert die Arbeitsdateien. Maßgeblich ist der Stand in Shopify.
 
 ## Wichtige IDs
 
@@ -13,61 +13,57 @@ Stand: 22.10.2026. Dieser Ordner sichert die Arbeitsdateien. Maßgeblich ist der
 | Neue Kollektion Polycarbonatplatten | `gid://shopify/Collection/695266935121` (Smart, unveröffentlicht, 24 Produkte) |
 | Neue Kollektion Hohlkammerplatten | `gid://shopify/Collection/695266967889` (Smart, unveröffentlicht, 19 Produkte) |
 
-## Erledigt (alles in Shopify geprüft)
+## In Shopify erledigt (geprüft)
 
-1. **LED-Spots** bei Terrassendächern: eigenes Produkt (nicht einzeln kaufbar). Einbindung auf der Produktseite und im Hero-Konfigurator. `es-led-guard` entfernt LED aus dem Warenkorb, sobald kein Dach mehr drin ist.
-2. **Design-Umbau v2** (Pakete 1–3, Hero mit zwei Tabs, eigene Archivo-Schrift): 25 Dateien hochgeladen und byte-genau geprüft (`theme/v2`).
-3. **Kategorieseiten (SEO):**
-   - SEO-Titel und -Beschreibung sind **live** gesetzt für 7 bestehende und 2 neue Kollektionen.
-   - Neue Kollektions-Metafelder: `custom.intro`, `custom.seo_text`, `custom.seo_faq`. Die Texte erscheinen nur im neuen Theme.
-   - Neue Section `es-collection-seo` (Ratgeber-Text, FAQ, FAQPage-Schema) in `templates/collection.json` und `collection.stegplatten.json` (`theme/cat`).
-   - Texte und Quellen: `content/kategorien`.
-4. **Ratgeber:**
-   - 6 Artikel als **Entwurf** angelegt, mit SEO-Feldern, FAQ und HowTo-Metafeldern (`custom.seo_faq`, `custom.howto`). Die Artikel verlinken untereinander, deshalb **alle 6 gemeinsam veröffentlichen**.
-   - Neue Section `es-article-faq` in `templates/article.json` (`theme/art`).
-   - Inhalte und offene Fachfragen: `content/ratgeber/README.md`.
+1. **LED-Spots** bei Terrassendächern: eigenes Produkt (nicht einzeln kaufbar), Produktseite + Hero-Konfigurator, Warenkorb-Wächter `es-led-guard`.
+2. **Design-Umbau v2** (Pakete 1–3, Hero mit zwei Tabs, eigene Archivo-Schrift): 25 Dateien byte-genau (`theme/v2`).
+3. **Kategorieseiten:** SEO-Titel/-Beschreibung **live** für 9 Kollektionen; Metafelder `custom.intro`, `custom.seo_text`, `custom.seo_faq`; Section `es-collection-seo` in `collection.json` + `collection.stegplatten.json` (`theme/cat`). Texte: `content/kategorien`.
+4. **Ratgeber:** 6 Artikel als **Entwurf** mit SEO-Feldern, FAQ/HowTo-Metafeldern (`custom.seo_faq`, `custom.howto`); Section `es-article-faq` in `article.json` (`theme/art`). Alle 6 gemeinsam veröffentlichen (verlinken sich gegenseitig). Offene Fachfragen: `content/ratgeber/README.md`.
 
-## Offen
+## Lokal fertig, noch NICHT hochgeladen: `theme/v3` (7 Dateien)
 
-- **#12 Montage zubuchbar:**
-  - Modell TerrassenPost: Preis je Dachgröße, ca. 300 km um Gelsenkirchen, Österreich +35 %, als eigene Warenkorbzeile, nicht einzeln kaufbar.
-  - **Fehlt:** die Montagepreise je Variante aus dem TerrassenPost-Shop.
-  - Alternative Preisbasis aus dem 3D-Planer TerrassenConcept: €/m² nach PLZ-Zone (Stegplatten 67 / 82,50 / 97 / 112 €, Glas 97 / 112 / 127 / 142 €).
-- **#13 Angebot anfordern / Konfiguration speichern** (Produktseite und Hero).
-- **#5 Vertrauens-Elemente:**
-  - Zuschnitt mm-genau und Kanten entgratet
-  - Farbmuster-Produkt für 0 € mit Tag „Farbmuster“; Versand 6,90 € über eine Regel in Advanced Shipping Rules
-  - eigene Judge.me-Bewertungen im Hero
-- **#4 LocalBusiness-Schema** (TSZ GmbH, Magdeburgerstraße 37, 45881 Gelsenkirchen, 0209 513 078 34, Mo–Fr 8–17) und og:image für die Startseite.
-  - Bugfix in `snippets/microdata-schema.liquid`: Die Breadcrumb eines Artikels nennt an Position 3 den Blog- statt den Artikeltitel.
-  - Google-Maps-Link fehlt noch.
-- **#15 Versand:**
-  - Wenn in der App „höchste Gruppe zählt“ aktiv ist und AU→AT umbenannt wurde: die 26 Testkörbe neu prüfen.
-  - Danach die Versandrichtlinie aktualisieren.
-- **#14 Komplettcheck** vor dem Livegang.
+Shopify-Verbindung war weg (Shop-Wechsel beim Lesen der TerrassenPost-Preise hat den Zugang zurückgesetzt). Tests grün: `tools/pdp_test.js` 57/57, `tools/guard_test.js` 12/12, `tools/led_test.js` 26/26 (Regression). Screenshots: `screenshots/pdp-390-*.png`, `pdp-1280-montage-offer.png`, `hero-390.png`.
+
+| Datei | Änderung |
+|---|---|
+| `sections/es-pdp-terrasse.liquid` | Block **Montage** (Selbstmontage / Montage durch unser Team, PLZ-Feld, Gebietsprüfung, Preis aus Montage-Produkt), **Angebot anfordern** (Shopify-Kontaktformular, Konfiguration vorausgefüllt), **Konfiguration teilen** (Link kopieren, WhatsApp, E-Mail, Drucken), Farbmuster-Link bei „Dachplatte“. Neue Einstellungen: Montage-Produkte, PLZ-Gebiet (Standard `26-35,37-38,40-62,65`), Texte, `muster_url`. |
+| `snippets/es-pdp-js.liquid` | Montage-Logik (DE 5-stellig nach Präfixliste, AT 4-stellig = ×1,35-Variante), Warenkorbzeile mit „Für Überdachung“ + „Montageort“, Sperre ohne gültige PLZ, Panels, `?mp=PLZ`, `?angebot=1`, `contact_posted` öffnet das Formular. |
+| `snippets/es-pdp-css.liquid` | Styles für Montage, Panels, Formular, Druckansicht. |
+| `snippets/es-led-guard.liquid` | Wächter jetzt für LED **und** Montage (Handles in `ADD` + Liquid-Liste pflegen). |
+| `snippets/es-hero-konfig.liquid` | Zeile „Farbmuster bestellen · Angebot anfordern“ (Link übergibt Variante/LED + `angebot=1`). Neuer Parameter `mu`. |
+| `sections/es-landing.liquid` | Beleg 3 im Hero = Judge.me-Gesamtwertung („4,9 ★ aus 212 Bewertungen“ aus `shop.metafields.judgeme.all_reviews_*`, Fallback Text); Einstellung `muster_url`. |
+| `templates/index.json` | Trust-Leiste: „Zuschnitt millimetergenau – rechtwinklig, Kanten entgratet, Kammern staubfrei“; Farbmuster-Link im Finder; `muster_url`. |
+
+**Upload:** `python3 tools/upload.py stage theme/v3` → stagedUploadsCreate → `put` → `upsert` → Job abwarten → `verify` (Manifest aus `theme/v3/new` erzeugen).
+
+## Nach dem Upload in Shopify anlegen
+
+1. **Montage-Produkte** (2): `content/montage/preise.csv` mit den **echten TerrassenPost-Preisen** füllen (aktuell Platzhalter 67/97 €/m²), dann `python3 tools/montage_product.py content/montage/preise.csv` → `productSet` mit `productset_stegplatten.json` / `productset_vsg.json`, danach im Online Store veröffentlichen. Vorher die echten Breiten/Tiefen der Dächer prüfen (Optionswerte müssen übereinstimmen). Details: `content/montage/README.md`.
+2. **Farbmuster-Produkt:** `productSet` mit `content/farbmuster/productset.json` (0 €, Tag `Farbmuster`, Handle `farbmuster`), veröffentlichen. Versand 6,90 € per Regel in Advanced Shipping Rules (Tag `Farbmuster`).
+3. **LocalBusiness + Breadcrumb-Fix:** `snippets/microdata-schema.liquid` aus dem Theme laden, `python3 tools/localbusiness_patch.py <orig> <neu>` ausführen, hochladen. Maps-Link (`hasMap`) ergänzen, sobald er vorliegt. Straßenschreibweise prüfen („Magdeburger Straße 37“).
+4. **og:image:** `snippets/social-meta-tags.liquid` prüfen (Fallback-Bild für Startseite setzen).
+
+## Danach
+
+- **Versand (#15):** nach Umstellung der App auf „höchste Rate“ und AU→AT die 26 Testkörbe erneut rechnen (`draftOrderCalculate`), zusätzlich „Dach + Montage“ (DE 99 €, AT 199 €) und „Farbmuster allein“ (6,90 €). Dann Versandrichtlinie (`shopPolicyUpdate`) und Theme-Texte angleichen, Theme-Einstellung „Gratisversand ab 500 €“ entfernen.
+- **Komplett-Check (#14):** MD5 aller Dateien, Liquid-Syntax, Funktionstests, Screenshots, Schema (FAQ, HowTo, LocalBusiness, Breadcrumb), Accessibility, Datenstand, unabhängiger Review-Agent, Go-live-Liste.
 
 ## Go-live-Checkliste (für den Shop-Betreiber)
 
 - Die 2 alten Versandarten „Montage bis 270km“ deaktivieren.
-- `snippets/es-upload-test.liquid` in beiden Themes löschen (das Löschen ist über die API gesperrt).
-- Advanced Shipping Rules:
-  - „höchste Rate“ einstellen
-  - Label „AU“ in „AT“ umbenennen
-  - Regel für Farbmuster: 6,90 €
-- Kollektionen Polycarbonatplatten und Hohlkammerplatten veröffentlichen und in die Navigation aufnehmen.
-- 301-Weiterleitung `/collections/hohlkammerpaneele-1` → `/collections/hohlkammerplatten`.
-- Die 6 Ratgeber-Artikel nach fachlicher Prüfung gemeinsam veröffentlichen und den Blog in Navigation und Footer verlinken.
-- Kollektions-Metafeld `custom.lieferzeit` der 16-mm-Kollektion steht auf „4 - 12 Werktage“; die Texte nennen 5–8 Werktage. Bitte vereinheitlichen.
-- In der Theme-Vorschau prüfen:
-  - Header, Hero-Tabs, Sticky-Leiste
-  - Klarna-Hinweis
-  - Kategorieseiten mit Ratgeber-Text und FAQ
-  - Artikel-Vorschau
+- `snippets/es-upload-test.liquid` in beiden Themes löschen (Löschen per API gesperrt).
+- Advanced Shipping Rules: „höchste Rate“, Label „AU“ → „AT“, Regel Farbmuster 6,90 €, Montage-Produkte (ohne Versand) lösen keine Gruppe aus.
+- Kollektionen Polycarbonatplatten und Hohlkammerplatten veröffentlichen und in die Navigation aufnehmen; 301 `/collections/hohlkammerpaneele-1` → `/collections/hohlkammerplatten`.
+- Die 6 Ratgeber-Artikel nach fachlicher Prüfung gemeinsam veröffentlichen; Blog in Navigation/Footer verlinken.
+- Kontaktformular: Shopify sendet Angebotsanfragen an die Kunden-E-Mail des Shops; reCAPTCHA in den Shopify-Einstellungen aktiv lassen.
+- Kollektions-Metafeld `custom.lieferzeit` der 16-mm-Kollektion („4 - 12 Werktage“) vs. Texte (5–8 Werktage) vereinheitlichen.
+- Theme-Vorschau prüfen: Header, Hero-Tabs, Sticky-Leiste, Klarna, Montage-Block, Angebotsformular (Testanfrage senden), Kategorieseiten, Artikel.
 
 ## Werkzeuge (`tools/`)
 
-- `upload.py`:
-  - `stage` / `put` / `upsert` / `verify`: Sammel-Upload über Shopify Staged Uploads mit MD5-Abgleich.
-- `cat_verify.py`, `art_verify.py`: vergleichen Kollektions- bzw. Artikeltexte in Shopify mit den lokalen Quellen.
-- `render_cat.py`, `shoot_*.js`: lokale Vorschau (python-liquid und Playwright) mit Screenshots.
-- `led_test.js`, `guard_test.js`: Funktionstests für LED-Logik und Warenkorb-Guard.
+- `upload.py` – `stage` / `put` / `upsert` / `verify`: Sammel-Upload über Staged Uploads mit MD5-Abgleich.
+- `v3_patch.py` – erzeugt `theme/v3/new` reproduzierbar aus `theme/v3/orig`.
+- `render_v3.py` – rendert Produktseite + Hero mit python-liquid und Beispieldaten nach `design-review/v3/` (Grundlage für Tests/Screenshots).
+- `pdp_test.js`, `guard_test.js`, `led_test.js` – Playwright-Funktionstests.
+- `montage_product.py`, `localbusiness_patch.py` – siehe oben.
+- `cat_verify.py`, `art_verify.py`, `render_cat.py`, `shoot_*.js` – Kategorien/Ratgeber.

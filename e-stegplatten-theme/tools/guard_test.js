@@ -6,6 +6,7 @@ if (/\{\{|\{%/.test(js)) throw new Error('Liquid im Skript');
 const LED = { key: 'L1', handle: 'led-spots-terrassenueberdachung', product_type: 'LED-Beleuchtung', product_title: 'LED-Spots für Terrassenüberdachung (vormontiert)' };
 const STEG = { key: 'R1', handle: 'premium-anthrazit-terrassenueberdachung-alu-nobelline-stegplatten-16mm-klar-1', product_type: 'Terrassenüberdachung', product_title: 'Terrassenüberdachung Premium Anthrazit Alu mit Stegplatten 16mm klar/farblos' };
 const VSG = { key: 'R2', handle: 'terrassendach-alu-anthrazit-vsg-klar', product_type: 'Glassysteme', product_title: 'Terrassendach Alu Anthrazit mit 8mm VSG Glas klar/farblos' };
+const MONT = { key: 'M1', handle: 'montage-terrassendach-stegplatten', product_type: 'Montage', product_title: 'Montage Terrassendach mit Stegplatten' };
 const TAPE = { key: 'Z1', handle: 'alu-klebeband', product_type: 'Zubehör', product_title: 'Aluminium Klebeband 60mm' };
 const page = (items, count) => `<!doctype html><meta charset=utf-8><script>
 window.__items=${JSON.stringify(items)};window.__log=[];window.__refresh=0;
@@ -36,6 +37,12 @@ const eq = (n, g, w) => { const ok = JSON.stringify(g) === JSON.stringify(w); ok
   await pg.evaluate(() => fetch('/cart/change.js', { method: 'POST', body: JSON.stringify({ id: 'R1', quantity: 0 }) }));
   await pg.waitForTimeout(800);
   eq('Dach im Mini-Warenkorb entfernt → LED folgt automatisch', await pg.evaluate(() => __items.map(i => i.key)), []);
+  r = await run([MONT], 1);
+  eq('Nur Montage im Warenkorb → wird entfernt', r.items, []);
+  r = await run([STEG, LED, MONT], 3);
+  eq('Dach + LED + Montage → bleibt', r.items, ['R1', 'L1', 'M1']);
+  r = await run([TAPE, MONT], 2);
+  eq('Zubehör + Montage (kein Dach) → Montage entfernt', r.items, ['Z1']);
   r = await run([], 0);
   eq('Leerer Warenkorb → keine Abfrage', r.log, []);
   eq('Keine JavaScript-Fehler', errs, []);

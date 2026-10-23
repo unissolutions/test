@@ -1,0 +1,18 @@
+{%- comment -%}e-Stegplatten: LED-Spots (led-spots-terrassenueberdachung) gibt es nur zusammen mit einem Terrassendach. Entfernt LED-Sets aus dem Warenkorb, sobald kein Dach mehr darin liegt, und leitet die LED-Produktseite zu den Terrassenüberdachungen um.{%- endcomment -%}
+{%- if request.page_type == 'product' and product.handle == 'led-spots-terrassenueberdachung' -%}<script>location.replace({{ routes.collections_url | append: '/terrassenuberdachung' | json }})</script>{%- endif -%}
+<script>(function(){
+var LED='led-spots-terrassenueberdachung',base=(window.routes&&window.routes.rootUrlWithoutSlash)||'',F=window.fetch.bind(window),busy=false;
+function roof(i){return i.handle!==LED&&(i.product_type==='Terrassenüberdachung'||/terrassendach|terrassenüberdachung/i.test(i.product_title||''))}
+function chk(){if(busy)return;busy=true;
+F(base+'/cart.js',{headers:{Accept:'application/json'}}).then(function(r){return r.json()}).then(function(c){
+var has=c.items.some(roof),u={},n=0;
+c.items.forEach(function(i){if(i.handle===LED&&!has){u[i.key]=0;n++}});
+if(!n){busy=false;return}
+return F(base+'/cart/update.js',{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify({updates:u})}).then(function(){busy=false;
+if(window.theme&&window.theme.pageType==='cart'){location.reload();return}
+document.documentElement.dispatchEvent(new CustomEvent('cart:refresh',{bubbles:true,detail:{scrollToTop:false}}))})})
+.catch(function(){busy=false})}
+window.fetch=function(u){var p=F.apply(window,arguments);try{if(RegExp('/cart/(change|update|clear)').test(String(u&&u.url||u)))p.then(function(){setTimeout(chk,300)},function(){})}catch(e){}return p};
+document.documentElement.addEventListener('cart:refresh',function(){setTimeout(chk,300)});
+if(window.theme&&window.theme.cartCount>0)chk();
+})();</script>
