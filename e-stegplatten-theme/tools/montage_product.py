@@ -44,7 +44,7 @@ for col, (handle, title, dach) in PRODUCTS.items():
     for w, d in sizes:
         for z in zones:
             price = (metres(w) * metres(d) * dec(z[col])).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
-            zk = ''.join(c for c in z['Zone'].upper() if c.isalnum())[:8]
+            zk = ''.join(c for c in z['Zone'].upper().replace('Ä', 'AE').replace('Ö', 'OE').replace('Ü', 'UE').replace('ß', 'SS') if c.isalnum() and c.isascii())[:8]
             variants.append({'optionValues': [{'optionName': 'Breite', 'name': w}, {'optionName': 'Tiefe', 'name': d}, {'optionName': 'Zone', 'name': z['Zone'].strip()}],
                              'price': str(price), 'taxable': True, 'inventoryPolicy': 'CONTINUE',
                              'inventoryItem': {'tracked': False, 'requiresShipping': False},
