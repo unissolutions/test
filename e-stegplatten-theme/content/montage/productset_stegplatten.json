@@ -9,7 +9,7 @@
    "Montage",
    "Nicht einzeln kaufbar"
   ],
-  "descriptionHtml": "<p>Montage Ihrer Alu-Terrassenüberdachung mit 16-mm-Stegplatten durch unser eigenes Montageteam – im Umkreis von ca. 300 km um Gelsenkirchen sowie in Österreich. Der Preis richtet sich nach Dachgröße und Land und wird auf der Produktseite des Daches nach Eingabe der Postleitzahl angezeigt.</p><p>Die Montage ist nur zusammen mit einem Terrassendach buchbar. Den Termin stimmen wir nach der Bestellung mit Ihnen ab. Fundamente und Wanddübel sind nicht enthalten.</p>",
+  "descriptionHtml": "<p>Montage Ihrer Alu-Terrassenüberdachung mit 16-mm-Stegplatten durch unser eigenes Montageteam. Der Preis richtet sich nach Dachfläche und Entfernung (Montagezone nach Postleitzahl) und wird auf der Produktseite des Daches nach Eingabe der PLZ angezeigt.</p><p>Die Montage ist nur zusammen mit einem Terrassendach buchbar. Den Termin stimmen wir nach der Bestellung mit Ihnen ab. Fundamente und Wanddübel sind nicht enthalten.</p>",
   "productOptions": [
    {
     "name": "Breite",
@@ -60,11 +60,20 @@
     ]
    },
    {
-    "name": "Land",
+    "name": "Zone",
     "position": 3,
     "values": [
      {
-      "name": "Deutschland"
+      "name": "Zone 1"
+     },
+     {
+      "name": "Zone 2"
+     },
+     {
+      "name": "Zone 3"
+     },
+     {
+      "name": "Zone 4"
      },
      {
       "name": "Österreich"
@@ -84,8 +93,8 @@
       "name": "2,00 Meter"
      },
      {
-      "optionName": "Land",
-      "name": "Deutschland"
+      "optionName": "Zone",
+      "name": "Zone 1"
      }
     ],
     "price": "402.00",
@@ -95,7 +104,7 @@
      "tracked": false,
      "requiresShipping": false
     },
-    "sku": "MONT-STE-300x200-DE"
+    "sku": "MONT-STE-300x200-ZONE1"
    },
    {
     "optionValues": [
@@ -108,18 +117,90 @@
       "name": "2,00 Meter"
      },
      {
-      "optionName": "Land",
-      "name": "Österreich"
+      "optionName": "Zone",
+      "name": "Zone 2"
      }
     ],
-    "price": "542.70",
+    "price": "495.00",
     "taxable": true,
     "inventoryPolicy": "CONTINUE",
     "inventoryItem": {
      "tracked": false,
      "requiresShipping": false
     },
-    "sku": "MONT-STE-300x200-AT"
+    "sku": "MONT-STE-300x200-ZONE2"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "3,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "2,00 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Zone 3"
+     }
+    ],
+    "price": "582.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-300x200-ZONE3"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "3,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "2,00 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Zone 4"
+     }
+    ],
+    "price": "672.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-300x200-ZONE4"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "3,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "2,00 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Österreich"
+     }
+    ],
+    "price": "907.20",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-300x200-ÖSTERREI"
    },
    {
     "optionValues": [
@@ -132,8 +213,8 @@
       "name": "2,50 Meter"
      },
      {
-      "optionName": "Land",
-      "name": "Deutschland"
+      "optionName": "Zone",
+      "name": "Zone 1"
      }
     ],
     "price": "502.50",
@@ -143,7 +224,7 @@
      "tracked": false,
      "requiresShipping": false
     },
-    "sku": "MONT-STE-300x250-DE"
+    "sku": "MONT-STE-300x250-ZONE1"
    },
    {
     "optionValues": [
@@ -156,18 +237,90 @@
       "name": "2,50 Meter"
      },
      {
-      "optionName": "Land",
-      "name": "Österreich"
+      "optionName": "Zone",
+      "name": "Zone 2"
      }
     ],
-    "price": "678.38",
+    "price": "618.75",
     "taxable": true,
     "inventoryPolicy": "CONTINUE",
     "inventoryItem": {
      "tracked": false,
      "requiresShipping": false
     },
-    "sku": "MONT-STE-300x250-AT"
+    "sku": "MONT-STE-300x250-ZONE2"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "3,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "2,50 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Zone 3"
+     }
+    ],
+    "price": "727.50",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-300x250-ZONE3"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "3,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "2,50 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Zone 4"
+     }
+    ],
+    "price": "840.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-300x250-ZONE4"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "3,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "2,50 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Österreich"
+     }
+    ],
+    "price": "1134.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-300x250-ÖSTERREI"
    },
    {
     "optionValues": [
@@ -180,8 +333,8 @@
       "name": "3,00 Meter"
      },
      {
-      "optionName": "Land",
-      "name": "Deutschland"
+      "optionName": "Zone",
+      "name": "Zone 1"
      }
     ],
     "price": "603.00",
@@ -191,7 +344,7 @@
      "tracked": false,
      "requiresShipping": false
     },
-    "sku": "MONT-STE-300x300-DE"
+    "sku": "MONT-STE-300x300-ZONE1"
    },
    {
     "optionValues": [
@@ -204,18 +357,90 @@
       "name": "3,00 Meter"
      },
      {
-      "optionName": "Land",
-      "name": "Österreich"
+      "optionName": "Zone",
+      "name": "Zone 2"
      }
     ],
-    "price": "814.05",
+    "price": "742.50",
     "taxable": true,
     "inventoryPolicy": "CONTINUE",
     "inventoryItem": {
      "tracked": false,
      "requiresShipping": false
     },
-    "sku": "MONT-STE-300x300-AT"
+    "sku": "MONT-STE-300x300-ZONE2"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "3,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "3,00 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Zone 3"
+     }
+    ],
+    "price": "873.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-300x300-ZONE3"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "3,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "3,00 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Zone 4"
+     }
+    ],
+    "price": "1008.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-300x300-ZONE4"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "3,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "3,00 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Österreich"
+     }
+    ],
+    "price": "1360.80",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-300x300-ÖSTERREI"
    },
    {
     "optionValues": [
@@ -228,8 +453,8 @@
       "name": "3,50 Meter"
      },
      {
-      "optionName": "Land",
-      "name": "Deutschland"
+      "optionName": "Zone",
+      "name": "Zone 1"
      }
     ],
     "price": "703.50",
@@ -239,7 +464,7 @@
      "tracked": false,
      "requiresShipping": false
     },
-    "sku": "MONT-STE-300x350-DE"
+    "sku": "MONT-STE-300x350-ZONE1"
    },
    {
     "optionValues": [
@@ -252,18 +477,90 @@
       "name": "3,50 Meter"
      },
      {
-      "optionName": "Land",
-      "name": "Österreich"
+      "optionName": "Zone",
+      "name": "Zone 2"
      }
     ],
-    "price": "949.73",
+    "price": "866.25",
     "taxable": true,
     "inventoryPolicy": "CONTINUE",
     "inventoryItem": {
      "tracked": false,
      "requiresShipping": false
     },
-    "sku": "MONT-STE-300x350-AT"
+    "sku": "MONT-STE-300x350-ZONE2"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "3,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "3,50 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Zone 3"
+     }
+    ],
+    "price": "1018.50",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-300x350-ZONE3"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "3,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "3,50 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Zone 4"
+     }
+    ],
+    "price": "1176.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-300x350-ZONE4"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "3,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "3,50 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Österreich"
+     }
+    ],
+    "price": "1587.60",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-300x350-ÖSTERREI"
    },
    {
     "optionValues": [
@@ -276,8 +573,8 @@
       "name": "4,00 Meter"
      },
      {
-      "optionName": "Land",
-      "name": "Deutschland"
+      "optionName": "Zone",
+      "name": "Zone 1"
      }
     ],
     "price": "804.00",
@@ -287,7 +584,7 @@
      "tracked": false,
      "requiresShipping": false
     },
-    "sku": "MONT-STE-300x400-DE"
+    "sku": "MONT-STE-300x400-ZONE1"
    },
    {
     "optionValues": [
@@ -300,18 +597,90 @@
       "name": "4,00 Meter"
      },
      {
-      "optionName": "Land",
-      "name": "Österreich"
+      "optionName": "Zone",
+      "name": "Zone 2"
      }
     ],
-    "price": "1085.40",
+    "price": "990.00",
     "taxable": true,
     "inventoryPolicy": "CONTINUE",
     "inventoryItem": {
      "tracked": false,
      "requiresShipping": false
     },
-    "sku": "MONT-STE-300x400-AT"
+    "sku": "MONT-STE-300x400-ZONE2"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "3,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "4,00 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Zone 3"
+     }
+    ],
+    "price": "1164.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-300x400-ZONE3"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "3,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "4,00 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Zone 4"
+     }
+    ],
+    "price": "1344.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-300x400-ZONE4"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "3,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "4,00 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Österreich"
+     }
+    ],
+    "price": "1814.40",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-300x400-ÖSTERREI"
    },
    {
     "optionValues": [
@@ -324,8 +693,8 @@
       "name": "4,50 Meter"
      },
      {
-      "optionName": "Land",
-      "name": "Deutschland"
+      "optionName": "Zone",
+      "name": "Zone 1"
      }
     ],
     "price": "904.50",
@@ -335,7 +704,7 @@
      "tracked": false,
      "requiresShipping": false
     },
-    "sku": "MONT-STE-300x450-DE"
+    "sku": "MONT-STE-300x450-ZONE1"
    },
    {
     "optionValues": [
@@ -348,18 +717,90 @@
       "name": "4,50 Meter"
      },
      {
-      "optionName": "Land",
-      "name": "Österreich"
+      "optionName": "Zone",
+      "name": "Zone 2"
      }
     ],
-    "price": "1221.08",
+    "price": "1113.75",
     "taxable": true,
     "inventoryPolicy": "CONTINUE",
     "inventoryItem": {
      "tracked": false,
      "requiresShipping": false
     },
-    "sku": "MONT-STE-300x450-AT"
+    "sku": "MONT-STE-300x450-ZONE2"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "3,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "4,50 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Zone 3"
+     }
+    ],
+    "price": "1309.50",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-300x450-ZONE3"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "3,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "4,50 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Zone 4"
+     }
+    ],
+    "price": "1512.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-300x450-ZONE4"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "3,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "4,50 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Österreich"
+     }
+    ],
+    "price": "2041.20",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-300x450-ÖSTERREI"
    },
    {
     "optionValues": [
@@ -372,8 +813,8 @@
       "name": "5,00 Meter"
      },
      {
-      "optionName": "Land",
-      "name": "Deutschland"
+      "optionName": "Zone",
+      "name": "Zone 1"
      }
     ],
     "price": "1005.00",
@@ -383,7 +824,7 @@
      "tracked": false,
      "requiresShipping": false
     },
-    "sku": "MONT-STE-300x500-DE"
+    "sku": "MONT-STE-300x500-ZONE1"
    },
    {
     "optionValues": [
@@ -396,18 +837,90 @@
       "name": "5,00 Meter"
      },
      {
-      "optionName": "Land",
-      "name": "Österreich"
+      "optionName": "Zone",
+      "name": "Zone 2"
      }
     ],
-    "price": "1356.75",
+    "price": "1237.50",
     "taxable": true,
     "inventoryPolicy": "CONTINUE",
     "inventoryItem": {
      "tracked": false,
      "requiresShipping": false
     },
-    "sku": "MONT-STE-300x500-AT"
+    "sku": "MONT-STE-300x500-ZONE2"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "3,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "5,00 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Zone 3"
+     }
+    ],
+    "price": "1455.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-300x500-ZONE3"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "3,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "5,00 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Zone 4"
+     }
+    ],
+    "price": "1680.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-300x500-ZONE4"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "3,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "5,00 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Österreich"
+     }
+    ],
+    "price": "2268.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-300x500-ÖSTERREI"
    },
    {
     "optionValues": [
@@ -420,8 +933,8 @@
       "name": "2,00 Meter"
      },
      {
-      "optionName": "Land",
-      "name": "Deutschland"
+      "optionName": "Zone",
+      "name": "Zone 1"
      }
     ],
     "price": "536.00",
@@ -431,7 +944,7 @@
      "tracked": false,
      "requiresShipping": false
     },
-    "sku": "MONT-STE-400x200-DE"
+    "sku": "MONT-STE-400x200-ZONE1"
    },
    {
     "optionValues": [
@@ -444,18 +957,90 @@
       "name": "2,00 Meter"
      },
      {
-      "optionName": "Land",
-      "name": "Österreich"
+      "optionName": "Zone",
+      "name": "Zone 2"
      }
     ],
-    "price": "723.60",
+    "price": "660.00",
     "taxable": true,
     "inventoryPolicy": "CONTINUE",
     "inventoryItem": {
      "tracked": false,
      "requiresShipping": false
     },
-    "sku": "MONT-STE-400x200-AT"
+    "sku": "MONT-STE-400x200-ZONE2"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "4,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "2,00 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Zone 3"
+     }
+    ],
+    "price": "776.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-400x200-ZONE3"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "4,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "2,00 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Zone 4"
+     }
+    ],
+    "price": "896.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-400x200-ZONE4"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "4,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "2,00 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Österreich"
+     }
+    ],
+    "price": "1209.60",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-400x200-ÖSTERREI"
    },
    {
     "optionValues": [
@@ -468,8 +1053,8 @@
       "name": "2,50 Meter"
      },
      {
-      "optionName": "Land",
-      "name": "Deutschland"
+      "optionName": "Zone",
+      "name": "Zone 1"
      }
     ],
     "price": "670.00",
@@ -479,7 +1064,7 @@
      "tracked": false,
      "requiresShipping": false
     },
-    "sku": "MONT-STE-400x250-DE"
+    "sku": "MONT-STE-400x250-ZONE1"
    },
    {
     "optionValues": [
@@ -492,18 +1077,90 @@
       "name": "2,50 Meter"
      },
      {
-      "optionName": "Land",
-      "name": "Österreich"
+      "optionName": "Zone",
+      "name": "Zone 2"
      }
     ],
-    "price": "904.50",
+    "price": "825.00",
     "taxable": true,
     "inventoryPolicy": "CONTINUE",
     "inventoryItem": {
      "tracked": false,
      "requiresShipping": false
     },
-    "sku": "MONT-STE-400x250-AT"
+    "sku": "MONT-STE-400x250-ZONE2"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "4,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "2,50 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Zone 3"
+     }
+    ],
+    "price": "970.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-400x250-ZONE3"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "4,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "2,50 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Zone 4"
+     }
+    ],
+    "price": "1120.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-400x250-ZONE4"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "4,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "2,50 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Österreich"
+     }
+    ],
+    "price": "1512.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-400x250-ÖSTERREI"
    },
    {
     "optionValues": [
@@ -516,8 +1173,8 @@
       "name": "3,00 Meter"
      },
      {
-      "optionName": "Land",
-      "name": "Deutschland"
+      "optionName": "Zone",
+      "name": "Zone 1"
      }
     ],
     "price": "804.00",
@@ -527,7 +1184,7 @@
      "tracked": false,
      "requiresShipping": false
     },
-    "sku": "MONT-STE-400x300-DE"
+    "sku": "MONT-STE-400x300-ZONE1"
    },
    {
     "optionValues": [
@@ -540,18 +1197,90 @@
       "name": "3,00 Meter"
      },
      {
-      "optionName": "Land",
-      "name": "Österreich"
+      "optionName": "Zone",
+      "name": "Zone 2"
      }
     ],
-    "price": "1085.40",
+    "price": "990.00",
     "taxable": true,
     "inventoryPolicy": "CONTINUE",
     "inventoryItem": {
      "tracked": false,
      "requiresShipping": false
     },
-    "sku": "MONT-STE-400x300-AT"
+    "sku": "MONT-STE-400x300-ZONE2"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "4,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "3,00 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Zone 3"
+     }
+    ],
+    "price": "1164.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-400x300-ZONE3"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "4,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "3,00 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Zone 4"
+     }
+    ],
+    "price": "1344.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-400x300-ZONE4"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "4,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "3,00 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Österreich"
+     }
+    ],
+    "price": "1814.40",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-400x300-ÖSTERREI"
    },
    {
     "optionValues": [
@@ -564,8 +1293,8 @@
       "name": "3,50 Meter"
      },
      {
-      "optionName": "Land",
-      "name": "Deutschland"
+      "optionName": "Zone",
+      "name": "Zone 1"
      }
     ],
     "price": "938.00",
@@ -575,7 +1304,7 @@
      "tracked": false,
      "requiresShipping": false
     },
-    "sku": "MONT-STE-400x350-DE"
+    "sku": "MONT-STE-400x350-ZONE1"
    },
    {
     "optionValues": [
@@ -588,18 +1317,90 @@
       "name": "3,50 Meter"
      },
      {
-      "optionName": "Land",
-      "name": "Österreich"
+      "optionName": "Zone",
+      "name": "Zone 2"
      }
     ],
-    "price": "1266.30",
+    "price": "1155.00",
     "taxable": true,
     "inventoryPolicy": "CONTINUE",
     "inventoryItem": {
      "tracked": false,
      "requiresShipping": false
     },
-    "sku": "MONT-STE-400x350-AT"
+    "sku": "MONT-STE-400x350-ZONE2"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "4,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "3,50 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Zone 3"
+     }
+    ],
+    "price": "1358.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-400x350-ZONE3"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "4,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "3,50 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Zone 4"
+     }
+    ],
+    "price": "1568.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-400x350-ZONE4"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "4,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "3,50 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Österreich"
+     }
+    ],
+    "price": "2116.80",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-400x350-ÖSTERREI"
    },
    {
     "optionValues": [
@@ -612,8 +1413,8 @@
       "name": "4,00 Meter"
      },
      {
-      "optionName": "Land",
-      "name": "Deutschland"
+      "optionName": "Zone",
+      "name": "Zone 1"
      }
     ],
     "price": "1072.00",
@@ -623,7 +1424,7 @@
      "tracked": false,
      "requiresShipping": false
     },
-    "sku": "MONT-STE-400x400-DE"
+    "sku": "MONT-STE-400x400-ZONE1"
    },
    {
     "optionValues": [
@@ -636,18 +1437,90 @@
       "name": "4,00 Meter"
      },
      {
-      "optionName": "Land",
-      "name": "Österreich"
+      "optionName": "Zone",
+      "name": "Zone 2"
      }
     ],
-    "price": "1447.20",
+    "price": "1320.00",
     "taxable": true,
     "inventoryPolicy": "CONTINUE",
     "inventoryItem": {
      "tracked": false,
      "requiresShipping": false
     },
-    "sku": "MONT-STE-400x400-AT"
+    "sku": "MONT-STE-400x400-ZONE2"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "4,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "4,00 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Zone 3"
+     }
+    ],
+    "price": "1552.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-400x400-ZONE3"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "4,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "4,00 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Zone 4"
+     }
+    ],
+    "price": "1792.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-400x400-ZONE4"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "4,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "4,00 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Österreich"
+     }
+    ],
+    "price": "2419.20",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-400x400-ÖSTERREI"
    },
    {
     "optionValues": [
@@ -660,8 +1533,8 @@
       "name": "4,50 Meter"
      },
      {
-      "optionName": "Land",
-      "name": "Deutschland"
+      "optionName": "Zone",
+      "name": "Zone 1"
      }
     ],
     "price": "1206.00",
@@ -671,7 +1544,7 @@
      "tracked": false,
      "requiresShipping": false
     },
-    "sku": "MONT-STE-400x450-DE"
+    "sku": "MONT-STE-400x450-ZONE1"
    },
    {
     "optionValues": [
@@ -684,18 +1557,90 @@
       "name": "4,50 Meter"
      },
      {
-      "optionName": "Land",
-      "name": "Österreich"
+      "optionName": "Zone",
+      "name": "Zone 2"
      }
     ],
-    "price": "1628.10",
+    "price": "1485.00",
     "taxable": true,
     "inventoryPolicy": "CONTINUE",
     "inventoryItem": {
      "tracked": false,
      "requiresShipping": false
     },
-    "sku": "MONT-STE-400x450-AT"
+    "sku": "MONT-STE-400x450-ZONE2"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "4,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "4,50 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Zone 3"
+     }
+    ],
+    "price": "1746.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-400x450-ZONE3"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "4,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "4,50 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Zone 4"
+     }
+    ],
+    "price": "2016.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-400x450-ZONE4"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "4,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "4,50 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Österreich"
+     }
+    ],
+    "price": "2721.60",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-400x450-ÖSTERREI"
    },
    {
     "optionValues": [
@@ -708,8 +1653,8 @@
       "name": "5,00 Meter"
      },
      {
-      "optionName": "Land",
-      "name": "Deutschland"
+      "optionName": "Zone",
+      "name": "Zone 1"
      }
     ],
     "price": "1340.00",
@@ -719,7 +1664,7 @@
      "tracked": false,
      "requiresShipping": false
     },
-    "sku": "MONT-STE-400x500-DE"
+    "sku": "MONT-STE-400x500-ZONE1"
    },
    {
     "optionValues": [
@@ -732,18 +1677,90 @@
       "name": "5,00 Meter"
      },
      {
-      "optionName": "Land",
-      "name": "Österreich"
+      "optionName": "Zone",
+      "name": "Zone 2"
      }
     ],
-    "price": "1809.00",
+    "price": "1650.00",
     "taxable": true,
     "inventoryPolicy": "CONTINUE",
     "inventoryItem": {
      "tracked": false,
      "requiresShipping": false
     },
-    "sku": "MONT-STE-400x500-AT"
+    "sku": "MONT-STE-400x500-ZONE2"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "4,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "5,00 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Zone 3"
+     }
+    ],
+    "price": "1940.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-400x500-ZONE3"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "4,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "5,00 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Zone 4"
+     }
+    ],
+    "price": "2240.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-400x500-ZONE4"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "4,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "5,00 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Österreich"
+     }
+    ],
+    "price": "3024.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-400x500-ÖSTERREI"
    },
    {
     "optionValues": [
@@ -756,8 +1773,8 @@
       "name": "2,00 Meter"
      },
      {
-      "optionName": "Land",
-      "name": "Deutschland"
+      "optionName": "Zone",
+      "name": "Zone 1"
      }
     ],
     "price": "670.00",
@@ -767,7 +1784,7 @@
      "tracked": false,
      "requiresShipping": false
     },
-    "sku": "MONT-STE-500x200-DE"
+    "sku": "MONT-STE-500x200-ZONE1"
    },
    {
     "optionValues": [
@@ -780,18 +1797,90 @@
       "name": "2,00 Meter"
      },
      {
-      "optionName": "Land",
-      "name": "Österreich"
+      "optionName": "Zone",
+      "name": "Zone 2"
      }
     ],
-    "price": "904.50",
+    "price": "825.00",
     "taxable": true,
     "inventoryPolicy": "CONTINUE",
     "inventoryItem": {
      "tracked": false,
      "requiresShipping": false
     },
-    "sku": "MONT-STE-500x200-AT"
+    "sku": "MONT-STE-500x200-ZONE2"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "5,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "2,00 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Zone 3"
+     }
+    ],
+    "price": "970.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-500x200-ZONE3"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "5,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "2,00 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Zone 4"
+     }
+    ],
+    "price": "1120.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-500x200-ZONE4"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "5,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "2,00 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Österreich"
+     }
+    ],
+    "price": "1512.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-500x200-ÖSTERREI"
    },
    {
     "optionValues": [
@@ -804,8 +1893,8 @@
       "name": "2,50 Meter"
      },
      {
-      "optionName": "Land",
-      "name": "Deutschland"
+      "optionName": "Zone",
+      "name": "Zone 1"
      }
     ],
     "price": "837.50",
@@ -815,7 +1904,7 @@
      "tracked": false,
      "requiresShipping": false
     },
-    "sku": "MONT-STE-500x250-DE"
+    "sku": "MONT-STE-500x250-ZONE1"
    },
    {
     "optionValues": [
@@ -828,18 +1917,90 @@
       "name": "2,50 Meter"
      },
      {
-      "optionName": "Land",
-      "name": "Österreich"
+      "optionName": "Zone",
+      "name": "Zone 2"
      }
     ],
-    "price": "1130.63",
+    "price": "1031.25",
     "taxable": true,
     "inventoryPolicy": "CONTINUE",
     "inventoryItem": {
      "tracked": false,
      "requiresShipping": false
     },
-    "sku": "MONT-STE-500x250-AT"
+    "sku": "MONT-STE-500x250-ZONE2"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "5,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "2,50 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Zone 3"
+     }
+    ],
+    "price": "1212.50",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-500x250-ZONE3"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "5,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "2,50 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Zone 4"
+     }
+    ],
+    "price": "1400.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-500x250-ZONE4"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "5,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "2,50 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Österreich"
+     }
+    ],
+    "price": "1890.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-500x250-ÖSTERREI"
    },
    {
     "optionValues": [
@@ -852,8 +2013,8 @@
       "name": "3,00 Meter"
      },
      {
-      "optionName": "Land",
-      "name": "Deutschland"
+      "optionName": "Zone",
+      "name": "Zone 1"
      }
     ],
     "price": "1005.00",
@@ -863,7 +2024,7 @@
      "tracked": false,
      "requiresShipping": false
     },
-    "sku": "MONT-STE-500x300-DE"
+    "sku": "MONT-STE-500x300-ZONE1"
    },
    {
     "optionValues": [
@@ -876,18 +2037,90 @@
       "name": "3,00 Meter"
      },
      {
-      "optionName": "Land",
-      "name": "Österreich"
+      "optionName": "Zone",
+      "name": "Zone 2"
      }
     ],
-    "price": "1356.75",
+    "price": "1237.50",
     "taxable": true,
     "inventoryPolicy": "CONTINUE",
     "inventoryItem": {
      "tracked": false,
      "requiresShipping": false
     },
-    "sku": "MONT-STE-500x300-AT"
+    "sku": "MONT-STE-500x300-ZONE2"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "5,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "3,00 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Zone 3"
+     }
+    ],
+    "price": "1455.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-500x300-ZONE3"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "5,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "3,00 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Zone 4"
+     }
+    ],
+    "price": "1680.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-500x300-ZONE4"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "5,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "3,00 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Österreich"
+     }
+    ],
+    "price": "2268.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-500x300-ÖSTERREI"
    },
    {
     "optionValues": [
@@ -900,8 +2133,8 @@
       "name": "3,50 Meter"
      },
      {
-      "optionName": "Land",
-      "name": "Deutschland"
+      "optionName": "Zone",
+      "name": "Zone 1"
      }
     ],
     "price": "1172.50",
@@ -911,7 +2144,7 @@
      "tracked": false,
      "requiresShipping": false
     },
-    "sku": "MONT-STE-500x350-DE"
+    "sku": "MONT-STE-500x350-ZONE1"
    },
    {
     "optionValues": [
@@ -924,18 +2157,90 @@
       "name": "3,50 Meter"
      },
      {
-      "optionName": "Land",
-      "name": "Österreich"
+      "optionName": "Zone",
+      "name": "Zone 2"
      }
     ],
-    "price": "1582.88",
+    "price": "1443.75",
     "taxable": true,
     "inventoryPolicy": "CONTINUE",
     "inventoryItem": {
      "tracked": false,
      "requiresShipping": false
     },
-    "sku": "MONT-STE-500x350-AT"
+    "sku": "MONT-STE-500x350-ZONE2"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "5,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "3,50 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Zone 3"
+     }
+    ],
+    "price": "1697.50",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-500x350-ZONE3"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "5,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "3,50 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Zone 4"
+     }
+    ],
+    "price": "1960.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-500x350-ZONE4"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "5,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "3,50 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Österreich"
+     }
+    ],
+    "price": "2646.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-500x350-ÖSTERREI"
    },
    {
     "optionValues": [
@@ -948,8 +2253,8 @@
       "name": "4,00 Meter"
      },
      {
-      "optionName": "Land",
-      "name": "Deutschland"
+      "optionName": "Zone",
+      "name": "Zone 1"
      }
     ],
     "price": "1340.00",
@@ -959,7 +2264,7 @@
      "tracked": false,
      "requiresShipping": false
     },
-    "sku": "MONT-STE-500x400-DE"
+    "sku": "MONT-STE-500x400-ZONE1"
    },
    {
     "optionValues": [
@@ -972,18 +2277,90 @@
       "name": "4,00 Meter"
      },
      {
-      "optionName": "Land",
-      "name": "Österreich"
+      "optionName": "Zone",
+      "name": "Zone 2"
      }
     ],
-    "price": "1809.00",
+    "price": "1650.00",
     "taxable": true,
     "inventoryPolicy": "CONTINUE",
     "inventoryItem": {
      "tracked": false,
      "requiresShipping": false
     },
-    "sku": "MONT-STE-500x400-AT"
+    "sku": "MONT-STE-500x400-ZONE2"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "5,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "4,00 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Zone 3"
+     }
+    ],
+    "price": "1940.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-500x400-ZONE3"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "5,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "4,00 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Zone 4"
+     }
+    ],
+    "price": "2240.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-500x400-ZONE4"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "5,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "4,00 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Österreich"
+     }
+    ],
+    "price": "3024.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-500x400-ÖSTERREI"
    },
    {
     "optionValues": [
@@ -996,8 +2373,8 @@
       "name": "4,50 Meter"
      },
      {
-      "optionName": "Land",
-      "name": "Deutschland"
+      "optionName": "Zone",
+      "name": "Zone 1"
      }
     ],
     "price": "1507.50",
@@ -1007,7 +2384,7 @@
      "tracked": false,
      "requiresShipping": false
     },
-    "sku": "MONT-STE-500x450-DE"
+    "sku": "MONT-STE-500x450-ZONE1"
    },
    {
     "optionValues": [
@@ -1020,18 +2397,90 @@
       "name": "4,50 Meter"
      },
      {
-      "optionName": "Land",
-      "name": "Österreich"
+      "optionName": "Zone",
+      "name": "Zone 2"
      }
     ],
-    "price": "2035.13",
+    "price": "1856.25",
     "taxable": true,
     "inventoryPolicy": "CONTINUE",
     "inventoryItem": {
      "tracked": false,
      "requiresShipping": false
     },
-    "sku": "MONT-STE-500x450-AT"
+    "sku": "MONT-STE-500x450-ZONE2"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "5,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "4,50 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Zone 3"
+     }
+    ],
+    "price": "2182.50",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-500x450-ZONE3"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "5,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "4,50 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Zone 4"
+     }
+    ],
+    "price": "2520.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-500x450-ZONE4"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "5,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "4,50 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Österreich"
+     }
+    ],
+    "price": "3402.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-500x450-ÖSTERREI"
    },
    {
     "optionValues": [
@@ -1044,8 +2493,8 @@
       "name": "5,00 Meter"
      },
      {
-      "optionName": "Land",
-      "name": "Deutschland"
+      "optionName": "Zone",
+      "name": "Zone 1"
      }
     ],
     "price": "1675.00",
@@ -1055,7 +2504,7 @@
      "tracked": false,
      "requiresShipping": false
     },
-    "sku": "MONT-STE-500x500-DE"
+    "sku": "MONT-STE-500x500-ZONE1"
    },
    {
     "optionValues": [
@@ -1068,18 +2517,90 @@
       "name": "5,00 Meter"
      },
      {
-      "optionName": "Land",
-      "name": "Österreich"
+      "optionName": "Zone",
+      "name": "Zone 2"
      }
     ],
-    "price": "2261.25",
+    "price": "2062.50",
     "taxable": true,
     "inventoryPolicy": "CONTINUE",
     "inventoryItem": {
      "tracked": false,
      "requiresShipping": false
     },
-    "sku": "MONT-STE-500x500-AT"
+    "sku": "MONT-STE-500x500-ZONE2"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "5,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "5,00 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Zone 3"
+     }
+    ],
+    "price": "2425.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-500x500-ZONE3"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "5,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "5,00 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Zone 4"
+     }
+    ],
+    "price": "2800.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-500x500-ZONE4"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "5,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "5,00 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Österreich"
+     }
+    ],
+    "price": "3780.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-500x500-ÖSTERREI"
    },
    {
     "optionValues": [
@@ -1092,8 +2613,8 @@
       "name": "2,00 Meter"
      },
      {
-      "optionName": "Land",
-      "name": "Deutschland"
+      "optionName": "Zone",
+      "name": "Zone 1"
      }
     ],
     "price": "804.00",
@@ -1103,7 +2624,7 @@
      "tracked": false,
      "requiresShipping": false
     },
-    "sku": "MONT-STE-600x200-DE"
+    "sku": "MONT-STE-600x200-ZONE1"
    },
    {
     "optionValues": [
@@ -1116,18 +2637,90 @@
       "name": "2,00 Meter"
      },
      {
-      "optionName": "Land",
-      "name": "Österreich"
+      "optionName": "Zone",
+      "name": "Zone 2"
      }
     ],
-    "price": "1085.40",
+    "price": "990.00",
     "taxable": true,
     "inventoryPolicy": "CONTINUE",
     "inventoryItem": {
      "tracked": false,
      "requiresShipping": false
     },
-    "sku": "MONT-STE-600x200-AT"
+    "sku": "MONT-STE-600x200-ZONE2"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "6,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "2,00 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Zone 3"
+     }
+    ],
+    "price": "1164.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-600x200-ZONE3"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "6,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "2,00 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Zone 4"
+     }
+    ],
+    "price": "1344.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-600x200-ZONE4"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "6,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "2,00 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Österreich"
+     }
+    ],
+    "price": "1814.40",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-600x200-ÖSTERREI"
    },
    {
     "optionValues": [
@@ -1140,8 +2733,8 @@
       "name": "2,50 Meter"
      },
      {
-      "optionName": "Land",
-      "name": "Deutschland"
+      "optionName": "Zone",
+      "name": "Zone 1"
      }
     ],
     "price": "1005.00",
@@ -1151,7 +2744,7 @@
      "tracked": false,
      "requiresShipping": false
     },
-    "sku": "MONT-STE-600x250-DE"
+    "sku": "MONT-STE-600x250-ZONE1"
    },
    {
     "optionValues": [
@@ -1164,18 +2757,90 @@
       "name": "2,50 Meter"
      },
      {
-      "optionName": "Land",
-      "name": "Österreich"
+      "optionName": "Zone",
+      "name": "Zone 2"
      }
     ],
-    "price": "1356.75",
+    "price": "1237.50",
     "taxable": true,
     "inventoryPolicy": "CONTINUE",
     "inventoryItem": {
      "tracked": false,
      "requiresShipping": false
     },
-    "sku": "MONT-STE-600x250-AT"
+    "sku": "MONT-STE-600x250-ZONE2"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "6,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "2,50 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Zone 3"
+     }
+    ],
+    "price": "1455.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-600x250-ZONE3"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "6,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "2,50 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Zone 4"
+     }
+    ],
+    "price": "1680.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-600x250-ZONE4"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "6,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "2,50 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Österreich"
+     }
+    ],
+    "price": "2268.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-600x250-ÖSTERREI"
    },
    {
     "optionValues": [
@@ -1188,8 +2853,8 @@
       "name": "3,00 Meter"
      },
      {
-      "optionName": "Land",
-      "name": "Deutschland"
+      "optionName": "Zone",
+      "name": "Zone 1"
      }
     ],
     "price": "1206.00",
@@ -1199,7 +2864,7 @@
      "tracked": false,
      "requiresShipping": false
     },
-    "sku": "MONT-STE-600x300-DE"
+    "sku": "MONT-STE-600x300-ZONE1"
    },
    {
     "optionValues": [
@@ -1212,18 +2877,90 @@
       "name": "3,00 Meter"
      },
      {
-      "optionName": "Land",
-      "name": "Österreich"
+      "optionName": "Zone",
+      "name": "Zone 2"
      }
     ],
-    "price": "1628.10",
+    "price": "1485.00",
     "taxable": true,
     "inventoryPolicy": "CONTINUE",
     "inventoryItem": {
      "tracked": false,
      "requiresShipping": false
     },
-    "sku": "MONT-STE-600x300-AT"
+    "sku": "MONT-STE-600x300-ZONE2"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "6,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "3,00 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Zone 3"
+     }
+    ],
+    "price": "1746.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-600x300-ZONE3"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "6,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "3,00 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Zone 4"
+     }
+    ],
+    "price": "2016.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-600x300-ZONE4"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "6,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "3,00 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Österreich"
+     }
+    ],
+    "price": "2721.60",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-600x300-ÖSTERREI"
    },
    {
     "optionValues": [
@@ -1236,8 +2973,8 @@
       "name": "3,50 Meter"
      },
      {
-      "optionName": "Land",
-      "name": "Deutschland"
+      "optionName": "Zone",
+      "name": "Zone 1"
      }
     ],
     "price": "1407.00",
@@ -1247,7 +2984,7 @@
      "tracked": false,
      "requiresShipping": false
     },
-    "sku": "MONT-STE-600x350-DE"
+    "sku": "MONT-STE-600x350-ZONE1"
    },
    {
     "optionValues": [
@@ -1260,18 +2997,90 @@
       "name": "3,50 Meter"
      },
      {
-      "optionName": "Land",
-      "name": "Österreich"
+      "optionName": "Zone",
+      "name": "Zone 2"
      }
     ],
-    "price": "1899.45",
+    "price": "1732.50",
     "taxable": true,
     "inventoryPolicy": "CONTINUE",
     "inventoryItem": {
      "tracked": false,
      "requiresShipping": false
     },
-    "sku": "MONT-STE-600x350-AT"
+    "sku": "MONT-STE-600x350-ZONE2"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "6,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "3,50 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Zone 3"
+     }
+    ],
+    "price": "2037.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-600x350-ZONE3"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "6,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "3,50 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Zone 4"
+     }
+    ],
+    "price": "2352.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-600x350-ZONE4"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "6,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "3,50 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Österreich"
+     }
+    ],
+    "price": "3175.20",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-600x350-ÖSTERREI"
    },
    {
     "optionValues": [
@@ -1284,8 +3093,8 @@
       "name": "4,00 Meter"
      },
      {
-      "optionName": "Land",
-      "name": "Deutschland"
+      "optionName": "Zone",
+      "name": "Zone 1"
      }
     ],
     "price": "1608.00",
@@ -1295,7 +3104,7 @@
      "tracked": false,
      "requiresShipping": false
     },
-    "sku": "MONT-STE-600x400-DE"
+    "sku": "MONT-STE-600x400-ZONE1"
    },
    {
     "optionValues": [
@@ -1308,18 +3117,90 @@
       "name": "4,00 Meter"
      },
      {
-      "optionName": "Land",
-      "name": "Österreich"
+      "optionName": "Zone",
+      "name": "Zone 2"
      }
     ],
-    "price": "2170.80",
+    "price": "1980.00",
     "taxable": true,
     "inventoryPolicy": "CONTINUE",
     "inventoryItem": {
      "tracked": false,
      "requiresShipping": false
     },
-    "sku": "MONT-STE-600x400-AT"
+    "sku": "MONT-STE-600x400-ZONE2"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "6,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "4,00 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Zone 3"
+     }
+    ],
+    "price": "2328.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-600x400-ZONE3"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "6,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "4,00 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Zone 4"
+     }
+    ],
+    "price": "2688.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-600x400-ZONE4"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "6,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "4,00 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Österreich"
+     }
+    ],
+    "price": "3628.80",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-600x400-ÖSTERREI"
    },
    {
     "optionValues": [
@@ -1332,8 +3213,8 @@
       "name": "4,50 Meter"
      },
      {
-      "optionName": "Land",
-      "name": "Deutschland"
+      "optionName": "Zone",
+      "name": "Zone 1"
      }
     ],
     "price": "1809.00",
@@ -1343,7 +3224,7 @@
      "tracked": false,
      "requiresShipping": false
     },
-    "sku": "MONT-STE-600x450-DE"
+    "sku": "MONT-STE-600x450-ZONE1"
    },
    {
     "optionValues": [
@@ -1356,18 +3237,90 @@
       "name": "4,50 Meter"
      },
      {
-      "optionName": "Land",
-      "name": "Österreich"
+      "optionName": "Zone",
+      "name": "Zone 2"
      }
     ],
-    "price": "2442.15",
+    "price": "2227.50",
     "taxable": true,
     "inventoryPolicy": "CONTINUE",
     "inventoryItem": {
      "tracked": false,
      "requiresShipping": false
     },
-    "sku": "MONT-STE-600x450-AT"
+    "sku": "MONT-STE-600x450-ZONE2"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "6,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "4,50 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Zone 3"
+     }
+    ],
+    "price": "2619.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-600x450-ZONE3"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "6,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "4,50 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Zone 4"
+     }
+    ],
+    "price": "3024.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-600x450-ZONE4"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "6,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "4,50 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Österreich"
+     }
+    ],
+    "price": "4082.40",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-600x450-ÖSTERREI"
    },
    {
     "optionValues": [
@@ -1380,8 +3333,8 @@
       "name": "5,00 Meter"
      },
      {
-      "optionName": "Land",
-      "name": "Deutschland"
+      "optionName": "Zone",
+      "name": "Zone 1"
      }
     ],
     "price": "2010.00",
@@ -1391,7 +3344,7 @@
      "tracked": false,
      "requiresShipping": false
     },
-    "sku": "MONT-STE-600x500-DE"
+    "sku": "MONT-STE-600x500-ZONE1"
    },
    {
     "optionValues": [
@@ -1404,18 +3357,90 @@
       "name": "5,00 Meter"
      },
      {
-      "optionName": "Land",
-      "name": "Österreich"
+      "optionName": "Zone",
+      "name": "Zone 2"
      }
     ],
-    "price": "2713.50",
+    "price": "2475.00",
     "taxable": true,
     "inventoryPolicy": "CONTINUE",
     "inventoryItem": {
      "tracked": false,
      "requiresShipping": false
     },
-    "sku": "MONT-STE-600x500-AT"
+    "sku": "MONT-STE-600x500-ZONE2"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "6,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "5,00 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Zone 3"
+     }
+    ],
+    "price": "2910.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-600x500-ZONE3"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "6,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "5,00 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Zone 4"
+     }
+    ],
+    "price": "3360.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-600x500-ZONE4"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "6,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "5,00 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Österreich"
+     }
+    ],
+    "price": "4536.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-600x500-ÖSTERREI"
    },
    {
     "optionValues": [
@@ -1428,8 +3453,8 @@
       "name": "2,00 Meter"
      },
      {
-      "optionName": "Land",
-      "name": "Deutschland"
+      "optionName": "Zone",
+      "name": "Zone 1"
      }
     ],
     "price": "938.00",
@@ -1439,7 +3464,7 @@
      "tracked": false,
      "requiresShipping": false
     },
-    "sku": "MONT-STE-700x200-DE"
+    "sku": "MONT-STE-700x200-ZONE1"
    },
    {
     "optionValues": [
@@ -1452,18 +3477,90 @@
       "name": "2,00 Meter"
      },
      {
-      "optionName": "Land",
-      "name": "Österreich"
+      "optionName": "Zone",
+      "name": "Zone 2"
      }
     ],
-    "price": "1266.30",
+    "price": "1155.00",
     "taxable": true,
     "inventoryPolicy": "CONTINUE",
     "inventoryItem": {
      "tracked": false,
      "requiresShipping": false
     },
-    "sku": "MONT-STE-700x200-AT"
+    "sku": "MONT-STE-700x200-ZONE2"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "7,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "2,00 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Zone 3"
+     }
+    ],
+    "price": "1358.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-700x200-ZONE3"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "7,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "2,00 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Zone 4"
+     }
+    ],
+    "price": "1568.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-700x200-ZONE4"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "7,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "2,00 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Österreich"
+     }
+    ],
+    "price": "2116.80",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-700x200-ÖSTERREI"
    },
    {
     "optionValues": [
@@ -1476,8 +3573,8 @@
       "name": "2,50 Meter"
      },
      {
-      "optionName": "Land",
-      "name": "Deutschland"
+      "optionName": "Zone",
+      "name": "Zone 1"
      }
     ],
     "price": "1172.50",
@@ -1487,7 +3584,7 @@
      "tracked": false,
      "requiresShipping": false
     },
-    "sku": "MONT-STE-700x250-DE"
+    "sku": "MONT-STE-700x250-ZONE1"
    },
    {
     "optionValues": [
@@ -1500,18 +3597,90 @@
       "name": "2,50 Meter"
      },
      {
-      "optionName": "Land",
-      "name": "Österreich"
+      "optionName": "Zone",
+      "name": "Zone 2"
      }
     ],
-    "price": "1582.88",
+    "price": "1443.75",
     "taxable": true,
     "inventoryPolicy": "CONTINUE",
     "inventoryItem": {
      "tracked": false,
      "requiresShipping": false
     },
-    "sku": "MONT-STE-700x250-AT"
+    "sku": "MONT-STE-700x250-ZONE2"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "7,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "2,50 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Zone 3"
+     }
+    ],
+    "price": "1697.50",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-700x250-ZONE3"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "7,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "2,50 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Zone 4"
+     }
+    ],
+    "price": "1960.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-700x250-ZONE4"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "7,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "2,50 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Österreich"
+     }
+    ],
+    "price": "2646.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-700x250-ÖSTERREI"
    },
    {
     "optionValues": [
@@ -1524,8 +3693,8 @@
       "name": "3,00 Meter"
      },
      {
-      "optionName": "Land",
-      "name": "Deutschland"
+      "optionName": "Zone",
+      "name": "Zone 1"
      }
     ],
     "price": "1407.00",
@@ -1535,7 +3704,7 @@
      "tracked": false,
      "requiresShipping": false
     },
-    "sku": "MONT-STE-700x300-DE"
+    "sku": "MONT-STE-700x300-ZONE1"
    },
    {
     "optionValues": [
@@ -1548,18 +3717,90 @@
       "name": "3,00 Meter"
      },
      {
-      "optionName": "Land",
-      "name": "Österreich"
+      "optionName": "Zone",
+      "name": "Zone 2"
      }
     ],
-    "price": "1899.45",
+    "price": "1732.50",
     "taxable": true,
     "inventoryPolicy": "CONTINUE",
     "inventoryItem": {
      "tracked": false,
      "requiresShipping": false
     },
-    "sku": "MONT-STE-700x300-AT"
+    "sku": "MONT-STE-700x300-ZONE2"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "7,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "3,00 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Zone 3"
+     }
+    ],
+    "price": "2037.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-700x300-ZONE3"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "7,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "3,00 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Zone 4"
+     }
+    ],
+    "price": "2352.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-700x300-ZONE4"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "7,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "3,00 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Österreich"
+     }
+    ],
+    "price": "3175.20",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-700x300-ÖSTERREI"
    },
    {
     "optionValues": [
@@ -1572,8 +3813,8 @@
       "name": "3,50 Meter"
      },
      {
-      "optionName": "Land",
-      "name": "Deutschland"
+      "optionName": "Zone",
+      "name": "Zone 1"
      }
     ],
     "price": "1641.50",
@@ -1583,7 +3824,7 @@
      "tracked": false,
      "requiresShipping": false
     },
-    "sku": "MONT-STE-700x350-DE"
+    "sku": "MONT-STE-700x350-ZONE1"
    },
    {
     "optionValues": [
@@ -1596,18 +3837,90 @@
       "name": "3,50 Meter"
      },
      {
-      "optionName": "Land",
-      "name": "Österreich"
+      "optionName": "Zone",
+      "name": "Zone 2"
      }
     ],
-    "price": "2216.03",
+    "price": "2021.25",
     "taxable": true,
     "inventoryPolicy": "CONTINUE",
     "inventoryItem": {
      "tracked": false,
      "requiresShipping": false
     },
-    "sku": "MONT-STE-700x350-AT"
+    "sku": "MONT-STE-700x350-ZONE2"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "7,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "3,50 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Zone 3"
+     }
+    ],
+    "price": "2376.50",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-700x350-ZONE3"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "7,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "3,50 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Zone 4"
+     }
+    ],
+    "price": "2744.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-700x350-ZONE4"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "7,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "3,50 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Österreich"
+     }
+    ],
+    "price": "3704.40",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-700x350-ÖSTERREI"
    },
    {
     "optionValues": [
@@ -1620,8 +3933,8 @@
       "name": "4,00 Meter"
      },
      {
-      "optionName": "Land",
-      "name": "Deutschland"
+      "optionName": "Zone",
+      "name": "Zone 1"
      }
     ],
     "price": "1876.00",
@@ -1631,7 +3944,7 @@
      "tracked": false,
      "requiresShipping": false
     },
-    "sku": "MONT-STE-700x400-DE"
+    "sku": "MONT-STE-700x400-ZONE1"
    },
    {
     "optionValues": [
@@ -1644,18 +3957,90 @@
       "name": "4,00 Meter"
      },
      {
-      "optionName": "Land",
-      "name": "Österreich"
+      "optionName": "Zone",
+      "name": "Zone 2"
      }
     ],
-    "price": "2532.60",
+    "price": "2310.00",
     "taxable": true,
     "inventoryPolicy": "CONTINUE",
     "inventoryItem": {
      "tracked": false,
      "requiresShipping": false
     },
-    "sku": "MONT-STE-700x400-AT"
+    "sku": "MONT-STE-700x400-ZONE2"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "7,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "4,00 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Zone 3"
+     }
+    ],
+    "price": "2716.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-700x400-ZONE3"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "7,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "4,00 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Zone 4"
+     }
+    ],
+    "price": "3136.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-700x400-ZONE4"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "7,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "4,00 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Österreich"
+     }
+    ],
+    "price": "4233.60",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-700x400-ÖSTERREI"
    },
    {
     "optionValues": [
@@ -1668,8 +4053,8 @@
       "name": "4,50 Meter"
      },
      {
-      "optionName": "Land",
-      "name": "Deutschland"
+      "optionName": "Zone",
+      "name": "Zone 1"
      }
     ],
     "price": "2110.50",
@@ -1679,7 +4064,7 @@
      "tracked": false,
      "requiresShipping": false
     },
-    "sku": "MONT-STE-700x450-DE"
+    "sku": "MONT-STE-700x450-ZONE1"
    },
    {
     "optionValues": [
@@ -1692,18 +4077,90 @@
       "name": "4,50 Meter"
      },
      {
-      "optionName": "Land",
-      "name": "Österreich"
+      "optionName": "Zone",
+      "name": "Zone 2"
      }
     ],
-    "price": "2849.18",
+    "price": "2598.75",
     "taxable": true,
     "inventoryPolicy": "CONTINUE",
     "inventoryItem": {
      "tracked": false,
      "requiresShipping": false
     },
-    "sku": "MONT-STE-700x450-AT"
+    "sku": "MONT-STE-700x450-ZONE2"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "7,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "4,50 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Zone 3"
+     }
+    ],
+    "price": "3055.50",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-700x450-ZONE3"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "7,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "4,50 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Zone 4"
+     }
+    ],
+    "price": "3528.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-700x450-ZONE4"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "7,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "4,50 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Österreich"
+     }
+    ],
+    "price": "4762.80",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-700x450-ÖSTERREI"
    },
    {
     "optionValues": [
@@ -1716,8 +4173,8 @@
       "name": "5,00 Meter"
      },
      {
-      "optionName": "Land",
-      "name": "Deutschland"
+      "optionName": "Zone",
+      "name": "Zone 1"
      }
     ],
     "price": "2345.00",
@@ -1727,7 +4184,7 @@
      "tracked": false,
      "requiresShipping": false
     },
-    "sku": "MONT-STE-700x500-DE"
+    "sku": "MONT-STE-700x500-ZONE1"
    },
    {
     "optionValues": [
@@ -1740,18 +4197,90 @@
       "name": "5,00 Meter"
      },
      {
-      "optionName": "Land",
-      "name": "Österreich"
+      "optionName": "Zone",
+      "name": "Zone 2"
      }
     ],
-    "price": "3165.75",
+    "price": "2887.50",
     "taxable": true,
     "inventoryPolicy": "CONTINUE",
     "inventoryItem": {
      "tracked": false,
      "requiresShipping": false
     },
-    "sku": "MONT-STE-700x500-AT"
+    "sku": "MONT-STE-700x500-ZONE2"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "7,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "5,00 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Zone 3"
+     }
+    ],
+    "price": "3395.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-700x500-ZONE3"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "7,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "5,00 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Zone 4"
+     }
+    ],
+    "price": "3920.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-700x500-ZONE4"
+   },
+   {
+    "optionValues": [
+     {
+      "optionName": "Breite",
+      "name": "7,00 Meter"
+     },
+     {
+      "optionName": "Tiefe",
+      "name": "5,00 Meter"
+     },
+     {
+      "optionName": "Zone",
+      "name": "Österreich"
+     }
+    ],
+    "price": "5292.00",
+    "taxable": true,
+    "inventoryPolicy": "CONTINUE",
+    "inventoryItem": {
+     "tracked": false,
+     "requiresShipping": false
+    },
+    "sku": "MONT-STE-700x500-ÖSTERREI"
    }
   ]
  },

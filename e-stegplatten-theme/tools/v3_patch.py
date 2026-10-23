@@ -49,7 +49,7 @@ patch('sections/es-pdp-terrasse.liquid', [
       assign mwi = forloop.index0
     elsif o.name == 'Tiefe' or o.name == 'Länge'
       assign mdi = forloop.index0
-    elsif o.name == 'Land'
+    elsif o.name == 'Zone'
       assign mli = forloop.index0
     endif
   endfor
@@ -68,7 +68,7 @@ patch('sections/es-pdp-terrasse.liquid', [
 {%- if mo_on -%}{%- capture mosvg -%}<svg width="36" height="36" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 21.5 8 28a2.1 2.1 0 0 1-3-3l6.5-6.5"/><path d="M19 9a6 6 0 0 1 8 7l-5.5 5.5a6 6 0 0 1-8-8z"/><path d="m17 13 6 6"/></svg>{%- endcapture -%}
 <div class="es-pdp__add es-pdp__mo" data-mo-box><div class="es-pdp__add-h">Montage</div>
 <label class="es-pdp__ar es-pdp__lr"><input type="radio" name="es-mo-{{ section.id }}" value="" data-mo="0" checked><span class="es-pdp__li es-pdp__li--off" aria-hidden="true">{{ mosvg }}</span><span>Selbstmontage<small>{{ section.settings.montage_self | default: 'Anleitung liegt bei, Telefon-Support bei der Montage' }}</small></span><b>+ 0,00 €</b></label>
-<label class="es-pdp__ar es-pdp__lr"><input type="radio" name="es-mo-{{ section.id }}" value="" data-mo="1" data-addon data-per="1" data-cents="0"><span class="es-pdp__li" aria-hidden="true">{{ mosvg }}</span><span>Montage durch unser Team<small>{{ section.settings.montage_sub | default: 'ca. 300 km um Gelsenkirchen und Österreich' }}</small></span><b data-mo-price>Preis nach PLZ</b></label>
+<label class="es-pdp__ar es-pdp__lr"><input type="radio" name="es-mo-{{ section.id }}" value="" data-mo="1" data-addon data-per="1" data-cents="0"><span class="es-pdp__li" aria-hidden="true">{{ mosvg }}</span><span>Montage durch unser Team<small>{{ section.settings.montage_sub | default: 'Preis nach Entfernung, Deutschland und Österreich' }}</small></span><b data-mo-price>Preis nach PLZ</b></label>
 <div class="es-pdp__mop" data-mo-panel hidden><label for="es-mo-plz-{{ section.id }}">Postleitzahl des Montageorts</label><div class="es-pdp__mor"><input type="text" id="es-mo-plz-{{ section.id }}" inputmode="numeric" autocomplete="postal-code" placeholder="z. B. 45881" data-mo-plz><span data-mo-land></span></div><p class="es-pdp__moh" data-mo-hint></p></div>
 <p class="es-pdp__lnote">{{ section.settings.montage_note | default: 'Montage nur zusammen mit dem Dach buchbar. Den Termin stimmen wir nach der Bestellung mit Ihnen ab.' }}</p></div>
 {%- endif -%}
@@ -106,7 +106,7 @@ patch('sections/es-pdp-terrasse.liquid', [
 <div class="es-pdp__trust">"""),
     # Parameter an das JS-Snippet
     ("cover: cover, cw: cw, cd: cd %}",
-     "cover: cover, cw: cw, cd: cd, mo: mo, mo_on: mo_on, mwi: mwi, mdi: mdi, mli: mli, marea: section.settings.montage_plz %}"),
+     "cover: cover, cw: cw, cd: cd, mo: mo, mo_on: mo_on, mwi: mwi, mdi: mdi, mli: mli, marea: section.settings.montage_zonen %}"),
     # Schema
     ("""{"type":"text","id":"led_note","label":"Hinweis unter der LED-Auswahl","default":"Unsere vormontierten LED-Spots werden optimal auf die Anzahl der Träger abgestimmt."}
 ],""",
@@ -115,10 +115,10 @@ patch('sections/es-pdp-terrasse.liquid', [
 {"type":"url","id":"muster_url","label":"Link Farbmuster-Produkt","info":"Leer = kein Link bei „Dachplatte“.","default":"/products/farbmuster"},
 {"type":"header","content":"Montage"},
 {"type":"checkbox","id":"montage_on","label":"Montage anbieten","default":true},
-{"type":"product","id":"montage_steg","label":"Montage-Produkt für Stegplatten-Dächer","info":"Leer = Handle montage-terrassendach-stegplatten. Varianten: Breite × Tiefe × Land (Deutschland/Österreich), Werte wie beim Dach."},
+{"type":"product","id":"montage_steg","label":"Montage-Produkt für Stegplatten-Dächer","info":"Leer = Handle montage-terrassendach-stegplatten. Varianten: Breite × Tiefe × Zone (Werte wie beim Dach, Zonennamen wie unten)."},
 {"type":"product","id":"montage_vsg","label":"Montage-Produkt für VSG-Glas-Dächer","info":"Leer = Handle montage-terrassendach-vsg-glas."},
-{"type":"text","id":"montage_plz","label":"Montagegebiet Deutschland (PLZ-Präfixe)","info":"2-stellig, kommagetrennt, Bereiche mit Bindestrich. Österreich (4-stellige PLZ) ist immer dabei.","default":"26-35,37-38,40-62,65"},
-{"type":"text","id":"montage_sub","label":"Zusatz unter „Montage durch unser Team“","default":"ca. 300 km um Gelsenkirchen und Österreich"},
+{"type":"textarea","id":"montage_zonen","label":"Montagezonen","info":"Eine Zone je Zeile: Name|PLZ-Präfixe|Beschreibung. Präfixe 2-stellig, kommagetrennt, Bereiche mit Bindestrich; AT = Österreich (4-stellige PLZ). Reihenfolge = Prüfreihenfolge (erster Treffer gilt). Der Name muss dem Optionswert „Zone“ im Montage-Produkt entsprechen; Zeile löschen = Zone nur auf Anfrage.","default":"Zone 1|32,40-53,57-59|bis 170 km\\nZone 2|26-31,33-35,37-38,54-56,60-62,65|170–270 km\\nZone 3|20-21,36,39,63-69,97-99|270–370 km\\nZone 4|01-19,22-25,70-96|370–770 km\\nÖsterreich|AT|ganz Österreich"},
+{"type":"text","id":"montage_sub","label":"Zusatz unter „Montage durch unser Team“","default":"Preis nach Entfernung, Deutschland und Österreich"},
 {"type":"text","id":"montage_self","label":"Zusatz unter „Selbstmontage“","default":"Anleitung liegt bei, Telefon-Support bei der Montage"},
 {"type":"text","id":"montage_note","label":"Hinweis unter der Montage-Auswahl","default":"Montage nur zusammen mit dem Dach buchbar. Den Termin stimmen wir nach der Bestellung mit Ihnen ab."},
 {"type":"header","content":"Angebot anfordern"},
@@ -134,7 +134,7 @@ patch('snippets/es-pdp-js.liquid', [
     ("""{%- endfor -%}]</script>
 <script>(function(){""",
      """{%- endfor -%}]</script>
-{%- if mo_on -%}<script type="application/json" data-mo-json>{"area":{{ marea | default: '' | json }},"v":{ {%- for mv in mo.variants -%}{{ mv.options[mwi] | append: '|' | append: mv.options[mdi] | append: '|' | append: mv.options[mli] | json }}:[{{ mv.id }},{{ mv.price }},{{ mv.available }}]{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%} }}</script>{%- endif -%}
+{%- if mo_on -%}<script type="application/json" data-mo-json>{"zones":{{ marea | default: '' | json }},"v":{ {%- for mv in mo.variants -%}{{ mv.options[mwi] | append: '|' | append: mv.options[mdi] | append: '|' | append: mv.options[mli] | json }}:[{{ mv.id }},{{ mv.price }},{{ mv.available }}]{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%} }}</script>{%- endif -%}
 <script>(function(){"""),
     # Summe: Montage zählt je Dach; danach Panels aktualisieren
     ("ex+=(+c.dataset.cents||0)*(c.dataset.led?qty:1)});var t=q('[data-tot]');if(t){t.hidden=!ex;if(ex)q('[data-tot-v]').textContent=eur(s+ex)}if(spr)spr.textContent=eur(s+ex)}",
@@ -146,23 +146,23 @@ patch('snippets/es-pdp-js.liquid', [
     ("""form.addEventListener('submit',function(e){e.preventDefault();var x=cur();if(!x||!x[5])return;var qty=Math.max(1,parseInt(qi.value,10)||1),items=[{id:x[2],quantity:qty}];
 qa('[data-addon]').forEach(function(c){if(!c.checked)return;var it={id:+c.value,quantity:c.dataset.led?qty:1};if(c.dataset.led)it.properties={'Für Überdachung':TT+' – '+sm(n(st.w))+' × '+sm(n(st.d))+' m'};items.push(it)});""",
      """form.addEventListener('submit',function(e){e.preventDefault();var x=cur();if(!x||!x[5])return;var qty=Math.max(1,parseInt(qi.value,10)||1),items=[{id:x[2],quantity:qty}];
-if(moR&&moR.checked&&!moR.dataset.ok){msg.className='es-pdp__msg is-err';msg.textContent=!moSt.plz?'Bitte die Postleitzahl des Montageorts eingeben.':moSt.land==='out'?'Montage für diese PLZ nur per Angebot. Bitte „Selbstmontage“ wählen oder ein Angebot anfordern.':'Für dieses Maß und diese PLZ können wir die Montage nicht direkt buchen. Bitte ein Angebot anfordern.';msg.hidden=false;if(moP)moP.focus();return}
+if(moR&&moR.checked&&!moR.dataset.ok){msg.className='es-pdp__msg is-err';msg.textContent=!moSt.plz?'Bitte die Postleitzahl des Montageorts eingeben.':moSt.z==='out'?'Montage für diese PLZ nur per Angebot. Bitte „Selbstmontage“ wählen oder ein Angebot anfordern.':'Für dieses Maß und diese PLZ können wir die Montage nicht direkt buchen. Bitte ein Angebot anfordern.';msg.hidden=false;if(moP)moP.focus();return}
 var ref=TT+' – '+sm(n(st.w))+' × '+sm(n(st.d))+' m';
 qa('[data-addon]').forEach(function(c){if(!c.checked||!c.value)return;var it={id:+c.value,quantity:(c.dataset.led||c.dataset.per)?qty:1};if(c.dataset.led)it.properties={'Für Überdachung':ref};if(c.dataset.mo)it.properties={'Für Überdachung':ref,'Montageort':moOrt()};items.push(it)});"""),
     # Montage + Angebot/Teilen vor der Sticky-Bar
     ("""var sb=q('[data-sticky]'),go=q('[data-sticky-go]'),mode='pick',pb=q('.es-pdp__pr'),vB=false,vP=!!pb;""",
      """var MO=null;try{MO=JSON.parse(q('[data-mo-json]').textContent)}catch(e){}
-var moR=q('[data-mo="1"]'),moP=q('[data-mo-plz]'),moH=q('[data-mo-hint]'),moPr=q('[data-mo-price]'),moPan=q('[data-mo-panel]'),moLd=q('[data-mo-land]'),moSt={land:null,plz:''},AREA=[];
-if(MO)String(MO.area||'').split(',').forEach(function(s){var m=s.trim().match(/^(\\d{2})(?:-(\\d{2}))?$/);if(m)AREA.push([+m[1],+(m[2]||m[1])])});
-function moLand(z){if(/^\\d{4}$/.test(z))return 'Österreich';if(/^\\d{5}$/.test(z)){var p=+z.slice(0,2);return AREA.some(function(r){return p>=r[0]&&p<=r[1]})?'Deutschland':'out'}return null}
-function moOrt(){return moSt.land==='Österreich'?'Österreich, PLZ '+moSt.plz:'PLZ '+moSt.plz}
-function moUpd(){if(!MO||!moR)return;var on=moR.checked;if(moPan)moPan.hidden=!on;moSt.plz=(moP.value||'').replace(/\\D/g,'').slice(0,5);if(moP.value!==moSt.plz)moP.value=moSt.plz;moSt.land=moLand(moSt.plz);
-var v=moSt.land&&moSt.land!=='out'?MO.v[st.w+'|'+st.d+'|'+moSt.land]:null,ok=!!(v&&v[2]);
+var moR=q('[data-mo="1"]'),moP=q('[data-mo-plz]'),moH=q('[data-mo-hint]'),moPr=q('[data-mo-price]'),moPan=q('[data-mo-panel]'),moLd=q('[data-mo-land]'),moSt={z:null,plz:''},ZN=[];
+if(MO)String(MO.zones||'').split(/\\r?\\n/).forEach(function(l){var f=l.split('|');if(f.length<2||!f[0].trim())return;var z={n:f[0].trim(),l:(f[2]||'').trim(),at:false,r:[]};f[1].split(',').forEach(function(s){s=s.trim();if(/^AT$/i.test(s)){z.at=true;return}var m=s.match(/^(\\d{2})(?:-(\\d{2}))?$/);if(m)z.r.push([+m[1],+(m[2]||m[1])])});ZN.push(z)});
+function moZone(z){var i;if(/^\\d{4}$/.test(z)){for(i=0;i<ZN.length;i++)if(ZN[i].at)return ZN[i];return 'out'}if(/^\\d{5}$/.test(z)){var p=+z.slice(0,2);for(i=0;i<ZN.length;i++)if(ZN[i].r.some(function(r){return p>=r[0]&&p<=r[1]}))return ZN[i];return 'out'}return null}
+function moOrt(){var z=moSt.z;return z&&z.at?'Österreich, PLZ '+moSt.plz:'PLZ '+moSt.plz+(z&&z!=='out'?', '+z.n:'')}
+function moUpd(){if(!MO||!moR)return;var on=moR.checked;if(moPan)moPan.hidden=!on;moSt.plz=(moP.value||'').replace(/\\D/g,'').slice(0,5);if(moP.value!==moSt.plz)moP.value=moSt.plz;moSt.z=moZone(moSt.plz);var z=moSt.z,zl=z&&z!=='out'?(z.at?'Österreich':z.n+(z.l?' · '+z.l:'')):'';
+var v=z&&z!=='out'?MO.v[st.w+'|'+st.d+'|'+z.n]:null,ok=!!(v&&v[2]);
 moR.value=ok?v[0]:'';moR.dataset.cents=ok?v[1]:0;moR.dataset.ok=ok?'1':'';
-if(moLd)moLd.textContent=moSt.land==='Österreich'||moSt.land==='Deutschland'?moSt.land:'';
-var h;if(!moSt.plz)h='PLZ eingeben – wir prüfen sofort, ob Ihr Ort im Montagegebiet liegt.';else if(!moSt.land)h='Bitte eine gültige PLZ eingeben (Deutschland 5-stellig, Österreich 4-stellig).';else if(moSt.land==='out')h='Außerhalb unseres Montagegebiets. Fragen Sie gern ein Angebot an – wir prüfen, ob wir Ihren Ort anfahren können.';else if(!ok)h='Für dieses Maß nennen wir den Montagepreis im persönlichen Angebot.';else h='Montage in '+(moSt.land==='Österreich'?'Österreich':'PLZ '+moSt.plz)+': '+eur(v[1])+' inkl. MwSt. – Termin nach Bestellung.';
+if(moLd)moLd.textContent=zl;
+var h;if(!moSt.plz)h='PLZ eingeben – wir prüfen sofort, ob Ihr Ort im Montagegebiet liegt.';else if(!z)h='Bitte eine gültige PLZ eingeben (Deutschland 5-stellig, Österreich 4-stellig).';else if(z==='out')h='Außerhalb unseres Montagegebiets. Fragen Sie gern ein Angebot an – wir prüfen, ob wir Ihren Ort anfahren können.';else if(!ok)h='Für dieses Maß nennen wir den Montagepreis im persönlichen Angebot.';else h='Montage in '+(z.at?'Österreich':'PLZ '+moSt.plz)+' ('+zl+'): '+eur(v[1])+' inkl. MwSt. – Termin nach Bestellung.';
 if(moH){moH.textContent=h;moH.classList.toggle('is-err',on&&!!moSt.plz&&!ok)}
-if(moPr)moPr.textContent=ok?'+ '+eur(v[1]):(moSt.land==='out'?'auf Anfrage':'Preis nach PLZ');
+if(moPr)moPr.textContent=ok?'+ '+eur(v[1]):(z==='out'?'auf Anfrage':'Preis nach PLZ');
 try{if(moSt.plz)localStorage.setItem('es-plz',moSt.plz)}catch(e){}}
 if(moR){moR.dataset.mo='1';qa('[data-mo]').forEach(function(r){r.addEventListener('change',function(){moUpd();tot();if(moR.checked&&moP&&!moP.value)moP.focus()})});moP.addEventListener('input',function(){moUpd();tot()});
 try{var SPm=new URLSearchParams(location.search),MP=SPm.get('mp')||localStorage.getItem('es-plz');if(MP)moP.value=MP;if(SPm.get('mp'))moR.checked=true}catch(e){}}

@@ -44,18 +44,21 @@ LED = {'id': 9, 'handle': 'led-spots-terrassenueberdachung', 'available': True, 
                     {'id': 903, 'title': '18er-Set', 'price': 50000, 'available': True, 'image': None}]}
 
 
-def montage(pid, rate):
+ZONES = [('Zone 1', 6700, 9700), ('Zone 2', 8250, 11200), ('Zone 3', 9700, 12700), ('Zone 4', 11200, 14200), ('Österreich', 15120, 19170)]  # €/m² in Cent (TerrassenConcept-Preisliste; AT = Zone 4 × 1,35)
+
+
+def montage(pid, col):
     vs, i = [], 0
     for w in W:
         for d in D:
-            for land, f in (('Deutschland', 1.0), ('Österreich', 1.35)):
-                vs.append({'id': pid * 1000 + i, 'price': round(num(w) * num(d) * rate * f), 'available': not (w == '7,00 Meter' and d == '5,00 Meter'), 'options': [w, d, land]})
+            for zn, rs, rv in ZONES:
+                vs.append({'id': pid * 1000 + i, 'price': round(num(w) * num(d) * (rs if col == 'steg' else rv)), 'available': not (w == '7,00 Meter' and d == '5,00 Meter'), 'options': [w, d, zn]})
                 i += 1
-    return {'id': pid, 'available': True, 'options_with_values': [{'name': 'Breite', 'values': W}, {'name': 'Tiefe', 'values': D}, {'name': 'Land', 'values': ['Deutschland', 'Österreich']}], 'variants': vs}
+    return {'id': pid, 'available': True, 'options_with_values': [{'name': 'Breite', 'values': W}, {'name': 'Tiefe', 'values': D}, {'name': 'Zone', 'values': [z[0] for z in ZONES]}], 'variants': vs}
 
 
-MO_S = montage(7, 6700)   # Platzhalter: 67 €/m² (TerrassenConcept Zone 1), AT ×1,35
-MO_V = montage(8, 9700)
+MO_S = montage(7, 'steg')
+MO_V = montage(8, 'vsg')
 ALL = {'led-spots-terrassenueberdachung': LED, 'montage-terrassendach-stegplatten': MO_S, 'montage-terrassendach-vsg-glas': MO_V}
 COLS = {'terrassenuberdachung-alu-mit-stegplatten': KC, 'terrassenuberdachung-alu-mit-vsg-glas': {'products': []}}
 ROUTES = {'root_url': '/', 'cart_add_url': '/cart/add', 'cart_url': '/cart', 'collections_url': '/collections'}

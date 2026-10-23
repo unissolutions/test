@@ -95,7 +95,7 @@
       assign mwi = forloop.index0
     elsif o.name == 'Tiefe' or o.name == 'Länge'
       assign mdi = forloop.index0
-    elsif o.name == 'Land'
+    elsif o.name == 'Zone'
       assign mli = forloop.index0
     endif
   endfor
@@ -143,7 +143,7 @@
 {%- if mo_on -%}{%- capture mosvg -%}<svg width="36" height="36" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 21.5 8 28a2.1 2.1 0 0 1-3-3l6.5-6.5"/><path d="M19 9a6 6 0 0 1 8 7l-5.5 5.5a6 6 0 0 1-8-8z"/><path d="m17 13 6 6"/></svg>{%- endcapture -%}
 <div class="es-pdp__add es-pdp__mo" data-mo-box><div class="es-pdp__add-h">Montage</div>
 <label class="es-pdp__ar es-pdp__lr"><input type="radio" name="es-mo-{{ section.id }}" value="" data-mo="0" checked><span class="es-pdp__li es-pdp__li--off" aria-hidden="true">{{ mosvg }}</span><span>Selbstmontage<small>{{ section.settings.montage_self | default: 'Anleitung liegt bei, Telefon-Support bei der Montage' }}</small></span><b>+ 0,00 €</b></label>
-<label class="es-pdp__ar es-pdp__lr"><input type="radio" name="es-mo-{{ section.id }}" value="" data-mo="1" data-addon data-per="1" data-cents="0"><span class="es-pdp__li" aria-hidden="true">{{ mosvg }}</span><span>Montage durch unser Team<small>{{ section.settings.montage_sub | default: 'ca. 300 km um Gelsenkirchen und Österreich' }}</small></span><b data-mo-price>Preis nach PLZ</b></label>
+<label class="es-pdp__ar es-pdp__lr"><input type="radio" name="es-mo-{{ section.id }}" value="" data-mo="1" data-addon data-per="1" data-cents="0"><span class="es-pdp__li" aria-hidden="true">{{ mosvg }}</span><span>Montage durch unser Team<small>{{ section.settings.montage_sub | default: 'Preis nach Entfernung, Deutschland und Österreich' }}</small></span><b data-mo-price>Preis nach PLZ</b></label>
 <div class="es-pdp__mop" data-mo-panel hidden><label for="es-mo-plz-{{ section.id }}">Postleitzahl des Montageorts</label><div class="es-pdp__mor"><input type="text" id="es-mo-plz-{{ section.id }}" inputmode="numeric" autocomplete="postal-code" placeholder="z. B. 45881" data-mo-plz><span data-mo-land></span></div><p class="es-pdp__moh" data-mo-hint></p></div>
 <p class="es-pdp__lnote">{{ section.settings.montage_note | default: 'Montage nur zusammen mit dem Dach buchbar. Den Termin stimmen wir nach der Bestellung mit Ihnen ab.' }}</p></div>
 {%- endif -%}
@@ -190,7 +190,7 @@
 </div>
 </div>
 <div class="es-pdp__sticky" data-sticky><div><small>{{ short }}</small><b data-sticky-price>{{ v.price | money_without_currency }} €</b></div><button type="button" data-sticky-go>Maße wählen</button></div>
-{% render 'es-pdp-js', sid: section.id, p: p, wi: wi, di: di, sib_col: sib_col, pl: pl, frame: frame, cover: cover, cw: cw, cd: cd, mo: mo, mo_on: mo_on, mwi: mwi, mdi: mdi, mli: mli, marea: section.settings.montage_plz %}
+{% render 'es-pdp-js', sid: section.id, p: p, wi: wi, di: di, sib_col: sib_col, pl: pl, frame: frame, cover: cover, cw: cw, cd: cd, mo: mo, mo_on: mo_on, mwi: mwi, mdi: mdi, mli: mli, marea: section.settings.montage_zonen %}
 </div>
 {% schema %}
 {"name":"ES Produkt Terrassendach","tag":"section","class":"es-pdp-sec","settings":[
@@ -204,10 +204,10 @@
 {"type":"url","id":"muster_url","label":"Link Farbmuster-Produkt","info":"Leer = kein Link bei „Dachplatte“.","default":"/products/farbmuster"},
 {"type":"header","content":"Montage"},
 {"type":"checkbox","id":"montage_on","label":"Montage anbieten","default":true},
-{"type":"product","id":"montage_steg","label":"Montage-Produkt für Stegplatten-Dächer","info":"Leer = Handle montage-terrassendach-stegplatten. Varianten: Breite × Tiefe × Land (Deutschland/Österreich), Werte wie beim Dach."},
+{"type":"product","id":"montage_steg","label":"Montage-Produkt für Stegplatten-Dächer","info":"Leer = Handle montage-terrassendach-stegplatten. Varianten: Breite × Tiefe × Zone (Werte wie beim Dach, Zonennamen wie unten)."},
 {"type":"product","id":"montage_vsg","label":"Montage-Produkt für VSG-Glas-Dächer","info":"Leer = Handle montage-terrassendach-vsg-glas."},
-{"type":"text","id":"montage_plz","label":"Montagegebiet Deutschland (PLZ-Präfixe)","info":"2-stellig, kommagetrennt, Bereiche mit Bindestrich. Österreich (4-stellige PLZ) ist immer dabei.","default":"26-35,37-38,40-62,65"},
-{"type":"text","id":"montage_sub","label":"Zusatz unter „Montage durch unser Team“","default":"ca. 300 km um Gelsenkirchen und Österreich"},
+{"type":"textarea","id":"montage_zonen","label":"Montagezonen","info":"Eine Zone je Zeile: Name|PLZ-Präfixe|Beschreibung. Präfixe 2-stellig, kommagetrennt, Bereiche mit Bindestrich; AT = Österreich (4-stellige PLZ). Reihenfolge = Prüfreihenfolge (erster Treffer gilt). Der Name muss dem Optionswert „Zone“ im Montage-Produkt entsprechen; Zeile löschen = Zone nur auf Anfrage.","default":"Zone 1|32,40-53,57-59|bis 170 km\nZone 2|26-31,33-35,37-38,54-56,60-62,65|170–270 km\nZone 3|20-21,36,39,63-69,97-99|270–370 km\nZone 4|01-19,22-25,70-96|370–770 km\nÖsterreich|AT|ganz Österreich"},
+{"type":"text","id":"montage_sub","label":"Zusatz unter „Montage durch unser Team“","default":"Preis nach Entfernung, Deutschland und Österreich"},
 {"type":"text","id":"montage_self","label":"Zusatz unter „Selbstmontage“","default":"Anleitung liegt bei, Telefon-Support bei der Montage"},
 {"type":"text","id":"montage_note","label":"Hinweis unter der Montage-Auswahl","default":"Montage nur zusammen mit dem Dach buchbar. Den Termin stimmen wir nach der Bestellung mit Ihnen ab."},
 {"type":"header","content":"Angebot anfordern"},

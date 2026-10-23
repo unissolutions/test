@@ -26,8 +26,8 @@ Shopify-Verbindung war weg (Shop-Wechsel beim Lesen der TerrassenPost-Preise hat
 
 | Datei | Änderung |
 |---|---|
-| `sections/es-pdp-terrasse.liquid` | Block **Montage** (Selbstmontage / Montage durch unser Team, PLZ-Feld, Gebietsprüfung, Preis aus Montage-Produkt), **Angebot anfordern** (Shopify-Kontaktformular, Konfiguration vorausgefüllt), **Konfiguration teilen** (Link kopieren, WhatsApp, E-Mail, Drucken), Farbmuster-Link bei „Dachplatte“. Neue Einstellungen: Montage-Produkte, PLZ-Gebiet (Standard `26-35,37-38,40-62,65`), Texte, `muster_url`. |
-| `snippets/es-pdp-js.liquid` | Montage-Logik (DE 5-stellig nach Präfixliste, AT 4-stellig = ×1,35-Variante), Warenkorbzeile mit „Für Überdachung“ + „Montageort“, Sperre ohne gültige PLZ, Panels, `?mp=PLZ`, `?angebot=1`, `contact_posted` öffnet das Formular. |
+| `sections/es-pdp-terrasse.liquid` | Block **Montage** (Selbstmontage / Montage durch unser Team, PLZ-Feld, Zonenprüfung, Preis aus Montage-Produkt), **Angebot anfordern** (Shopify-Kontaktformular, Konfiguration vorausgefüllt), **Konfiguration teilen** (Link kopieren, WhatsApp, E-Mail, Drucken), Farbmuster-Link bei „Dachplatte“. Neue Einstellungen: Montage-Produkte, Montagezonen (`Name|PLZ-Präfixe|Beschreibung` je Zeile; Standard = TerrassenConcept-Zonen 1–4 + Österreich), Texte, `muster_url`. |
+| `snippets/es-pdp-js.liquid` | Montage-Logik nach dem Modell aus der Preisliste: Zone über die ersten zwei PLZ-Ziffern (erster Treffer gilt, AT = 4-stellige PLZ), Preis = Variante Breite × Tiefe × Zone des Montage-Produkts; Warenkorbzeile mit „Für Überdachung“ + „Montageort“, Sperre ohne gültige PLZ, Panels, `?mp=PLZ`, `?angebot=1`, `contact_posted` öffnet das Formular. |
 | `snippets/es-pdp-css.liquid` | Styles für Montage, Panels, Formular, Druckansicht. |
 | `snippets/es-led-guard.liquid` | Wächter jetzt für LED **und** Montage (Handles in `ADD` + Liquid-Liste pflegen). |
 | `snippets/es-hero-konfig.liquid` | Zeile „Farbmuster bestellen · Angebot anfordern“ (Link übergibt Variante/LED + `angebot=1`). Neuer Parameter `mu`. |
@@ -38,7 +38,9 @@ Shopify-Verbindung war weg (Shop-Wechsel beim Lesen der TerrassenPost-Preise hat
 
 ## Nach dem Upload in Shopify anlegen
 
-1. **Montage-Produkte** (2): `content/montage/preise.csv` mit den **echten TerrassenPost-Preisen** füllen (aktuell Platzhalter 67/97 €/m²), dann `python3 tools/montage_product.py content/montage/preise.csv` → `productSet` mit `productset_stegplatten.json` / `productset_vsg.json`, danach im Online Store veröffentlichen. Vorher die echten Breiten/Tiefen der Dächer prüfen (Optionswerte müssen übereinstimmen). Details: `content/montage/README.md`.
+1. **Montage-Produkte** (2): Preise stehen in `content/montage/zonen.csv` (€/m² je PLZ-Zone aus der Preisliste TerrassenConcept; Österreich vorläufig Zone 4 × 1,35). `python3 tools/montage_product.py` → `productSet` mit `productset_stegplatten.json` / `productset_vsg.json` (je 175 Varianten, erweitertes Variantenmodell nötig), danach im Online Store veröffentlichen. Vorher die echten Breiten/Tiefen der Dächer prüfen (Optionswerte müssen übereinstimmen). Details und offene Punkte: `content/montage/README.md`.
+
+**Offene Entscheidungen (Stand 23.10.):** Österreich-Satz und -Gebiet; alle 4 Zonen online buchbar oder nur bis ca. 300 km; Versand zusätzlich zur Montage; Leistungsumfang-Text; Empfänger-Adresse der Angebotsanfragen; Farbmuster-Sortiment/Versandweg; Fachfragen aus `content/ratgeber/README.md` und `content/kategorien/README.md` (Lieferzeit 16 mm, Dachneigung, Stirnseiten, Garantie, Wunschmaß-Bestellweg); Tag-Bereinigung bei Acryl-/Gewächshausplatten; Maps-Link und Straßenschreibweise.
 2. **Farbmuster-Produkt:** `productSet` mit `content/farbmuster/productset.json` (0 €, Tag `Farbmuster`, Handle `farbmuster`), veröffentlichen. Versand 6,90 € per Regel in Advanced Shipping Rules (Tag `Farbmuster`).
 3. **LocalBusiness + Breadcrumb-Fix:** `snippets/microdata-schema.liquid` aus dem Theme laden, `python3 tools/localbusiness_patch.py <orig> <neu>` ausführen, hochladen. Maps-Link (`hasMap`) ergänzen, sobald er vorliegt. Straßenschreibweise prüfen („Magdeburger Straße 37“).
 4. **og:image:** `snippets/social-meta-tags.liquid` prüfen (Fallback-Bild für Startseite setzen).

@@ -1,22 +1,34 @@
 # Montage zubuchbar – Datenstand
 
-## Preistabelle `preise.csv`
+## Preismodell (aus der Datei „Preisliste Montage TerrassenConcept“)
 
-**Platzhalter!** Die Zahlen sind aus dem TerrassenConcept-3D-Planer abgeleitet (Zone 1: Stegplatten 67 €/m², VSG 97 €/m², jeweils × Dachfläche) und dienen nur zum Testen. Die echten Montagepreise je Dachgröße aus dem TerrassenPost-Shop bitte hier eintragen (Spalten `Stegplatten` und `VSG`, EUR brutto, Deutschland). Österreich wird automatisch mit × 1,35 berechnet.
+Montagepreis = Breite (m) × Tiefe (m) × €/m² der Zone. Die Zone ergibt sich aus den ersten zwei Ziffern der PLZ, Zonen werden der Reihe nach geprüft, der erste Treffer gilt (PLZ 65 → Zone 2).
 
-Die Maßwerte (z. B. `5,00 Meter`) müssen exakt den Optionswerten der Dach-Produkte entsprechen – welche Breiten/Tiefen die Dächer wirklich haben, wird beim Anlegen gegen den Shop geprüft (siehe HANDOFF).
+| Zone | Entfernung | PLZ-Präfixe | Stegplatten €/m² | VSG-Glas €/m² |
+|---|---|---|---|---|
+| 1 | bis 170 km | 32, 40–53, 57–59 | 67,00 | 97,00 |
+| 2 | 170–270 km | 26–31, 33–35, 37–38, 54–56, 60–62, 65 | 82,50 | 112,00 |
+| 3 | 270–370 km | 20–21, 36, 39, 63–69, 97–99 | 97,00 | 127,00 |
+| 4 | 370–770 km | 01–19, 22–25, 70–96 | 112,00 | 142,00 |
+| Österreich | 4-stellige PLZ | AT | 151,20 | 191,70 |
+
+**Offen (siehe Fragenliste):** Österreich-Satz (hier vorläufig Zone 4 × 1,35), ob alle vier Zonen online buchbar sind oder nur bis ca. 300 km, Versand bei Montage, Leistungsumfang.
+
+`zonen.csv` ist die einzige Quelle für die Preise. Änderungen dort → Skript erneut laufen lassen → Produkte per `productSet` aktualisieren (gleicher Handle, Varianten werden ersetzt).
 
 ## Anlegen in Shopify
 
-1. `python3 tools/montage_product.py content/montage/preise.csv`
-2. `productSet` mit `content/montage/productset_stegplatten.json` und `productset_vsg.json` ausführen (synchron).
-3. Beide Produkte im Vertriebskanal „Online Store“ veröffentlichen (`publishablePublish`), sonst lassen sie sich nicht in den Warenkorb legen.
-4. Advanced Shipping Rules: Produkte ohne Versand (requiresShipping = false) dürfen keine Versandgruppe auslösen – im Testkorb „Dach + Montage“ prüfen, dass weiterhin 99 € (DE) bzw. 199 € (AT) berechnet werden.
-5. Theme-Einstellung „Montagegebiet Deutschland (PLZ-Präfixe)“ prüfen. Standard: `26-35,37-38,40-62,65` (entspricht den TerrassenConcept-Zonen 1–2, bis ca. 270 km). Für „ca. 300 km“ ggf. um Präfixe der Zone 3 ergänzen (20–21, 36, 39, 63–69).
+1. Dachmaße prüfen: Optionswerte Breite/Tiefe der Dach-Produkte lesen; weichen sie von 3–7 m × 2–5 m (0,5-m-Schritte) ab, `--sizes sizes.csv` verwenden.
+2. `python3 tools/montage_product.py content/montage/zonen.csv`
+3. `productSet` mit `productset_stegplatten.json` und `productset_vsg.json` (synchron). 175 Varianten je Produkt: braucht das erweiterte Variantenmodell (bis 2.048). Lehnt Shopify das ab, je Zone ein Produkt anlegen (Handle-Schema dann in Theme-Einstellung und Wächter nachziehen).
+4. Beide Produkte im Vertriebskanal „Online Store“ veröffentlichen, sonst lassen sie sich nicht in den Warenkorb legen.
+5. Theme-Einstellung „Montagezonen“ (Section „ES Produkt Terrassendach“) mit dem Inhalt von `zonen_theme.txt` abgleichen (Standardwert ist identisch).
+6. Advanced Shipping Rules: Montage-Produkte haben `requiresShipping = false`; Testkorb „Dach + Montage“ muss weiterhin 99 € (DE) bzw. 199 € (AT) ergeben – sofern Versand bei Montage berechnet werden soll.
 
 ## Funktionsweise im Theme
 
-- Produktseite Terrassendach: Block „Montage“ mit Selbstmontage / Montage durch unser Team, PLZ-Feld, Gebietsprüfung (DE 5-stellig nach Präfixliste, AT 4-stellig), Preis aus der Variante Breite × Tiefe × Land.
-- Warenkorb: Montage als eigene Zeile mit Eigenschaften „Für Überdachung“ und „Montageort“, Menge = Dachmenge.
-- `snippets/es-led-guard.liquid`: entfernt Montage (und LED) ohne Dach, leitet die Montage-Produktseite auf die Terrassenüberdachungen um.
-- Außerhalb des Gebiets oder ohne passende Variante: Hinweis + Verweis auf „Angebot anfordern“, Warenkorb blockiert, bis Selbstmontage gewählt oder PLZ korrigiert ist.
+- Produktseite Terrassendach: Block „Montage“ – Selbstmontage / Montage durch unser Team, PLZ-Feld, Zonenprüfung (DE 5-stellig, AT 4-stellig), Preis aus der Variante Breite × Tiefe × Zone des Montage-Produkts (Stegplatten- oder VSG-Produkt je nach Dach).
+- Warenkorb: Montage als eigene Zeile, Menge = Dachmenge, Eigenschaften „Für Überdachung“ und „Montageort“ (z. B. „PLZ 45881, Zone 1“ / „Österreich, PLZ 1010“).
+- Ohne Zone (PLZ nicht in der Tabelle) oder ohne passende Variante: Hinweis „auf Anfrage“ + Verweis auf „Angebot anfordern“; Warenkorb bleibt gesperrt, bis Selbstmontage gewählt oder die PLZ korrigiert ist.
+- `snippets/es-led-guard.liquid`: entfernt Montage und LED ohne Dach, leitet die Montage-Produktseiten auf die Terrassenüberdachungen um.
+- Geteilte Links übergeben die PLZ (`?mp=45881`), das Angebotsformular übernimmt sie.
