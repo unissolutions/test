@@ -1,0 +1,41 @@
+{%- comment -%}e-Stegplatten: Dachhaut-/Komplettset-Konfigurator (#DachhautRoot aus product-variant-selector) im Design System – wie „Zuschnitt Wunschmaß“ bei Stegplatten: Kopfzeile ohne Rahmen mit Trennlinien und Chevron, Archivo, Felder 48px, Radio-Kreise grün, Hinweise hellgrün/hellgelb statt blau, Buttons grün 52px, Anfrage-Button ohne Pulsieren.{%- endcomment -%}
+<style id="es-pdp-dachhaut">
+html body #DachhautRoot:not(#_){margin:16px 0 0!important;border-top:1px solid #DCE3DE;border-bottom:1px solid #DCE3DE;font-family:Archivo,system-ui,sans-serif!important;color:#3A423E}
+html body #DachhautRoot *:not(#_){font-family:inherit!important}
+html body #DachhautRoot .btn-open-zuschnitte:not(#_){display:flex!important;align-items:center;justify-content:flex-start!important;gap:10px;width:100%;min-height:56px;padding:14px 0!important;margin:0!important;background:none!important;border:0!important;color:#1B1F1D!important;font-size:16px!important;font-weight:800!important;letter-spacing:0!important;text-transform:none!important;white-space:nowrap;cursor:pointer}
+html body #DachhautRoot .btn-open-zuschnitte svg:not(#_){margin:0!important;color:#338258;width:20px;height:20px;flex:none}
+html body #DachhautRoot .btn-open-zuschnitte:not(#_)::after{content:'';margin-left:auto;width:8px;height:8px;border-right:2.5px solid #6B7570;border-bottom:2.5px solid #6B7570;transform:rotate(45deg);margin-right:4px;margin-top:-4px}
+html body #DachhautRoot .btn-open-zuschnitte:not(#_):hover{background:none!important;color:#2A6C49!important}
+html body #DachhautRoot .zuschnitte-form-container:not(#_){background:none!important;border:0!important;padding:0 0 16px!important;margin:0!important}
+html body #DachhautRoot .zuschnitte-header:not(#_){min-height:56px;margin:0 0 14px!important;padding:0!important;border-bottom:1px solid #EEF1EF!important}
+html body #DachhautRoot .zuschnitte-header span:not(#_){font-size:16px!important;font-weight:800!important;color:#1B1F1D!important;letter-spacing:0!important;text-transform:none!important}
+html body #DachhautRoot .close-btn:not(#_){width:44px;height:44px;display:flex;align-items:center;justify-content:center;color:#6B7570!important;font-size:16px!important;margin-right:-12px}
+html body #DachhautRoot .hint-text:not(#_){font-size:13px!important;color:#6B7570!important;margin:0 0 14px!important}
+html body #DachhautRoot .dachhaut-field-group:not(#_){margin:0 0 16px!important}
+html body #DachhautRoot .dachhaut-field-label:not(#_){font-size:15px!important;font-weight:700!important;color:#1B1F1D!important;margin:0 0 8px!important}
+html body #DachhautRoot .dachhaut-input:not(#_){height:48px;padding:0 14px!important;border:1px solid #DCE3DE!important;background:#fff!important;font-size:16px!important;font-weight:700;color:#1B1F1D!important}
+html body #DachhautRoot .dachhaut-input:not(#_):focus{border-color:#338258!important;box-shadow:inset 0 0 0 1px #338258}
+html body #DachhautRoot .dachhaut-input.is-error:not(#_){border-color:#C93F3F!important}
+html body #DachhautRoot .dachhaut-field-error:not(#_){font-size:12.5px!important;color:#C93F3F!important}
+html body #DachhautRoot .dachhaut-radio-group:not(#_){gap:6px!important}
+html body #DachhautRoot .dachhaut-radio-item:not(#_){min-height:48px;padding:0 14px!important;border:1px solid #DCE3DE;background:#fff}
+html body #DachhautRoot .dachhaut-radio-item:has(input:checked):not(#_){border-color:#338258;box-shadow:inset 0 0 0 1px #338258;background:#E8F2EC}
+html body #DachhautRoot .dachhaut-radio-custom:not(#_){border-color:#9AA39E!important}
+html body #DachhautRoot .dachhaut-radio-input:checked + .dachhaut-radio-custom:not(#_){border-color:#338258!important}
+html body #DachhautRoot .dachhaut-radio-custom:not(#_)::after{background:#338258!important}
+html body #DachhautRoot .dachhaut-radio-text:not(#_){font-size:15px!important;color:#1B1F1D!important;font-weight:600}
+html body #DachhautRoot .dachhaut-info-box:not(#_){background:#F0F4F1!important;border:1px solid #DCE3DE;padding:12px 14px!important;margin:0 0 8px!important}
+html body #DachhautRoot .dachhaut-info-box p:not(#_),html body #DachhautRoot .dachhaut-info-icon:not(#_){color:#3A423E!important;font-size:13.5px!important}
+html body #DachhautRoot .dachhaut-info-icon:not(#_){color:#338258!important}
+html body #DachhautRoot .dachhaut-warning-box:not(#_){background:#FBF6EA!important;border:1px solid #EAD9B0;padding:12px 14px!important;margin:0 0 8px!important}
+html body #DachhautRoot .dachhaut-warning-box p:not(#_){color:#1B1F1D!important;font-size:13.5px!important}
+html body #DachhautRoot .dachhaut-warning-icon:not(#_){color:#B7791F!important}
+html body #DachhautRoot .btn-save-dark:not(#_),html body #DachhautRoot .btn-request-dark:not(#_){display:flex;align-items:center;justify-content:center;height:52px;padding:0 20px!important;border:0!important;background:#338258!important;color:#fff!important;font-size:16px!important;font-weight:700!important;letter-spacing:0!important;text-transform:none!important;animation:none!important;box-shadow:none!important;transform:none!important}
+html body #DachhautRoot .btn-save-dark:not(#_):hover{background:#2A6C49!important}
+html body #DachhautRoot .btn-request-dark:not(#_){background:#1B1F1D!important}
+html body #DachhautRoot .btn-request-dark:not(#_):hover{background:#3A423E!important}
+html body #DachhautRoot .zuschnitte-summary-box:not(#_){background:#E8F2EC!important;border:1px solid #338258!important;padding:12px 14px!important;margin:0 0 16px!important}
+html body #DachhautRoot .summary-title:not(#_){font-size:15px!important;font-weight:800;color:#2A6C49!important;text-transform:none!important}
+html body #DachhautRoot .edit-btn:not(#_){height:36px;padding:0 12px!important;border:1px solid #1B1F1D!important;background:#fff;font-size:13px!important;font-weight:700;text-transform:none!important;color:#1B1F1D}
+html body #DachhautRoot .summary-content:not(#_){font-size:14px!important;color:#1B1F1D!important;line-height:1.6}
+</style>

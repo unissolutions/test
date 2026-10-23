@@ -1,0 +1,75 @@
+{%- comment -%}e-Stegplatten: Wunschmaß für Terrassendächer (nur Terrassen-PDP .es-pdp). Durchgangshöhe/Breite/Tiefe per Regler oder Eingabe → nächstgrößere Standardgröße wird als Variante gewählt; Maße gehen als Positions-Eigenschaften mit in den Warenkorb.{%- endcomment -%}
+{%- liquid
+  assign ok = false
+  if product.tags contains 'Terrassenüberdachung' or product.template_suffix == 'terrassen'
+    assign ok = true
+  endif
+  assign wi = 0
+  assign di = 1
+  for o in product.options_with_values
+    if o.name == 'Breite'
+      assign wi = forloop.index0
+    elsif o.name == 'Tiefe' or o.name == 'Länge'
+      assign di = forloop.index0
+    endif
+  endfor
+-%}
+{%- if ok -%}
+<template id="es-wm-tpl">
+<details class="es-wm">
+<summary class="es-wm__h"><b>Eigenes Maß? Wunschmaß einstellen</b><span class="es-wm__badge">OPTIONAL</span><svg class="es-wm__chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></summary>
+<div class="es-wm__b">
+<div class="es-wm__f"><div class="es-wm__l"><span>Durchgangshöhe (Rinne Unterkante)</span><label class="es-wm__in"><input type="number" inputmode="numeric" data-wm="h"><i>mm</i></label></div><input type="range" step="10" data-wmr="h"><div class="es-wm__mm"><span data-wm-min="h"></span><span data-wm-max="h"></span></div></div>
+<div class="es-wm__f"><div class="es-wm__l"><span>Breite <small>entlang der Hauswand</small></span><label class="es-wm__in"><input type="number" inputmode="numeric" data-wm="w"><i>mm</i></label></div><input type="range" step="10" data-wmr="w"><div class="es-wm__mm"><span data-wm-min="w"></span><span data-wm-max="w"></span></div></div>
+<div class="es-wm__f"><div class="es-wm__l"><span>Tiefe <small>von der Wand nach vorn</small></span><label class="es-wm__in"><input type="number" inputmode="numeric" data-wm="d"><i>mm</i></label></div><input type="range" step="10" data-wmr="d"><div class="es-wm__mm"><span data-wm-min="d"></span><span data-wm-max="d"></span></div></div>
+<div class="es-wm__sum" data-wm-sum></div>
+<button type="button" class="es-wm__ok" data-wm-ok>Wunschmaß übernehmen</button>
+<p class="es-wm__info">Wir passen Ihre Terrassenüberdachung auf Ihr Wunschmaß an. Regler ziehen oder Wert eintippen und übernehmen – berechnet wird die nächstgrößere Standardgröße.</p>
+</div>
+</details>
+</template>
+<style>
+.es-wm{margin:0 0 18px;border:1px solid #DCE3DE;background:#fff;font-family:Archivo,system-ui,sans-serif;color:#3A423E}
+.es-wm__h{display:flex;align-items:center;gap:10px;padding:14px 16px;cursor:pointer;list-style:none}
+.es-wm__h::-webkit-details-marker{display:none}
+.es-wm__h b{font-size:16px;font-weight:800;color:#1B1F1D}
+.es-wm__badge{margin-left:auto;background:#F0F4F1;color:#6B7570;font-size:11px;font-weight:800;letter-spacing:.06em;padding:4px 8px}
+.es-wm__chev{transition:transform .2s;color:#6B7570}.es-wm[open] .es-wm__chev{transform:rotate(180deg)}
+.es-wm[open] .es-wm__h{border-bottom:1px solid #DCE3DE}
+.es-wm.is-set{border-color:#338258;box-shadow:inset 0 0 0 1px #338258}.es-wm.is-set .es-wm__badge{background:#E8F2EC;color:#2A6C49}
+.es-wm__b{padding:14px 16px 16px}
+.es-wm__f{margin:0 0 14px}
+.es-wm__l{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:0 0 6px;font-size:15px;font-weight:700;color:#1B1F1D}
+.es-wm__l small{display:block;font-weight:500;font-size:12.5px;color:#6B7570}
+.es-wm__in{display:inline-flex;align-items:center;gap:6px;height:42px;padding:0 10px;border:1px solid #DCE3DE;background:#fff;margin:0;flex:none}
+.es-wm__in input{width:64px;border:0;text-align:right;font-family:ui-monospace,Menlo,monospace;font-size:16px;font-weight:700;color:#1B1F1D;background:none;padding:0;margin:0;-moz-appearance:textfield}
+.es-wm__in input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.es-wm__in i{font-style:normal;font-size:13px;color:#6B7570}
+.es-wm input[type=range]{width:100%;margin:6px 0 2px;accent-color:#338258;height:24px}
+.es-wm__mm{display:flex;justify-content:space-between;font-size:11.5px;color:#6B7570}
+.es-wm__sum{background:#F0F4F1;border:1px solid #DCE3DE;padding:10px 12px;font-size:13.5px;line-height:1.5;margin:4px 0 12px}.es-wm__sum b{color:#1B1F1D}
+.es-wm__ok{width:100%;height:50px;border:1px solid #338258;background:#fff;color:#2A6C49;font-family:inherit;font-weight:700;font-size:16px;cursor:pointer}
+.es-wm__ok:hover{background:#E8F2EC}.es-wm.is-set .es-wm__ok{background:#338258;color:#fff}
+.es-wm__info{margin:12px 0 0;font-size:13px;line-height:1.5;color:#6B7570}
+</style>
+<script>document.addEventListener('DOMContentLoaded',function(){
+var V=[{%- for x in product.variants -%}[{{ x.options[wi] | remove: ' Meter' | replace: ',', '.' | times: 1000 | round }},{{ x.options[di] | remove: ' Meter' | replace: ',', '.' | times: 1000 | round }},{{ x.options[wi] | json }},{{ x.options[di] | json }},{{ x.available }}]{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%}];
+var tpl=document.getElementById('es-wm-tpl'),opts=document.querySelector('.es-pdp [data-opts]');if(!tpl||!opts||!V.length)return;
+var R=tpl.content.firstElementChild.cloneNode(true);opts.parentNode.insertBefore(R,opts.nextSibling);
+var maxW=0,maxD=0;V.forEach(function(v){if(v[0]>maxW)maxW=v[0];if(v[1]>maxD)maxD=v[1]});
+var L={h:[2000,2500],w:[2000,maxW],d:[1500,maxD]},st={h:2500,w:5000,d:3000},us=false;
+['h','w','d'].forEach(function(k){var n=R.querySelector('[data-wm="'+k+'"]'),r=R.querySelector('[data-wmr="'+k+'"]');[n,r].forEach(function(e){e.min=L[k][0];e.max=L[k][1]});R.querySelector('[data-wm-min="'+k+'"]').textContent='min: '+L[k][0]+' mm';R.querySelector('[data-wm-max="'+k+'"]').textContent='max: '+L[k][1]+' mm';
+r.addEventListener('input',function(){st[k]=+r.value;upd()});n.addEventListener('change',function(){st[k]=Math.min(L[k][1],Math.max(L[k][0],parseInt(n.value,10)||L[k][0]));upd()})});
+function pick(){var b=null;V.forEach(function(v){if(!v[4]||v[0]<st.w||v[1]<st.d)return;if(!b||v[0]*v[1]<b[0]*b[1])b=v});return b}
+function m(x){return (x/1000).toLocaleString('de-DE',{maximumFractionDigits:2})}
+var sum=R.querySelector('[data-wm-sum]'),ok=R.querySelector('[data-wm-ok]');
+function upd(){['h','w','d'].forEach(function(k){R.querySelector('[data-wm="'+k+'"]').value=st[k];R.querySelector('[data-wmr="'+k+'"]').value=st[k]});var p=pick();
+if(!p){sum.textContent='Dieses Maß bitte anfragen – max. '+maxW+' × '+maxD+' mm.';ok.disabled=true;return}ok.disabled=false;
+sum.innerHTML='Wunschmaß <b>'+st.w+' × '+st.d+' mm</b> · Durchgangshöhe <b>'+st.h+' mm</b> — gefertigt aus Standardgröße <b>'+m(p[0])+' × '+m(p[1])+' m</b>.';
+if(window.esWunsch&&!us){window.esWunsch=null;R.classList.remove('is-set');ok.textContent='Wunschmaß übernehmen'}}
+ok.addEventListener('click',function(){var p=pick();if(!p)return;us=true;var bw=document.querySelector('.es-pdp [data-w="'+p[2]+'"]'),bd=document.querySelector('.es-pdp [data-d="'+p[3]+'"]');if(bw)bw.click();if(bd)bd.click();us=false;
+window.esWunsch={props:{'Wunschmaß':st.w+' × '+st.d+' mm','Durchgangshöhe':st.h+' mm','Aus Standardgröße':m(p[0])+' × '+m(p[1])+' m'}};R.classList.add('is-set');ok.textContent='✓ Wunschmaß übernommen';});
+document.querySelectorAll('.es-pdp [data-w],.es-pdp [data-d]').forEach(function(b){b.addEventListener('click',function(){if(!us&&window.esWunsch){window.esWunsch=null;R.classList.remove('is-set');ok.textContent='Wunschmaß übernehmen'}})});
+var of=window.fetch;window.fetch=function(u,o){try{if(window.esWunsch&&typeof u==='string'&&u.indexOf('/cart/add')>-1&&o&&o.body){var b=JSON.parse(o.body);if(b.items&&b.items[0]){var p=b.items[0].properties||{};for(var k in window.esWunsch.props)p[k]=window.esWunsch.props[k];b.items[0].properties=p;o.body=JSON.stringify(b)}}}catch(e){}return of.apply(this,arguments)};
+upd()});</script>
+{%- endif -%}

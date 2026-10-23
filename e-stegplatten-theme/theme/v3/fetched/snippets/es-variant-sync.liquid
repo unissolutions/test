@@ -1,0 +1,43 @@
+{%- comment -%}e-Stegplatten: Variante folgt dem Wunschmaß – bei allen „Zuschnitt Wunschmaß“-Varianten:
+(1) Stegplatten (es-zuschnitt): beobachtet die Zusammenfassung „… aus Platte à L × B mm“ und klickt live die passenden Options-Kacheln (Länge/Breite) im Theme-Variantenwähler; zusätzlich Fallback über den versteckten Varianten-Select.
+(2) Komplettset/Dachhaut (#DachhautRoot): kleinste verfügbare Variante ≥ Dachbreite/Dachtiefe wird gewählt, mit Hinweis.
+(3) Terrassendach (es-wunschmass): Regler/Eingabe übernimmt sofort die nächstgrößere Standardgröße.
+Außerdem: Button „Komplettset in den Warenkorb“ (.es-sz__add) exakt wie „Zum Warenkorb“.{%- endcomment -%}
+{%- liquid
+  assign bi = -1
+  assign ti = -1
+  for o in product.options_with_values
+    assign on = o.name | downcase
+    if on == 'dachbreite'
+      assign bi = forloop.index0
+    elsif on == 'dachtiefe'
+      assign ti = forloop.index0
+    endif
+  endfor
+-%}
+<style>
+.es-vs-note{margin:8px 0 0;padding:8px 12px;background:#E8F2EC;border:1px solid #338258;font-size:13.5px;color:#1B1F1D;font-family:Archivo,sans-serif}.es-vs-note b{color:#2A6C49}
+html body .es-sz .es-sz__add:not(#_){display:flex!important;align-items:center;justify-content:center;width:100%!important;height:52px!important;min-height:52px!important;padding:0 16px!important;margin:0!important;border:1px solid #338258!important;background:#338258!important;color:#fff!important;font-family:Archivo,sans-serif!important;font-size:16px!important;font-weight:700!important;line-height:1.2!important;letter-spacing:0!important;text-transform:none!important;white-space:normal;text-align:center;opacity:1!important;cursor:pointer;box-shadow:none!important}
+html body .es-sz .es-sz__add:not(#_)::before{content:none!important;display:none!important}
+html body .es-sz .es-sz__add:not(#_):hover{background:#2A6C49!important;border-color:#2A6C49!important}
+html body .es-sz .es-sz__add:disabled:not(#_){background:#338258!important;opacity:.6!important;cursor:wait}
+</style>
+<script>document.addEventListener('DOMContentLoaded',function(){
+var PV=[{%- for x in product.variants -%}{"id":{{ x.id }},"a":{{ x.available }},"o":{{ x.options | json }}}{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%}];
+var BI={{ bi }},TI={{ ti }};
+function nm(s){var m=String(s).replace(/\./g,'').match(/\d+/);return m?+m[0]:0}
+function selOpts(vals){var root=document.querySelector('.product-form__variants')||document;var groups=[].slice.call(root.querySelectorAll('.product-form__option')).filter(function(g){return !g.classList.contains('no-js')});vals.forEach(function(val,i){var g=groups[i];if(!g)return;var lab=null;g.querySelectorAll('label[title]').forEach(function(l){if(l.getAttribute('title')===val)lab=l});if(lab){var inp=document.getElementById(lab.getAttribute('for'));if(!inp||!inp.checked){if(inp){inp.checked=true;inp.dispatchEvent(new Event('change',{bubbles:true}))}else lab.click()}return}var a=null;g.querySelectorAll('a[title]').forEach(function(l){if(l.getAttribute('title')===val)a=l});if(a&&!a.classList.contains('is-selected')){a.click();return}var s=g.querySelector('select.product-form__single-selector');if(s){for(var k=0;k<s.options.length;k++){if(s.options[k].text.trim()===val&&!s.options[k].selected){s.selectedIndex=k;s.dispatchEvent(new Event('change',{bubbles:true}))}}}})}
+function curId(){var i=document.querySelector('.product-form [name=id]');return i?String(i.value):''}
+function selId(id){for(var i=0;i<PV.length;i++)if(String(PV[i].id)===String(id)){if(curId()!==String(id)||true)selOpts(PV[i].o);return PV[i]}return null}
+window.esSelectVariant=selId;
+var ns=document.querySelector('.no-js select[name="id"]');if(ns)ns.addEventListener('change',function(){selId(ns.value)});
+setTimeout(function(){var sum=document.querySelector('.es-zs [data-zs-sum]');if(!sum)return;var last='',tm;function chk(){var m=sum.textContent.match(/Platten?\s*à\s*([\d.]+)\s*×\s*([\d.]+)\s*mm/);if(!m)return;var a=nm(m[1]),b=nm(m[2]),key=a+'x'+b;if(key===last)return;for(var i=0;i<PV.length;i++){var o=PV[i].o.map(nm);if(o.indexOf(a)>-1&&o.indexOf(b)>-1&&(a!==b||o.filter(function(x){return x===a}).length>1||o.length===1)){last=key;selOpts(PV[i].o);return}}}
+new MutationObserver(function(){clearTimeout(tm);tm=setTimeout(chk,250)}).observe(sum,{childList:true,characterData:true,subtree:true});chk()},120);
+function mm(s){s=String(s).toLowerCase().replace(',','.');var n=parseFloat(s.replace(/[^0-9.]/g,''))||0;if(s.indexOf('mm')>-1)return n;if(s.indexOf('cm')>-1)return n*10;if(/\d\s*m/.test(s))return n*1000;return n}
+var DR=document.getElementById('DachhautRoot');
+if(DR&&BI>-1&&TI>-1){var ib=document.getElementById('dachhaut-dachbreite'),it=document.getElementById('dachhaut-dachtiefe');var note=document.createElement('p');note.className='es-vs-note';note.hidden=true;var sv=document.getElementById('save-dachhaut-btn');if(sv&&sv.parentNode)sv.parentNode.insertBefore(note,sv);
+function pickD(){var b=+ib.value||0,t=+it.value||0;if(!b||!t){note.hidden=true;return null}var best=null;PV.forEach(function(v){if(!v.a)return;var vb=mm(v.o[BI]),vt=mm(v.o[TI]);if(vb<b||vt<t)return;if(!best||vb*vt<mm(best.o[BI])*mm(best.o[TI]))best=v});if(!best){note.hidden=true;return null}note.hidden=false;note.innerHTML='Wird aus Größe <b>'+best.o[BI]+' × '+best.o[TI]+'</b> gefertigt – diese Variante ist ausgewählt.';return best}
+var tmr;function run(){clearTimeout(tmr);tmr=setTimeout(function(){var p=pickD();if(p)selOpts(p.o)},350)}
+[ib,it].forEach(function(e){if(e){e.addEventListener('input',run);e.addEventListener('change',run)}});if(sv)sv.addEventListener('click',function(){var p=pickD();if(p)selOpts(p.o)},true)}
+setTimeout(function(){var wm=document.querySelector('.es-wm');if(!wm)return;var ok=wm.querySelector('[data-wm-ok]');wm.addEventListener('change',function(e){if(e.target.matches('input')&&ok&&!ok.disabled)ok.click()})},50);
+});</script>

@@ -5,7 +5,7 @@ import json, pathlib, re, shutil
 
 B = pathlib.Path('/tmp/claude-0/-home-user-test/beef7815-2c55-57f0-9ec2-48630e491a1b/scratchpad/theme/v3')
 FILES = ['sections/es-pdp-terrasse.liquid', 'sections/es-landing.liquid', 'snippets/es-pdp-js.liquid',
-         'snippets/es-pdp-css.liquid', 'snippets/es-hero-konfig.liquid', 'snippets/es-led-guard.liquid', 'snippets/es-landing-css.liquid', 'templates/index.json', 'snippets/es-overrides.liquid', 'sections/es-collection-chips.liquid', 'assets/es-mobile.css']
+         'snippets/es-pdp-css.liquid', 'snippets/es-hero-konfig.liquid', 'snippets/es-led-guard.liquid', 'snippets/es-landing-css.liquid', 'templates/index.json', 'snippets/es-overrides.liquid', 'sections/es-collection-chips.liquid', 'assets/es-mobile.css', 'snippets/es-zuschnitt.liquid', 'snippets/es-steg-zubehoer.liquid']
 for f in FILES:
     shutil.copy(B / 'orig' / f, B / 'new' / f)
 
@@ -544,6 +544,40 @@ patch('assets/es-mobile.css', [
 # Desktop: die Liste löst sich auf (Label + Chips wie bisher in einer Zeile)
 m = B / 'new/assets/es-mobile.css'
 m.write_text(m.read_text(encoding='utf-8') + '\n@media (min-width: 750px){.es-chips__list{display:contents}}\n', encoding='utf-8')
+
+
+# ---------------------------------------------------------------- Zuschnitt Wunschmaß (es-zuschnitt): Kunde bestätigt die Maße selbst
+patch('snippets/es-zuschnitt.liquid', [
+    ('<div class="es-zs__a"><button type="button" class="es-zs__add" data-zs-add>Maß hinzufügen</button>',
+     '<label class="es-zs__ok"><input type="checkbox" data-zs-ok><span>Ich habe die Maße selbst geprüft. Der Zuschnitt wird exakt nach meinen Angaben gefertigt – nachträgliche Maßänderung, Umtausch oder Widerruf sind ausgeschlossen.</span></label>\n<div class="es-zs__a"><button type="button" class="es-zs__add" data-zs-add>Maß hinzufügen</button>'),
+    (".es-zs__a{display:flex;align-items:center;gap:16px;flex-wrap:wrap}",
+     ".es-zs__ok{display:flex;gap:10px;align-items:flex-start;margin:0 0 12px;font-size:13px;line-height:1.45;color:#1B1F1D;cursor:pointer}.es-zs__ok input{flex:none;width:18px;height:18px;margin:1px 0 0;accent-color:#338258;appearance:auto;-webkit-appearance:checkbox;position:static;opacity:1}.es-zs__ok.is-err{color:#A33232}\n.es-zs__a{display:flex;align-items:center;gap:16px;flex-wrap:wrap}"),
+    ("add.addEventListener('click',function(){var p=last;if(!p)return;",
+     "var okc=q('[data-zs-ok]');okc.addEventListener('change',function(){okc.closest('.es-zs__ok').classList.remove('is-err')});\nadd.addEventListener('click',function(){var p=last;if(!p)return;if(!okc.checked){okc.closest('.es-zs__ok').classList.add('is-err');okc.focus();return}"),
+    ("properties:{'Zuschnitt':st.l+' × '+st.w+' mm','Aus Platte':p[0]+' × '+p[1]+' mm'}",
+     "properties:{'Zuschnitt':st.l+' × '+st.w+' mm','Aus Platte':p[0]+' × '+p[1]+' mm','Maße bestätigt':'Ja – vom Kunden geprüft ('+new Date().toLocaleDateString('de-DE')+')'}"),
+])
+
+
+# ---------------------------------------------------------------- Komplettset-Rechner (es-steg-zubehoer): Layout in schmalen Spalten, Button-Text einzeilig
+patch('snippets/es-steg-zubehoer.liquid', [
+    (".es-sz{margin:18px 0 0;border:1px solid #DCE3DE;background:#fff;font-family:Archivo,system-ui,sans-serif;color:#3A423E}",
+     ".es-sz{margin:18px 0 0;border:1px solid #DCE3DE;background:#fff;font-family:Archivo,system-ui,sans-serif;color:#3A423E;container-type:inline-size}"),
+    (".es-sz__h b{font-size:16px;color:#1B1F1D;font-weight:800}", ".es-sz__h b{font-size:16px;color:#1B1F1D;font-weight:800;text-wrap:balance}"),
+    # Dachbreite/Dachtiefe: Spalten dürfen schrumpfen (Zahlenfeld hat sonst eine feste Mindestbreite), Dachtiefe als Lesefeld im gleichen Look
+    (".es-sz__dim{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:12px 16px 0}.es-sz__dim label,.es-sz__dim div{display:flex;flex-direction:column;gap:4px;margin:0}",
+     ".es-sz__dim{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px;padding:12px 16px 0}.es-sz__dim label,.es-sz__dim div{display:flex;flex-direction:column;gap:4px;margin:0;min-width:0}.es-sz__dim i{min-width:0}"),
+    (".es-sz__dim input{flex:1;min-width:0;border:0;", ".es-sz__dim input{flex:1;width:0;min-width:0;border:0;"),
+    (".es-sz__dim b{height:44px;display:flex;align-items:center;font-size:16px;color:#1B1F1D}.es-sz__dim small{font-size:11.5px;color:#6B7570;margin-top:-6px}",
+     ".es-sz__dim b{height:44px;display:flex;align-items:center;justify-content:flex-end;padding:0 10px;border:1px solid #DCE3DE;background:#F7F8F7;font-size:16px;color:#1B1F1D;white-space:nowrap}.es-sz__dim small{font-size:11.5px;color:#6B7570;margin-top:-2px}"),
+    (".es-sz__n{display:flex;flex-direction:column;min-width:0;font-size:13px;line-height:1.35}.es-sz__n b{font-size:15px;color:#1B1F1D}",
+     ".es-sz__n{display:flex;flex-direction:column;min-width:0;font-size:13px;line-height:1.35}.es-sz__n b{font-size:15px;color:#1B1F1D;overflow-wrap:anywhere}"),
+    # Button-Text fest, Zusammensetzung in der Summenzeile; mobil nach Containerbreite (auch in der schmalen Desktop-Spalte)
+    ("@media(max-width:749px){.es-sz{border-left:0;border-right:0}.es-sz__r{grid-template-columns:auto 44px minmax(0,1fr);gap:4px 12px}.es-sz__r input[type=checkbox],.es-sz__r img{grid-row:span 2}.es-sz__r img{width:44px;height:44px}.es-sz__p{grid-column:3;flex-direction:row;justify-content:space-between;align-items:center}}",
+     "@media(max-width:749px){.es-sz{border-left:0;border-right:0}}\n@container (max-width:439px){.es-sz__r{grid-template-columns:auto 44px minmax(0,1fr);gap:4px 12px}.es-sz__r input[type=checkbox],.es-sz__r img{grid-row:span 2}.es-sz__r img{width:44px;height:44px}.es-sz__p{grid-column:3;flex-direction:row;justify-content:space-between;align-items:center}}\n@container (max-width:339px){.es-sz__dim{grid-template-columns:minmax(0,1fr)}}"),
+    ("add.textContent=n+' Platte'+(n>1?'n':'')+(k?' + '+k+' Zubehörteile':'')+' in den Warenkorb';",
+     "q('.es-sz__tot span').textContent=n+' Platte'+(n>1?'n':'')+(k?' + '+k+' Zubehörteil'+(k>1?'e':''):'');add.textContent='Komplettset in den Warenkorb';"),
+])
 
 # ---------------------------------------------------------------- index.json: Trust-Text, Farbmuster
 p = B / 'new/templates/index.json'

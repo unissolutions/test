@@ -1,0 +1,96 @@
+{%- comment -%}e-Stegplatten: „Komplettset selbst zusammenstellen“ (Stegplatten-PDP). Aufbau wie Dachhaut-Komplettsets: Dachbreite = n × (Plattenbreite + 30) + 40 mm (z. B. 3070 = 3 × 980er), Dachtiefe = Plattenlänge (Variante). n Platten, n−1 Verbindungsprofile, 2 Randprofile, n U-Profile, Anti-Dust-Tape oben+unten, n+1 Haltewinkel, Schrauben Unterprofil (Holz 4,5×35 / Metall 4,2×32), Bohrschrauben 6,3×32, Schrauben Winkel 4,2×16, Spezial Silikon. Eingabe Dachbreite → Plattenanzahl wird berechnet und in „Menge“ gesetzt; Varianten-/Mengenwechsel aktualisiert alles. Schraubenmengen = Richtwerte.{%- endcomment -%}
+{%- liquid
+  assign t = product.title | downcase
+  assign ok = false
+  if t contains 'stegplatte'
+    assign ok = true
+  endif
+  if t contains 'komplettset' or t contains 'terrassen' or t contains 'profil' or t contains 'winkel' or t contains 'tape' or t contains 'schraube'
+    assign ok = false
+  endif
+  assign mm = product.metafields.custom.plattenstarke | remove: 'mm' | strip
+  if mm == blank
+    for tg in product.tags
+      if tg contains 'mm Stegplatten' and mm == blank
+        assign mm = tg | remove: 'mm Stegplatten' | strip
+      endif
+    endfor
+  endif
+  assign zh = 'profile-zubehor-fur-' | append: mm | append: 'mm'
+  assign zc = collections[zh]
+  if mm == blank or zc == blank or zc.products.size == 0
+    assign ok = false
+  endif
+  assign li = 0
+  assign wi = 1
+  for o in product.options_with_values
+    assign on = o.name | downcase
+    if on contains 'läng'
+      assign li = forloop.index0
+    elsif on contains 'breit'
+      assign wi = forloop.index0
+    endif
+  endfor
+-%}
+{%- if ok -%}
+{%- assign keys = 'mittelprofil alu-alu|Verbindungsprofile|zwischen den Platten|mid|;randprofil alu-alu|Randprofile|Abschluss links und rechts|rand|;mit tropfkante|U-Profil mit Tropfkante|unten an jeder Platte|u|;anti dust|Anti-Dust-Tape|Stirnseiten oben und unten|tape|;abrutsch|Abschluss- und Haltewinkel|unten an jedem Profil|win|;4,5×35|Schrauben Unterprofil (Holz)|Richtwert, Raster ca. 50 cm|sh|holz;4,2×32|Schrauben Unterprofil (Metall)|Richtwert, Raster ca. 50 cm|sh|metall;6,3×32|Schrauben Oberprofil|Richtwert, Raster ca. 50 cm|so|;4,2×16|Schrauben Haltewinkel|2 je Winkel|sw|;spezial silikon|Spezial Silikon|Abdichtung U-Profil / Platte|sil|' | split: ';' -%}
+{%- capture rows -%}
+{%- for k in keys -%}{%- assign kk = k | split: '|' -%}{%- assign hit = nil -%}
+{%- for zp in zc.products -%}{%- assign zt = zp.title | downcase -%}{%- if zt contains kk[0] -%}{%- unless zt contains 'thermo' or zt contains 'weiß' -%}{%- if zp.available -%}{%- assign hit = zp -%}{%- break -%}{%- endif -%}{%- endunless -%}{%- endif -%}{%- endfor -%}
+{%- if hit -%}<label class="es-sz__r" data-uk="{{ kk[4] }}"{% if kk[4] == 'metall' %} hidden{% endif %}><input type="checkbox" data-sz-c checked><img src="{{ hit.featured_image | image_url: width: 120 }}" alt="" loading="lazy" width="48" height="48"><span class="es-sz__n"><b>{{ kk[1] }}</b><small>{{ kk[2] }}</small><a href="{{ hit.url }}" data-sz-u>{{ hit.title | truncate: 60 }}</a></span><span class="es-sz__p"><b data-sz-p></b><span class="es-sz__q"><button type="button" data-sz-qd="-1" aria-label="Weniger">−</button><input type="number" min="1" value="1" data-sz-q aria-label="Anzahl"><button type="button" data-sz-qd="1" aria-label="Mehr">+</button></span></span><script type="application/json" data-sz-v>{"r":{{ kk[3] | json }},"t":{{ mm | json }},"v":[{%- for x in hit.variants -%}{%- if x.available -%}[{{ x.id }},{{ x.price }},{{ x.title | json }}],{%- endif -%}{%- endfor -%}[0,0,""]]}</script></label>{%- endif -%}
+{%- endfor -%}
+{%- endcapture -%}
+{%- if rows contains 'es-sz__r' -%}
+<template id="es-sz-tpl"><div class="es-sz"><div class="es-sz__h"><b>Komplettset selbst zusammenstellen</b><span>Wie unsere Komplettsets – Mengen passend zu Ihrer Dachfläche</span></div><div class="es-sz__dim"><label><span>Dachbreite</span><i><input type="number" inputmode="numeric" min="500" step="10" value="3070" data-sz-b>mm</i></label><div><span>Dachtiefe</span><b data-sz-l>–</b><small>= Plattenlänge, oben wählen</small></div></div><p class="es-sz__calc" data-sz-calc></p><div class="es-sz__uk"><span>Unterkonstruktion</span><label><input type="radio" name="es-sz-uk" value="holz" checked>Holz</label><label><input type="radio" name="es-sz-uk" value="metall">Metall</label></div>{{ rows }}<div class="es-sz__f"><div class="es-sz__tot"><span>Platten + Zubehör</span><b data-sz-tot></b></div><button type="button" class="es-sz__add" data-sz-add>Komplettset in den Warenkorb</button><small class="es-sz__hint">Schraubenmengen sind Richtwerte – Fragen? <a href="tel:020951307834">0209 513 078 34</a></small><a href="{{ zc.url }}">Alle Profile für {{ mm }} mm →</a></div><p class="es-sz__msg" data-sz-msg hidden></p></div></template>
+<style>
+.es-sz{margin:18px 0 0;border:1px solid #DCE3DE;background:#fff;font-family:Archivo,system-ui,sans-serif;color:#3A423E}
+.es-sz__h{background:#F0F4F1;padding:12px 16px;border-bottom:1px solid #DCE3DE;display:flex;flex-direction:column;gap:2px}.es-sz__h b{font-size:16px;color:#1B1F1D;font-weight:800}.es-sz__h span{font-size:13px;color:#6B7570}
+.es-sz__dim{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:12px 16px 0}.es-sz__dim label,.es-sz__dim div{display:flex;flex-direction:column;gap:4px;margin:0}.es-sz__dim span{font-size:13px;font-weight:700;color:#1B1F1D}.es-sz__dim i{display:flex;align-items:center;gap:6px;height:44px;padding:0 10px;border:1px solid #DCE3DE;font-style:normal;font-size:13px;color:#6B7570;background:#fff}.es-sz__dim i:focus-within{border-color:#338258;box-shadow:inset 0 0 0 1px #338258}.es-sz__dim input{flex:1;min-width:0;border:0;background:none;padding:0;margin:0;font-family:inherit;font-size:16px;font-weight:700;color:#1B1F1D;text-align:right;-moz-appearance:textfield}.es-sz__dim input::-webkit-inner-spin-button{-webkit-appearance:none}.es-sz__dim b{height:44px;display:flex;align-items:center;font-size:16px;color:#1B1F1D}.es-sz__dim small{font-size:11.5px;color:#6B7570;margin-top:-6px}
+.es-sz__calc{margin:10px 16px 12px;padding:8px 12px;background:#E8F2EC;border:1px solid #338258;font-size:13.5px;color:#1B1F1D;line-height:1.45}.es-sz__calc b{color:#2A6C49}
+.es-sz__uk{display:flex;align-items:center;gap:8px;padding:10px 16px;border-top:1px solid #DCE3DE;border-bottom:1px solid #DCE3DE;font-size:14px}.es-sz__uk span{font-weight:700;color:#1B1F1D;margin-right:auto}.es-sz__uk label{display:flex;align-items:center;gap:6px;height:36px;padding:0 12px;border:1px solid #DCE3DE;margin:0;cursor:pointer;font-weight:600;color:#1B1F1D}.es-sz__uk label:has(input:checked){border-color:#338258;box-shadow:inset 0 0 0 1px #338258;background:#E8F2EC}.es-sz__uk input{accent-color:#338258;margin:0;appearance:auto;-webkit-appearance:radio;position:static;opacity:1;width:16px;height:16px}
+.es-sz__r{display:grid;grid-template-columns:auto 48px minmax(0,1fr) auto;gap:12px;align-items:center;padding:12px 16px;border-top:1px solid #DCE3DE;margin:0;cursor:pointer}.es-sz__r[hidden]{display:none}.es-sz__uk + .es-sz__r{border-top:0}
+.es-sz__r input[type=checkbox]{width:20px;height:20px;accent-color:#338258;margin:0;appearance:auto;-webkit-appearance:checkbox;position:static;opacity:1}
+.es-sz__r img{width:48px;height:48px;object-fit:contain;border:1px solid #DCE3DE;background:#fff}
+.es-sz__n{display:flex;flex-direction:column;min-width:0;font-size:13px;line-height:1.35}.es-sz__n b{font-size:15px;color:#1B1F1D}.es-sz__n small{font-size:12.5px;color:#6B7570}.es-sz__n a{font-size:12px;color:#2A6C49;text-decoration:underline;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.es-sz__p{display:flex;flex-direction:column;align-items:flex-end;gap:6px}.es-sz__p b{font-size:15px;color:#1B1F1D;white-space:nowrap}
+.es-sz__q{display:flex;align-items:center}.es-sz__q input{text-align:center;font-family:inherit;font-size:14px;font-weight:700;background:none;padding:0;margin:0;border:0;-moz-appearance:textfield}.es-sz__q input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}.es-sz__q button{border:0;background:none;cursor:pointer}
+.es-sz__tot{display:flex;justify-content:space-between;align-items:baseline;font-size:15px}.es-sz__tot b{font-size:20px;font-weight:800;color:#1B1F1D}
+.es-sz__hint{font-size:12.5px;color:#6B7570;line-height:1.4}.es-sz__hint a{color:#2A6C49;font-weight:700}
+.es-sz__msg{margin:0;padding:0 16px 14px;font-size:14px}.es-sz__msg a{color:#2A6C49;font-weight:700}.es-sz__msg.is-err{color:#C93F3F}
+@media(max-width:749px){.es-sz{border-left:0;border-right:0}.es-sz__r{grid-template-columns:auto 44px minmax(0,1fr);gap:4px 12px}.es-sz__r input[type=checkbox],.es-sz__r img{grid-row:span 2}.es-sz__r img{width:44px;height:44px}.es-sz__p{grid-column:3;flex-direction:row;justify-content:space-between;align-items:center}}
+</style>
+<script>document.addEventListener('DOMContentLoaded',function(){
+var PV={ {%- for x in product.variants -%}"{{ x.id }}":[{{ x.options[li] | remove: 'mm' | strip | plus: 0 }},{{ x.options[wi] | remove: 'mm' | strip | plus: 0 }},{{ x.price }}]{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%} };
+var tp=document.getElementById('es-sz-tpl');var an=document.querySelector('.es-pay')||document.querySelector('.product-form__payment-container')||document.querySelector('.product-form__buy-buttons');if(!tp||!an||document.querySelector('.es-sz'))return;
+var R=tp.content.firstElementChild.cloneNode(true);an.insertAdjacentElement('afterend',R);
+function q(s){return R.querySelector(s)}function eur(c){return (c/100).toLocaleString('de-DE',{minimumFractionDigits:2,maximumFractionDigits:2})+' €'}
+function num(s){var m=String(s).replace('.','').match(/\d+/);return m?+m[0]:0}
+var rows=[].slice.call(R.querySelectorAll('.es-sz__r')).map(function(r){var d=JSON.parse(r.querySelector('[data-sz-v]').textContent);d.v.pop();return {el:r,d:d,cur:null,man:false}});
+function pid(){var i=document.querySelector('.product-form [name=id]')||document.querySelector('form[action*="/cart/add"] [name=id]');return i?String(i.value):''}
+function qi(){return document.querySelector('.product-form [name=quantity]')||document.querySelector('form[action*="/cart/add"] [name=quantity]')}
+function minLen(v,need){var best=null,max=null;v.forEach(function(x){var n=num(x[2]);if(!n)return;if(!max||n>num(max[2]))max=x;if(n>=need&&(!best||n<num(best[2])))best=x});return best||max||v[0]}
+function pack(v,c){var s=null,b=null;v.forEach(function(x){var n=num(x[2]);if(!n)return;if(!s||n<num(s[2]))s=x;if(!b||n>num(b[2]))b=x});if(!s)return [v[0],1];if(c>60&&b)return [b,Math.ceil(c/num(b[2]))];return [s,Math.ceil(c/num(s[2]))]}
+function calc(r,n,L,W){var v=r.d.v,prof=n+1,per=Math.ceil(L/500)+1;if(!v.length)return null;
+switch(r.d.r){case 'mid':return n>1?[minLen(v,L),n-1]:null;case 'rand':return [minLen(v,L),2];case 'u':return [minLen(v,W),n];
+case 'tape':var t=null,f=function(x){return parseFloat(String(x[2]).replace(',','.'))||0};v.forEach(function(x){if(x[2].indexOf(r.d.t+'mm')>-1&&(!t||f(x)>f(t)))t=x});t=t||v[0];return [t,Math.max(1,Math.ceil(2*n*W/((f(t)||15)*1000)))];
+case 'win':return [v[0],prof];case 'sh':case 'so':return pack(v,prof*per);case 'sw':return pack(v,prof*2);case 'sil':return [v[0],n>6?2:1]}return null}
+var uk='holz',bIn=q('[data-sz-b]'),add=q('[data-sz-add]'),msg=q('[data-sz-msg]'),key='';
+function nPl(W){var B=parseInt(bIn.value,10)||0;return Math.max(1,Math.ceil((B-40)/((W||980)+30)))}
+function setQty(n){var i=qi();if(i&&String(i.value)!==String(n)){i.value=n;i.dispatchEvent(new Event('input',{bubbles:true}));i.dispatchEvent(new Event('change',{bubbles:true}))}}
+function act(){return rows.filter(function(r){return !r.el.hidden&&r.cur&&r.el.querySelector('[data-sz-c]').checked})}
+function upd(fromB){var id=pid(),d=PV[id]||[0,0,0],L=d[0],W=d[1];var n=nPl(W);if(fromB!==false)setQty(n);
+var B=n*((W||980)+30)+40;q('[data-sz-l]').textContent=L?L.toLocaleString('de-DE')+' mm':'–';
+q('[data-sz-calc]').innerHTML='Ergibt <b>'+n+' Platte'+(n>1?'n':'')+' à '+(L||'?')+' × '+(W||'?')+' mm</b> – Menge oben auf '+n+' gesetzt. Fertige Dachbreite ca. '+B.toLocaleString('de-DE')+' mm.';
+var tot=d[2]*n;rows.forEach(function(r){var hide=!!(r.el.dataset.uk&&r.el.dataset.uk!==uk);var c=calc(r,n,L,W);if(!c){r.cur=null;r.el.hidden=true;return}r.el.hidden=hide;r.cur=c[0];var qq=r.el.querySelector('[data-sz-q]');if(!r.man)qq.value=c[1];var m=Math.max(1,parseInt(qq.value,10)||1);r.el.querySelector('[data-sz-p]').textContent=eur(r.cur[1]*m);var u=r.el.querySelector('[data-sz-u]');if(r.cur[2]&&r.cur[2]!=='Default Title')u.textContent=r.cur[2];if(!hide&&r.el.querySelector('[data-sz-c]').checked)tot+=r.cur[1]*m});
+q('[data-sz-tot]').textContent=eur(tot);var k=act().length;add.textContent=n+' Platte'+(n>1?'n':'')+(k?' + '+k+' Zubehörteile':'')+' in den Warenkorb';key=id+'|'+n+'|'+bIn.value}
+bIn.addEventListener('input',function(){rows.forEach(function(r){r.man=false});clearTimeout(window.__esB);window.__esB=setTimeout(upd,250)});
+R.addEventListener('click',function(e){var b=e.target.closest('[data-sz-qd]');if(b){e.preventDefault();var row=b.closest('.es-sz__r'),i=row.querySelector('[data-sz-q]');i.value=Math.max(1,(parseInt(i.value,10)||1)+(+b.dataset.szQd));row.querySelector('[data-sz-c]').checked=true;rows.forEach(function(r){if(r.el===row)r.man=true});upd(false)}});
+R.addEventListener('change',function(e){if(e.target===bIn)return;if(e.target.name==='es-sz-uk')uk=e.target.value;if(e.target.matches('[data-sz-q]')){var row=e.target.closest('.es-sz__r');row.querySelector('[data-sz-c]').checked=true;rows.forEach(function(r){if(r.el===row)r.man=true})}upd(false)});
+setInterval(function(){var id=pid();var d=PV[id]||[0,0];var k=id+'|'+nPl(d[1])+'|'+bIn.value;if(k!==key){rows.forEach(function(r){r.man=false});upd()}},400);
+add.addEventListener('click',function(){var id=pid();if(!id)return;var d=PV[id]||[0,980];var items=[{id:+id,quantity:nPl(d[1])}].concat(act().map(function(r){return {id:r.cur[0],quantity:Math.max(1,parseInt(r.el.querySelector('[data-sz-q]').value,10)||1)}}));add.disabled=true;add.textContent='Wird hinzugefügt …';msg.hidden=true;
+fetch(((window.routes&&window.routes.cartAddUrl)||'/cart/add')+'.js',{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify({items:items})}).then(function(r){return r.json().then(function(j){if(!r.ok)throw j;return j})})
+.then(function(){document.documentElement.dispatchEvent(new CustomEvent('cart:refresh',{bubbles:true,detail:{scrollToTop:false,openMiniCart:true}}));msg.className='es-sz__msg';msg.innerHTML='Komplettset hinzugefügt. <a href="'+((window.routes&&window.routes.cartUrl)||'/cart')+'">Zum Warenkorb →</a>';msg.hidden=false;add.disabled=false;upd(false)})
+.catch(function(err){msg.className='es-sz__msg is-err';msg.textContent=(err&&(err.description||err.message))||'Konnte nicht hinzugefügt werden.';msg.hidden=false;add.disabled=false;upd(false)})});
+upd()});</script>
+{%- endif -%}
+{%- endif -%}

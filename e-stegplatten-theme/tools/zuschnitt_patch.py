@@ -50,6 +50,7 @@ s = sub1(r"(document\.getElementById\('edit-z-btn'\)\.onclick\s*=\s*\(\)\s*=>\s*
 CSS = ('.z-confirm { display: flex; gap: 10px; align-items: flex-start; margin: 14px 0 4px; font-size: 13px; line-height: 1.45; color: #171917; cursor: pointer; }'
        ' .z-confirm input { flex: none; width: 18px; height: 18px; margin: 1px 0 0; accent-color: #338258; }'
        ' .z-confirm-ok { margin-top: 6px; color: #2A6C49; font-weight: 600; } ')
-s = sub1(r'(@media \(max-width:\s*640px\)\s*\{\s*\.z-grid)', lambda m: CSS + m.group(1), s)
+assert re.search(r'(@media \(max-width:\s*640px\)\s*\{\s*\.z-grid)', s), 'CSS-Anker fehlt'
+s = re.sub(r'(@media \(max-width:\s*640px\)\s*\{\s*\.z-grid)', lambda m: CSS + m.group(1), s, count=1)  # erste Fundstelle (CSS gilt global)
 out_path.write_text(s, encoding='utf-8')
 print('gepatcht ->', out_path, len(s.encode('utf-8')), 'Bytes')

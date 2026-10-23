@@ -1,0 +1,109 @@
+{%- comment -%}e-Stegplatten: Zuschnitt-Konfigurator für Stegplatten (Produktseiten mit Varianten „Länge mm / Breite mm“). Wunschmaß per Regler/Eingabe → kleinste passende Platte wird als Variante gewählt (auch im Theme-Varianten-Wähler), „Maß hinzufügen“ legt Variante + Zuschnittmaß (Eigenschaft) in den Warenkorb; beliebig viele Maße kombinierbar.{%- endcomment -%}
+{%- liquid
+  assign t = product.title | downcase
+  assign ok = false
+  if t contains 'stegplatten' and product.options.size >= 2
+    assign ok = true
+  endif
+  if t contains 'komplettset' or t contains 'terrassen'
+    assign ok = false
+  endif
+  assign li = 0
+  assign wi = 1
+  for o in product.options_with_values
+    assign on = o.name | downcase
+    if on contains 'läng'
+      assign li = forloop.index0
+    elsif on contains 'breit'
+      assign wi = forloop.index0
+    endif
+  endfor
+  assign fv = product.variants.first
+  unless fv.options[li] contains 'mm' and fv.options[wi] contains 'mm'
+    assign ok = false
+  endunless
+-%}
+{%- if ok -%}
+<template id="es-zs-tpl">
+<details class="es-zs" open>
+<summary class="es-zs__h"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#338258" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.3 15.3 8.7 2.7a1 1 0 0 0-1.4 0L2.7 7.3a1 1 0 0 0 0 1.4l12.6 12.6a1 1 0 0 0 1.4 0l4.6-4.6a1 1 0 0 0 0-1.4zM7.5 10.5l2-2M10.5 13.5l2-2M13.5 16.5l2-2"/></svg><b>Zuschnitt Wunschmaß</b><span class="es-zs__badge">KOSTENFREI</span><svg class="es-zs__chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></summary>
+<div class="es-zs__b">
+<p class="es-zs__intro">Maß eintippen oder Regler ziehen, Anzahl wählen, hinzufügen – <b>beliebig viele Maße kombinierbar.</b> Jedes Maß wird aus der kleinsten passenden Platte geschnitten.</p>
+<div class="es-zs__f"><div class="es-zs__l"><span>Länge</span><label class="es-zs__in"><input type="number" inputmode="numeric" data-zs-ln><i>mm</i></label></div><input type="range" data-zs-lr step="10"><div class="es-zs__mm"><span data-zs-lmin></span><span data-zs-lmax></span></div></div>
+<div class="es-zs__f"><div class="es-zs__l"><span>Breite</span><label class="es-zs__in"><input type="number" inputmode="numeric" data-zs-wn><i>mm</i></label></div><input type="range" data-zs-wr step="10"><div class="es-zs__mm"><span>250 mm</span><span data-zs-wmax></span></div></div>
+<div class="es-zs__q"><span>Anzahl mit diesem Maß</span><div class="es-zs__qty"><button type="button" data-zs-qd="-1" aria-label="Weniger">−</button><input type="number" value="1" min="1" data-zs-q aria-label="Anzahl"><button type="button" data-zs-qd="1" aria-label="Mehr">+</button></div></div>
+<div class="es-zs__sum" data-zs-sum></div>
+<label class="es-zs__ok"><input type="checkbox" data-zs-ok><span>Ich habe die Maße selbst geprüft. Der Zuschnitt wird exakt nach meinen Angaben gefertigt – nachträgliche Maßänderung, Umtausch oder Widerruf sind ausgeschlossen.</span></label>
+<div class="es-zs__a"><button type="button" class="es-zs__add" data-zs-add>Maß hinzufügen</button><button type="button" class="es-zs__rs" data-zs-rs>Regler zurücksetzen</button></div>
+<div class="es-zs__list" data-zs-list hidden></div>
+</div>
+</details>
+</template>
+<style>
+.es-zs{margin:16px 0 18px;border:1px solid #DCE3DE;background:#fff;font-family:Archivo,system-ui,sans-serif;color:#3A423E}
+.es-zs__h{display:flex;align-items:center;gap:10px;padding:14px 16px;cursor:pointer;list-style:none;border-bottom:1px solid #DCE3DE}
+.es-zs__h::-webkit-details-marker{display:none}
+.es-zs__h b{font-size:16px;font-weight:800;color:#1B1F1D}
+.es-zs__badge{margin-left:auto;background:#E8F2EC;color:#2A6C49;font-size:11px;font-weight:800;letter-spacing:.06em;padding:4px 8px}
+.es-zs__chev{transition:transform .2s;color:#6B7570}.es-zs[open] .es-zs__chev{transform:rotate(180deg)}
+.es-zs:not([open]) .es-zs__h{border-bottom:0}
+.es-zs__b{padding:14px 16px 16px}
+.es-zs__intro{font-size:13.5px;line-height:1.5;margin:0 0 12px;color:#3A423E}.es-zs__intro b{color:#1B1F1D}
+.es-zs__f{margin:0 0 14px}
+.es-zs__l{display:flex;justify-content:space-between;align-items:center;margin:0 0 6px;font-size:15px;font-weight:700;color:#1B1F1D}
+.es-zs__in{display:inline-flex;align-items:center;gap:6px;height:42px;padding:0 10px;border:1px solid #DCE3DE;background:#fff;margin:0}
+.es-zs__in input{width:70px;border:0;text-align:right;font-family:ui-monospace,Menlo,monospace;font-size:16px;font-weight:700;color:#1B1F1D;background:none;padding:0;margin:0;-moz-appearance:textfield}
+.es-zs__in input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.es-zs__in i{font-style:normal;font-size:13px;color:#6B7570}
+.es-zs input[type=range]{width:100%;margin:6px 0 2px;accent-color:#338258;height:24px}
+.es-zs__mm{display:flex;justify-content:space-between;font-size:11.5px;color:#6B7570}
+.es-zs__q{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 0;margin:2px 0 12px;border-top:1px solid #EEF1EF;font-size:15px;font-weight:600;color:#1B1F1D}
+.es-zs__qty{display:flex;align-items:center;border:1px solid #DCE3DE;height:46px}
+.es-zs__qty button{width:42px;height:44px;border:0;background:none;font-size:20px;color:#1B1F1D;cursor:pointer;padding:0}
+.es-zs__qty input{width:40px;border:0;text-align:center;font-family:inherit;font-size:16px;font-weight:700;background:none;padding:0;margin:0;-moz-appearance:textfield}
+.es-zs__qty input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.es-zs__sum{background:#F0F4F1;border:1px solid #DCE3DE;padding:10px 12px;font-size:13.5px;line-height:1.5;margin:0 0 12px}.es-zs__sum b{color:#1B1F1D}.es-zs__sum.is-err{background:#FBEDED;border-color:#F0C9C9;color:#A33232}
+.es-zs__ok{display:flex;gap:10px;align-items:flex-start;margin:0 0 12px;font-size:13px;line-height:1.45;color:#1B1F1D;cursor:pointer}.es-zs__ok input{flex:none;width:18px;height:18px;margin:1px 0 0;accent-color:#338258;appearance:auto;-webkit-appearance:checkbox;position:static;opacity:1}.es-zs__ok.is-err{color:#A33232}
+.es-zs__a{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.es-zs__add{height:50px;padding:0 24px;border:0;background:#338258;color:#fff;font-family:inherit;font-weight:700;font-size:16px;cursor:pointer}
+.es-zs__add:hover{background:#2A6C49}.es-zs__add:disabled{background:#9DB3A6;cursor:not-allowed}
+.es-zs__rs{border:0;background:none;padding:0;font-family:inherit;font-size:13.5px;color:#3A423E;text-decoration:underline;cursor:pointer}
+.es-zs__list{margin:12px 0 0;padding:10px 0 0;border-top:1px solid #EEF1EF;font-size:13.5px}
+.es-zs__list b{display:block;color:#1B1F1D;margin:0 0 6px}
+.es-zs__list span{display:inline-flex;margin:0 6px 6px 0;padding:4px 8px;background:#E8F2EC;color:#2A6C49;font-weight:600}
+@media(max-width:749px){.es-zs__b{padding:12px}.es-zs__add{flex:1}}
+</style>
+<script>document.addEventListener('DOMContentLoaded',function(){
+var V=[{%- for x in product.variants -%}[{{ x.options[li] | remove: 'mm' | strip | plus: 0 }},{{ x.options[wi] | remove: 'mm' | strip | plus: 0 }},{{ x.id }},{{ x.price }},{{ x.available }},{{ x.options[li] | json }},{{ x.options[wi] | json }}]{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%}];
+var tpl=document.getElementById('es-zs-tpl');if(!tpl||!V.length)return;
+var anchor=document.querySelector('.product-form__buy-buttons')||document.querySelector('.product-form__payment-container')||document.querySelector('.product-form');if(!anchor)return;
+var node=tpl.content.firstElementChild.cloneNode(true);anchor.parentNode.insertBefore(node,anchor);var R=node;
+function q(s){return R.querySelector(s)}
+var Lmax=0,Wmax=0;V.forEach(function(v){if(v[0]>Lmax)Lmax=v[0];if(v[1]>Wmax)Wmax=v[1]});var Lmin=300,Wmin=250;
+var ln=q('[data-zs-ln]'),lr=q('[data-zs-lr]'),wn=q('[data-zs-wn]'),wr=q('[data-zs-wr]'),qi=q('[data-zs-q]'),sum=q('[data-zs-sum]'),add=q('[data-zs-add]'),list=q('[data-zs-list]');
+[ln,lr].forEach(function(e){e.min=Lmin;e.max=Lmax});[wn,wr].forEach(function(e){e.min=Wmin;e.max=Wmax});
+q('[data-zs-lmin]').textContent=Lmin+' mm';q('[data-zs-lmax]').textContent=Lmax.toLocaleString('de-DE')+' mm (größte Platte)';q('[data-zs-wmax]').textContent=Wmax+' mm (Plattenmaß)';
+var DL=1000,DW=Wmax,st={l:DL,w:DW},done=[];
+function eur(c){return (c/100).toLocaleString('de-DE',{minimumFractionDigits:2,maximumFractionDigits:2})+' €'}
+function pick(l,w){var best=null;V.forEach(function(v){if(!v[4]||v[0]<l||v[1]<w)return;if(!best||v[0]<best[0]||(v[0]===best[0]&&v[1]<best[1]))best=v});return best}
+function sel(v){document.querySelectorAll('.product-form__option').forEach(function(g){[v[5],v[6]].forEach(function(val){var i=g.querySelector('input[value="'+val.replace(/"/g,'\\"')+'"]');if(i&&!i.checked)i.click()})});var s=document.querySelector('.product-form select[name="id"]');if(s&&s.value!=String(v[2])){s.value=v[2];s.dispatchEvent(new Event('change',{bubbles:true}))}}
+var last=null;
+function upd(push){var l=st.l,w=st.w,n=Math.max(1,parseInt(qi.value,10)||1);ln.value=l;lr.value=l;wn.value=w;wr.value=w;
+var p=pick(l,w);if(!p){sum.className='es-zs__sum is-err';sum.textContent='Für dieses Maß gibt es keine passende Platte – max. '+Lmax+' × '+Wmax+' mm. Größere Maße fragen Sie bitte an.';add.disabled=true;return}
+sum.className='es-zs__sum';add.disabled=false;
+sum.innerHTML='Wird hinzugefügt: <b>'+l+' mm × '+w+' mm</b> · '+n+'× — geschnitten aus '+n+' Platte'+(n>1?'n':'')+' à <b>'+p[0]+' × '+p[1]+' mm</b> · '+eur(p[3]*n)+' · Zuschnitt kostenfrei.';
+if(push&&(!last||last[2]!==p[2])){sel(p)}last=p}
+function clampL(v){v=parseInt(v,10)||Lmin;return Math.min(Lmax,Math.max(Lmin,v))}function clampW(v){v=parseInt(v,10)||Wmin;return Math.min(Wmax,Math.max(Wmin,v))}
+lr.addEventListener('input',function(){st.l=clampL(lr.value);upd(false)});lr.addEventListener('change',function(){upd(true)});
+wr.addEventListener('input',function(){st.w=clampW(wr.value);upd(false)});wr.addEventListener('change',function(){upd(true)});
+ln.addEventListener('change',function(){st.l=clampL(ln.value);upd(true)});wn.addEventListener('change',function(){st.w=clampW(wn.value);upd(true)});
+R.querySelectorAll('[data-zs-qd]').forEach(function(b){b.addEventListener('click',function(){qi.value=Math.max(1,(parseInt(qi.value,10)||1)+(+b.dataset.zsQd));upd(false)})});qi.addEventListener('change',function(){upd(false)});
+q('[data-zs-rs]').addEventListener('click',function(){st={l:DL,w:DW};qi.value=1;upd(true)});
+var okc=q('[data-zs-ok]');okc.addEventListener('change',function(){okc.closest('.es-zs__ok').classList.remove('is-err')});
+add.addEventListener('click',function(){var p=last;if(!p)return;if(!okc.checked){okc.closest('.es-zs__ok').classList.add('is-err');okc.focus();return}var n=Math.max(1,parseInt(qi.value,10)||1);add.disabled=true;add.textContent='Wird hinzugefügt …';
+fetch(((window.routes&&window.routes.cartAddUrl)||'/cart/add')+'.js',{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify({items:[{id:p[2],quantity:n,properties:{'Zuschnitt':st.l+' × '+st.w+' mm','Aus Platte':p[0]+' × '+p[1]+' mm','Maße bestätigt':'Ja – vom Kunden geprüft ('+new Date().toLocaleDateString('de-DE')+')'}}]})})
+.then(function(r){return r.json().then(function(j){if(!r.ok)throw j;return j})})
+.then(function(){document.documentElement.dispatchEvent(new CustomEvent('cart:refresh',{bubbles:true,detail:{scrollToTop:false,openMiniCart:true}}));done.push(n+'× '+st.l+' × '+st.w+' mm');list.hidden=false;list.innerHTML='<b>Im Warenkorb:</b>'+done.map(function(d){return '<span>'+d+'</span>'}).join('')+' <a href="'+((window.routes&&window.routes.cartUrl)||'/cart')+'" style="color:#2A6C49;font-weight:700">Zum Warenkorb →</a>';add.textContent='✓ Hinzugefügt – nächstes Maß?';setTimeout(function(){add.textContent='Maß hinzufügen';add.disabled=false},1800)})
+.catch(function(e){add.disabled=false;add.textContent='Maß hinzufügen';sum.className='es-zs__sum is-err';sum.textContent=(e&&(e.description||e.message))||'Konnte nicht hinzugefügt werden.'})});
+upd(false)});</script>
+{%- endif -%}

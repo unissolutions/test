@@ -1,0 +1,2217 @@
+{%- assign selected_variant = product.selected_or_first_available_variant -%}
+{%- assign color_label = 'color,colour,couleur,cor,colore,farbe,색,色,カラー,färg,farve,szín,barva' | split: ',' -%}
+
+{%- unless product.has_only_default_variant -%}
+  <variant-picker handle="{{ product.handle }}" section-id="{{ section.id }}" form-id="{{ product_form_id }}" {% if update_url %}update-url{% endif %} {% if block.settings.hide_sold_out_variants %}hide-sold-out-variants{% endif %} class="product-form__variants" {{ block.shopify_attributes }}>
+    <script data-variant type="application/json">
+      {{- product.selected_or_first_available_variant | json -}}
+    </script>
+
+    {%- for option in product.options_with_values -%}
+      {%- assign downcase_option = option.name | downcase -%}
+      {%- capture option_name -%}option{{ option.position }}{%- endcapture -%}
+
+      {%- assign option_selector_type = block.settings.selector_mode -%}
+      {%- assign variant_image_options = block.settings.variant_image_options | replace: ', ', ',' | downcase | split: ',' -%}
+
+      {%- assign swatch_count = option.values | map: 'swatch' | compact | size -%}
+
+      {%- if swatch_count > 0 and block.settings.color_mode == 'swatch' %}
+        {%- assign option_selector_type = 'swatch' -%}
+      {%- endif -%}
+
+      {% if swatch_count == 0 and color_label contains downcase_option and block.settings.color_mode != 'none' %}
+        {%- assign option_selector_type = 'swatch' -%}
+      {%- endif -%}
+
+      {%- if variant_image_options contains downcase_option -%}
+        {%- assign option_selector_type = 'variant' -%}
+      {%- endif -%}
+
+      <div class="product-form__option">
+        {%- case option_selector_type -%}
+          {%- when 'swatch' -%}
+            <span class="product-form__option-name text--strong">{{ option.name }}: <span class="product-form__selected-value">{{ option.selected_value }}</span></span>
+
+            <div class="color-swatch-list color-swatch-list--large">
+              {%- assign color_swatch_config = settings.color_swatch_config | newline_to_br | split: '<br />' -%}
+
+              {%- for value in option.values -%}
+                {%- assign downcased_value = value | downcase -%}
+                {%- capture color_id -%}{{ product_form_id }}-{{ option_name }}-{{ forloop.index }}{%- endcapture -%}
+
+                <div class="color-swatch {% if downcased_value == 'white' or downcased_value == 'blanc' %}color-swatch--white{% endif %} {% unless value.available %}color-swatch--disabled{% endunless %}">
+                  {%- if value.product_url != blank -%}
+                    {%- if value == option.selected_value -%}
+                    <input type="hidden" name="{{ option_name }}" form="{{ product_form_id }}" value="{{ value.id }}" data-option-position="{{ option.position }}">
+                    {%- endif -%}
+
+                    <a href="{{ value.product_url }}" class="color-swatch__item {% if value == option.selected_value %}is-selected{% endif %}" style="{% render 'color-swatch-style', swatch: value.swatch, color_swatch_config: color_swatch_config, value: downcased_value %}" title="{{ value | escape }}">
+                    <span class="visually-hidden">{{ value }}</span>
+                    {%- render 'icon', icon: 'cross-sold-out' -%}
+                    </a>
+                  {%- else -%}
+                    <input class="color-swatch__radio product-form__single-selector" type="radio" name="{{ option_name }}" id="{{ color_id }}" value="{{ value.id }}" {% if option.selected_value == value %}checked{% endif %} data-option-position="{{ option.position }}" form="{{ product_form_id }}">
+                    <label class="color-swatch__item" for="{{ color_id }}" style="{% render 'color-swatch-style', swatch: value.swatch, color_swatch_config: color_swatch_config, value: downcased_value %}" title="{{ value | escape }}">
+                    <span class="visually-hidden">{{ value }}</span>
+                    {%- render 'icon', icon: 'cross-sold-out' -%}
+                    </label>
+                  {%- endif -%}
+                </div>
+              {%- endfor -%}
+            </div>
+
+          {%- when 'variant' -%}
+            <span class="product-form__option-name text--strong">{{ option.name }}: <span class="product-form__selected-value">{{ option.selected_value }}</span></span>
+
+            <div class="variant-swatch-list">
+              {%- for value in option.values -%}
+                {%- capture variant_swatch_id -%}{{ product_form_id }}-{{ option_name }}-{{ forloop.index }}{%- endcapture -%}
+
+                {%- liquid
+                  assign image = value.variant.featured_media
+                  assign option_name = 'option' | append: option.position
+
+                  if value.variant.featured_media == blank
+                    for variant in product.variants
+                    if variant[option_name] == value
+                    assign image = variant.featured_media
+                    break
+                    endif
+                    endfor
+                  endif
+
+                  assign image = image | default: product.featured_media
+                -%}
+
+                <div class="variant-swatch {% unless value.available %}variant-swatch--disabled{% endunless %}">
+                  {%- if value.product_url != blank -%}
+                    {%- if value == option.selected_value -%}
+                    <input type="hidden" name="{{ option_name }}" form="{{ product_form_id }}" value="{{ value.id }}" data-option-position="{{ option.position }}">
+                    {%- endif -%}
+
+                    <a href="{{ value.product_url }}" class="variant-swatch__item {% if value == option.selected_value %}is-selected{% endif %}" title="{{ value | escape }}">
+                    <div class="aspect-ratio" style="padding-bottom: {{ 100.0 | divided_by: image.aspect_ratio }}%">
+                    {{- image | image_url: width: image.width | image_tag: loading: 'lazy', sizes: '120px', widths: '120,240' -}}
+                    </div>
+
+                    {% render 'icon', icon: 'cross-sold-out' %}
+                    </a>
+                  {%- else -%}
+                    <input class="variant-swatch__radio product-form__single-selector" type="radio" name="{{ option_name }}" id="{{ variant_swatch_id }}" value="{{ value.id }}" form="{{ product_form_id }}" {% if option.selected_value == value %}checked{% endif %} data-option-position="{{ option.position }}">
+
+                    <label class="variant-swatch__item" for="{{ variant_swatch_id }}" title="{{ value | escape }}">
+                    <div class="aspect-ratio" style="padding-bottom: {{ 100.0 | divided_by: image.aspect_ratio }}%">
+                    {{- image | image_url: width: image.width | image_tag: loading: 'lazy', sizes: '120px', widths: '120,240' -}}
+                    </div>
+
+                    {% render 'icon', icon: 'cross-sold-out' %}
+                    </label>
+                  {%- endif -%}
+                </div>
+              {%- endfor -%}
+            </div>
+
+          {%- when 'block' -%}
+            <span class="product-form__option-name text--strong">{{ option.name }}: <span class="product-form__selected-value">{{ option.selected_value }}</span></span>
+
+            <div class="block-swatch-list">
+              {%- for value in option.values -%}
+                {%- capture block_swatch_id -%}{{ product_form_id }}-{{ option_name }}-{{ forloop.index }}{%- endcapture -%}
+
+                <div class="block-swatch {% unless value.available %}block-swatch--disabled{% endunless %}">
+                  {%- if value.product_url != blank -%}
+                    {%- if value == option.selected_value -%}
+                    <input type="hidden" name="{{ option_name }}" form="{{ product_form_id }}" value="{{ value.id }}" data-option-position="{{ option.position }}">
+                    {%- endif -%}
+
+                    <a href="{{ value.product_url }}" class="block-swatch__item {% if value == option.selected_value %}is-selected{% endif %}" title="{{ value | escape }}">
+                    <span class="block-swatch__item-text">{{ value }}</span>
+                    </a>
+                  {%- else -%}
+                    <input class="block-swatch__radio product-form__single-selector" type="radio" name="{{ option_name }}" id="{{ block_swatch_id }}" value="{{ value.id }}" form="{{ product_form_id }}" {% if option.selected_value == value %}checked{% endif %} data-option-position="{{ option.position }}">
+                    <label class="block-swatch__item" for="{{ block_swatch_id }}" title="{{ value | escape }}">
+                    <span class="block-swatch__item-text">{{ value }}</span>
+                    </label>
+                  {%- endif -%}
+                </div>
+              {%- endfor -%}
+            </div>
+
+          {%- when 'dropdown' -%}
+            {%- capture dropdown_id -%}{{ product_form_id }}-{{ option_name }}-{{ forloop.index }}{%- endcapture -%}
+
+            <label for="{{ dropdown_id }}" class="product-form__option-name text--strong">{{ option.name }}: <span class="product-form__selected-value">{{ option.selected_value }}</span></label>
+
+            <div class="select-wrapper select-wrapper--primary">
+              {%- render 'icon', icon: 'arrow-bottom' -%}
+
+              <select class="product-form__single-selector" name="{{ option_name }}" form="{{ product_form_id }}" id="{{ dropdown_id }}" data-option-position="{{ option.position }}">
+                {%- for value in option.values -%}
+                  <option {% if value.product_url != blank %}data-update-url="{{ value.product_url | escape }}"{% endif %} value="{{ value.id }}" {% if value == option.selected_value %}selected="selected"{% endif %}>{{ value }}</option>
+                {%- endfor -%}
+              </select>
+            </div>
+        {%- endcase -%}
+      </div>
+    {%- endfor -%}
+
+    <div class="no-js product-form__option">
+      <label class="product-form__option-name text--strong" for="product-select-{{ product.id }}">{{ 'product.form.variant' | t }}</label>
+
+      <div class="select-wrapper select-wrapper--primary">
+        <select id="product-select-{{ product.id }}" name="id">
+          {%- for variant in product.variants -%}
+            <option {% if variant == selected_variant %}selected="selected"{% endif %} {% unless variant.available %}disabled="disabled"{% endunless %} value="{{ variant.id }}" data-sku="{{ variant.sku }}">{{ variant.title }} - {{ variant.price | money }}</option>
+          {%- endfor -%}
+        </select>
+      </div>
+    </div>
+  </variant-picker>
+{%- else -%}
+  <input type="hidden" name="id" data-sku="{{ selected_variant.sku }}" value="{{ selected_variant.id }}">
+{%- endunless -%}
+
+<div class="product-form__info-list">
+  {%- if product.selected_or_first_available_variant != nil -%}
+    <div class="product-form__info-item">
+      <span class="product-form__info-title text--strong">{{ 'product.form.price' | t }}:</span>
+
+      <div class="product-form__info-content" role="region" aria-live="polite">
+        <div class="price-list">
+          {%- if selected_variant.compare_at_price > selected_variant.price -%}
+            <span class="price price--highlight">
+              <span class="visually-hidden">{{ 'product.general.sale_price' | t }}</span>
+              {%- if settings.currency_code_enabled -%}
+                {{- selected_variant.price | money_with_currency -}}
+              {%- else -%}
+                {{- selected_variant.price | money -}}
+              {%- endif -%}
+            </span>
+
+            <span class="price price--compare">
+              <span class="visually-hidden">{{ 'product.general.regular_price' | t }}</span>
+              {%- if settings.currency_code_enabled -%}
+                {{- selected_variant.compare_at_price | money_with_currency -}}
+              {%- else -%}
+                {{- selected_variant.compare_at_price | money -}}
+              {%- endif -%}
+            </span>
+          {%- else -%}
+            <span class="price">
+              <span class="visually-hidden">{{ 'product.general.sale_price' | t }}</span>
+              {%- if settings.currency_code_enabled -%}
+                {{- selected_variant.price | money_with_currency -}}
+              {%- else -%}
+                {{- selected_variant.price | money -}}
+              {%- endif -%}
+            </span>
+          {%- endif -%}
+        </div>
+
+        {%- assign variant_to_use = selected_variant | default: product.selected_or_first_available_variant -%}
+
+        {%- if variant_to_use.unit_price -%}
+          <div class="product-form__price-info">
+            <div class="unit-price-measurement">
+              {{- variant_to_use.unit_price | unit_price_with_measurement: variant_to_use.unit_price_measurement -}}
+            </div>
+          </div>
+        {%- endif -%}
+
+        {{- form | payment_terms -}}
+
+        {%- if block.settings.show_taxes_included -%}
+          {%- if cart.taxes_included or shop.shipping_policy.body != blank -%}
+            <p class="product-form__price-info">
+              {%- if cart.taxes_included -%}
+                {{ 'product.general.include_taxes' | t }}
+              {%- endif -%}
+              {%- if shop.shipping_policy.body != blank -%}
+                {{ 'product.general.shipping_policy_html' | t: link: shop.shipping_policy.url }}
+              {%- endif -%}
+            </p>
+          {%- endif -%}
+        {%- endif -%}
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- if block.settings.show_inventory_quantity and product.template_suffix != 'pre-order' and product.selected_or_first_available_variant != nil -%}
+    <div class="product-form__info-item">
+      <span class="product-form__info-title text--strong">{{ 'product.form.inventory' | t }}:</span>
+
+      <div class="product-form__info-content">
+        {%- if selected_variant.inventory_management -%}
+          {%- if selected_variant.available -%}
+            {%- if selected_variant.inventory_quantity <= 0 and selected_variant.requires_shipping -%}
+              {%- if selected_variant.incoming -%}
+                {%- capture next_incoming_date -%}{{ selected_variant.next_incoming_date | date: format: 'date' }}{%- endcapture -%}
+                <span class="product-form__inventory inventory inventory--high">{{ 'product.form.incoming_stock' | t: next_incoming_date: next_incoming_date }}</span>
+              {%- else -%}
+                <span class="product-form__inventory inventory inventory--high">{{ 'product.form.oversell_stock' | t }}</span>
+              {%- endif -%}
+            {%- elsif block.settings.low_inventory_threshold > 0 -%}
+              {%- if selected_variant.inventory_quantity <= block.settings.low_inventory_threshold -%}
+                <span class="product-form__inventory inventory inventory--low">{{ 'product.form.low_stock_with_quantity_count' | t: count: selected_variant.inventory_quantity }}</span>
+              {%- else -%}
+                <span class="product-form__inventory inventory inventory--high">{{ 'product.form.in_stock_with_quantity_count' | t: count: selected_variant.inventory_quantity }}</span>
+              {%- endif -%}
+            {%- else -%}
+              <span class="product-form__inventory inventory inventory--high">{{ 'product.form.in_stock' | t }}</span>
+            {%- endif -%}
+          {%- else -%}
+            {%- if selected_variant.incoming -%}
+              {%- capture next_incoming_date -%}{{ selected_variant.next_incoming_date | date: format: 'date' }}{%- endcapture -%}
+              <span class="product-form__inventory inventory">{{ 'product.form.incoming_stock' | t: next_incoming_date: next_incoming_date }}</span>
+            {%- else -%}
+              <span class="product-form__inventory inventory">{{ 'product.form.sold_out' | t }}</span>
+            {%- endif -%}
+          {%- endif -%}
+        {%- else -%}
+          <span class="product-form__inventory inventory inventory--high">{{ 'product.form.in_stock' | t }}</span>
+        {%- endif -%}
+
+        {%- for tag in product.tags -%}
+          {%- if tag contains '__stock:' -%}
+            {%- assign stock_countdown_max = tag | split: '__stock:' | last | times: 1.0 -%}
+            {%- break -%}
+          {%- endif -%}
+        {%- endfor -%}
+
+        {%- assign stock_countdown_max = stock_countdown_max | default: block.settings.progress_bar_max_value | times: 1.0 -%}
+
+        <progress-bar class="inventory-bar" data-variant-inventory="{{ selected_variant.inventory_quantity }}" data-stock-countdown-max="{{ stock_countdown_max }}">
+          <span class="inventory-bar__progress" style="width: 100%"></span>
+        </progress-bar>
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- if product.template_suffix != 'contact' -%}
+    {%- if block.settings.show_quantity_selector -%}
+      <div class="product-form__info-item product-form__info-item--quantity">
+        <label for="{{ section.id }}-{{ product.id }}-quantity" class="product-form__info-title text--strong">{{ 'product.form.quantity' | t }}:</label>
+
+        <div class="product-form__info-content">
+          {%- assign variant = product.selected_or_first_available_variant -%}
+          
+          <div class="product-form__quantity-with-rules">
+            <quantity-picker class="quantity-selector quantity-selector--product">
+              <button type="button" class="quantity-selector__button" data-action="decrease-picker-quantity" aria-label="{{ 'cart.items.decrease_quantity' | t }}" title="{{ 'cart.items.decrease_quantity' | t }}">{% render 'icon', icon: 'minus' %}</button>
+              <input id="{{ section.id }}-{{ product.id }}-quantity" type="number" name="quantity" aria-label="{{ 'product.form.quantity' | t }}" class="quantity-selector__value" inputmode="numeric" value="{{ variant.quantity_rule.min | default: 1 }}" step="{{ variant.quantity_rule.increment }}" min="{{ variant.quantity_rule.min }}" {% if variant.quantity_rule.max != nil %}max="{{ variant.quantity_rule.max }}"{% endif %}>
+              <button type="button" class="quantity-selector__button" data-action="increase-picker-quantity" aria-label="{{ 'cart.items.increase_quantity' | t }}" title="{{ 'cart.items.increase_quantity' | t }}">{% render 'icon', icon: 'plus' %}</button>
+            </quantity-picker>
+  
+            {%- liquid
+              assign variant = product.selected_or_first_available_variant
+              assign quantity_rules = ''
+  
+              if variant.quantity_rule.min > 1
+                assign rule = 'product.quantity.minimum_of' | t: min: variant.quantity_rule.min
+                assign quantity_rules = quantity_rules | append: ' / ' | append: rule
+              endif
+  
+              if variant.quantity_rule.max != nil
+                assign rule = 'product.quantity.maximum_of' | t: max: variant.quantity_rule.max
+                assign quantity_rules = quantity_rules | append: ' / ' | append: rule
+              endif
+  
+              if variant.quantity_rule.increment > 1
+                assign rule = 'product.quantity.increment_of' | t: step: variant.quantity_rule.increment
+                assign quantity_rules = quantity_rules | append: ' / ' | append: rule
+              endif
+            -%}
+  
+            {%- if quantity_rules != blank -%}
+              <p class="product-form__quantity-rules text--small">{{ quantity_rules | remove_first: ' / ' | capitalize }}</p>
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+    {%- else -%}
+      <input type="hidden" name="quantity" value="1">
+    {%- endif -%}
+  {%- endif -%}
+</div>
+
+{%- comment -%}
+  =====================================================
+  KONFIGURATOR PRIORITÄTSLOGIK
+  =====================================================
+  Priorität (höchste zuerst):
+  1. Dachhaut-Konfigurator (Collections: dachhaut-komplettset-mit-acrylglas, doppelstegplatten-komplettset-dachhaut)
+  2. Terrassen-Konfigurator (Collection: terrassenuberdachung)
+  3. Zuschnitt-Konfigurator (Collections: doppelstegplatten, wellplatten, gewachshaus-komplettset, trapezplatten, gewachshausplatten)
+  
+  Es wird immer nur EIN Konfigurator angezeigt!
+{%- endcomment -%}
+
+{%- comment -%} SCHRITT 1: Prüfe Dachhaut-Collections (HÖCHSTE PRIORITÄT) {%- endcomment -%}
+{%- assign dachhaut_collections = 'dachhaut-komplettset-mit-acrylglas,doppelstegplatten-komplettset-dachhaut' | split: ',' -%}
+{%- assign show_dachhaut = false -%}
+
+{%- for collection in product.collections -%}
+  {%- assign collection_handle = collection.handle | downcase -%}
+  {%- if dachhaut_collections contains collection_handle -%}
+    {%- assign show_dachhaut = true -%}
+    {%- break -%}
+  {%- endif -%}
+{%- endfor -%}
+
+{%- comment -%} SCHRITT 2: Wenn KEIN Dachhaut, prüfe Terrassen-Collection {%- endcomment -%}
+{%- assign show_terrassen_konfigurator = false -%}
+{%- unless show_dachhaut -%}
+  {%- for collection in product.collections -%}
+    {%- if collection.handle == 'terrassenuberdachung' -%}
+      {%- assign show_terrassen_konfigurator = true -%}
+      {%- break -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endunless -%}
+
+{%- comment -%} SCHRITT 3: Wenn weder Dachhaut noch Terrassen, prüfe Zuschnitt-Collections {%- endcomment -%}
+{%- assign zuschnitt_collections = 'doppelstegplatten,wellplatten,gewachshaus-komplettset,trapezplatten,gewachshausplatten' | split: ',' -%}
+{%- assign show_zuschnitte = false -%}
+{%- unless show_dachhaut or show_terrassen_konfigurator -%}
+  {%- for collection in product.collections -%}
+    {%- assign collection_handle = collection.handle | downcase -%}
+    {%- if zuschnitt_collections contains collection_handle -%}
+      {%- assign show_zuschnitte = true -%}
+      {%- break -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endunless -%}
+
+{%- comment -%} Ermittle Maximalwerte aus Varianten {%- endcomment -%}
+{%- assign max_breite = 0 -%}
+{%- assign max_laenge = 0 -%}
+{%- assign max_tiefe = 0 -%}
+{%- assign max_dachbreite = 0 -%}
+{%- assign max_dachtiefe = 0 -%}
+
+{%- for variant in product.variants -%}
+  {%- if variant.available -%}
+    {%- for option in product.options_with_values -%}
+      {%- assign option_key = 'option' | append: option.position -%}
+      {%- assign option_name_downcase = option.name | downcase -%}
+      {%- assign raw_value = variant[option_key] | downcase | strip -%}
+
+      {%- assign option_value = raw_value
+        | replace: ',', '.'
+        | remove: 'mm'
+        | remove: 'cm'
+        | remove: 'm'
+        | remove: ' '
+        | plus: 0
+      -%}
+
+      {%- assign contains_meter_only = false -%}
+      {%- if raw_value contains 'm' -%}
+        {%- unless raw_value contains 'mm' -%}
+          {%- assign contains_meter_only = true -%}
+        {%- endunless -%}
+      {%- endif -%}
+
+      {%- if contains_meter_only -%}
+        {%- assign option_value = option_value | times: 1000 -%}
+      {%- endif -%}
+
+      {%- if option_name_downcase == 'breite' or option_name_downcase == 'plattenbreite' -%}
+        {%- if option_value > max_breite -%}
+          {%- assign max_breite = option_value -%}
+        {%- endif -%}
+      {%- endif -%}
+
+      {%- if option_name_downcase == 'länge' or option_name_downcase == 'lange' or option_name_downcase == 'laenge' or option_name_downcase == 'plattenlänge' or option_name_downcase == 'plattenlange' or option_name_downcase == 'plattenlaenge' -%}
+        {%- if option_value > max_laenge -%}
+          {%- assign max_laenge = option_value -%}
+        {%- endif -%}
+      {%- endif -%}
+
+      {%- if option_name_downcase == 'tiefe' -%}
+        {%- if option_value > max_tiefe -%}
+          {%- assign max_tiefe = option_value -%}
+        {%- endif -%}
+      {%- endif -%}
+
+      {%- comment -%} Dachhaut-spezifische Werte {%- endcomment -%}
+      {%- if option_name_downcase == 'dachbreite' -%}
+        {%- if option_value > max_dachbreite -%}
+          {%- assign max_dachbreite = option_value -%}
+        {%- endif -%}
+      {%- endif -%}
+
+      {%- if option_name_downcase == 'dachtiefe' -%}
+        {%- if option_value > max_dachtiefe -%}
+          {%- assign max_dachtiefe = option_value -%}
+        {%- endif -%}
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endif -%}
+{%- endfor -%}
+
+{%- comment -%}
+  =====================================================
+  DACHHAUT-KONFIGURATOR (PRIORITÄT 1)
+  =====================================================
+{%- endcomment -%}
+{%- if show_dachhaut -%}
+<div class="custom-zuschnitte-wrapper" id="DachhautRoot"> 
+  <button type="button" id="open-dachhaut-btn" class="btn-open-zuschnitte"> 
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="margin-right:10px;"> 
+      <path d="M3 3h18v18H3zM9 3v18M15 3v18"/> 
+    </svg> 
+    Zuschnitt Wunschmaß
+  </button> 
+  
+  <div id="dachhaut-form" class="zuschnitte-form-container" style="display: none;"> 
+    <div class="zuschnitte-header"> 
+      <span style="font-weight:600; color: #171917; text-transform: uppercase; letter-spacing: 0.05em; font-size: 13px;">Dachhaut Zuschnitt Stegplatten</span> 
+      <button type="button" id="close-dachhaut-btn" class="close-btn" aria-label="Schließen">✕</button> 
+    </div>
+
+    {%- if max_dachbreite > 0 or max_dachtiefe > 0 -%}
+      <p class="hint-text">
+        Maximal zulässig:
+        {%- if max_dachbreite > 0 -%} Dachbreite {{ max_dachbreite }} mm{%- endif -%}
+        {%- if max_dachbreite > 0 and max_dachtiefe > 0 -%} / {%- endif -%}
+        {%- if max_dachtiefe > 0 -%} Dachtiefe {{ max_dachtiefe }} mm{%- endif -%}
+      </p>
+    {%- endif -%}
+
+    {%- comment -%} Auswahl der Schrauben {%- endcomment -%}
+    <div class="dachhaut-field-group">
+      <label class="dachhaut-field-label">Auswahl der Schrauben</label>
+      <div class="dachhaut-radio-group">
+        <label class="dachhaut-radio-item">
+          <input type="radio" name="dachhaut_schraubentyp" value="Auf Holz" checked class="dachhaut-radio-input">
+          <span class="dachhaut-radio-custom"></span>
+          <span class="dachhaut-radio-text">Auf Holz</span>
+        </label>
+        <label class="dachhaut-radio-item">
+          <input type="radio" name="dachhaut_schraubentyp" value="Auf Stahl/Aluminium" class="dachhaut-radio-input">
+          <span class="dachhaut-radio-custom"></span>
+          <span class="dachhaut-radio-text">Auf Stahl/Aluminium</span>
+        </label>
+      </div>
+    </div>
+
+    {%- comment -%} Individuelle Dachbreite {%- endcomment -%}
+    <div class="dachhaut-field-group">
+      <label class="dachhaut-field-label">Individuelle Dachbreite</label>
+      <input type="number" id="dachhaut-dachbreite" class="dachhaut-input" placeholder="Dachbreite in mm" min="1">
+      <div class="dachhaut-field-error"></div>
+    </div>
+
+    {%- comment -%} Individuelle Dachtiefe {%- endcomment -%}
+    <div class="dachhaut-field-group">
+      <label class="dachhaut-field-label">Individuelle Dachtiefe</label>
+      <input type="number" id="dachhaut-dachtiefe" class="dachhaut-input" placeholder="Dachtiefe in mm" min="1">
+      <div class="dachhaut-field-error"></div>
+    </div>
+
+    {%- comment -%} Symmetrie der Platten {%- endcomment -%}
+    <div class="dachhaut-field-group">
+      <label class="dachhaut-field-label">Symmetrie der Platten</label>
+      <div class="dachhaut-radio-group">
+        <label class="dachhaut-radio-item">
+          <input type="radio" name="dachhaut_symmetrie" value="Alle Platten in der Breite zuschneiden" checked class="dachhaut-radio-input">
+          <span class="dachhaut-radio-custom"></span>
+          <span class="dachhaut-radio-text">Alle Platten in der Breite zuschneiden</span>
+        </label>
+        <label class="dachhaut-radio-item">
+          <input type="radio" name="dachhaut_symmetrie" value="1 Platte in der Breite zuschneiden" class="dachhaut-radio-input">
+          <span class="dachhaut-radio-custom"></span>
+          <span class="dachhaut-radio-text">1 Platte in der Breite zuschneiden</span>
+        </label>
+        <label class="dachhaut-radio-item">
+          <input type="radio" name="dachhaut_symmetrie" value="2 Platten in der Breite zuschneiden" class="dachhaut-radio-input">
+          <span class="dachhaut-radio-custom"></span>
+          <span class="dachhaut-radio-text">2 Platten in der Breite zuschneiden</span>
+        </label>
+      </div>
+    </div>
+
+    {%- comment -%} Info-Boxen {%- endcomment -%}
+    <div class="dachhaut-info-box">
+      <div class="dachhaut-info-icon">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+        </svg>
+      </div>
+      <p>Stegplatten schneiden wir in der Breite und in der Länge zu. Aluminium Profile können bauseits ganz einfach zugeschnitten werden</p>
+    </div>
+
+    <div class="dachhaut-warning-box">
+      <div class="dachhaut-warning-icon">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2L1 21h22L12 2zm1 14h-2v-2h2v2zm0-4h-2V8h2v4z"/>
+        </svg>
+      </div>
+      <p>Zugeschnittene Produkte sind von der Rückgabe ausgeschlossen!</p>
+    </div>
+
+    <div style="margin-top:15px;"> 
+      <button type="button" id="save-dachhaut-btn" class="btn-save-dark">Maße übernehmen</button>
+      <a href="https://e-stegplatten.de/pages/contact" id="dachhaut-anfrage-btn" class="btn-request-dark pulse-glow" style="display:none;">Individuelle Anfrage stellen</a>
+    </div>
+  </div> 
+  
+  <div id="dachhaut-summary" class="zuschnitte-summary-box" style="display: none;"> 
+    <div class="summary-header"> 
+      <strong class="summary-title">Maße gespeichert</strong> 
+      <button type="button" id="edit-dachhaut-btn" class="edit-btn">Bearbeiten</button> 
+    </div> 
+    <div id="dachhaut-summary-text" class="summary-content"></div> 
+  </div> 
+</div> 
+
+<style> 
+  :root {
+    --akzent-dark: #171917;
+    --border-color: #e5e5e5;
+    --info-blue-bg: #dbeeff;
+    --info-blue-text: #2c7da0;
+  }
+
+  .custom-zuschnitte-wrapper { 
+    margin: 20px 0; 
+    width: 100%; 
+  } 
+  
+  .btn-open-zuschnitte { 
+    width: 100%; 
+    padding: 14px 20px; 
+    background: transparent;
+    border: 1px solid var(--akzent-dark); 
+    color: var(--akzent-dark); 
+    border-radius: 0;
+    font-weight: 600; 
+    font-size: 14px;
+    cursor: pointer; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    transition: all 0.2s ease; 
+    text-transform: uppercase; 
+    letter-spacing: 0.05em;
+  } 
+  .btn-open-zuschnitte:hover { 
+    background: var(--akzent-dark);
+    color: #fff;
+  }
+  
+  .zuschnitte-form-container { 
+    background: #fff; 
+    padding: 20px; 
+    border-radius: 0; 
+    border: 1px solid var(--border-color); 
+    margin-top: -1px;
+  }
+  
+  .zuschnitte-header { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center;
+    margin-bottom: 20px; 
+    border-bottom: 1px solid #f0f0f0; 
+    padding-bottom: 15px; 
+  }
+  
+  .close-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #999;
+    font-size: 18px;
+  }
+
+  /* Dachhaut-spezifische Styles */
+  .dachhaut-field-group {
+    margin-bottom: 20px;
+  }
+
+  .dachhaut-field-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #171917;
+    margin-bottom: 10px;
+  }
+
+  .dachhaut-input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ccc;
+    border-radius: 0;
+    font-size: 14px;
+    outline: none;
+    background: #f9f9f9;
+  }
+
+  .dachhaut-input:focus {
+    border-color: var(--akzent-dark);
+    background: #fff;
+  }
+
+  .dachhaut-input.is-error {
+    border-color: #e53e3e !important;
+  }
+
+  .dachhaut-field-error {
+    min-height: 16px;
+    margin-top: 4px;
+    font-size: 11px;
+    color: #e53e3e;
+    line-height: 1.3;
+  }
+
+  /* Custom Radio Buttons (CSS-only) */
+  .dachhaut-radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .dachhaut-radio-item {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 8px 0;
+  }
+
+  .dachhaut-radio-input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .dachhaut-radio-custom {
+    width: 18px;
+    height: 18px;
+    border: 2px solid #ccc;
+    border-radius: 50%;
+    margin-right: 10px;
+    position: relative;
+    flex-shrink: 0;
+    transition: border-color 0.2s ease;
+  }
+
+  .dachhaut-radio-custom::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    width: 8px;
+    height: 8px;
+    background: var(--akzent-dark);
+    border-radius: 50%;
+    transition: transform 0.2s ease;
+  }
+
+  .dachhaut-radio-input:checked + .dachhaut-radio-custom {
+    border-color: var(--akzent-dark);
+  }
+
+  .dachhaut-radio-input:checked + .dachhaut-radio-custom::after {
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  .dachhaut-radio-text {
+    font-size: 14px;
+    color: #333;
+  }
+
+  /* Info-Boxen */
+  .dachhaut-info-box {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    background: var(--info-blue-bg);
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 0;
+  }
+
+  .dachhaut-info-icon {
+    color: var(--info-blue-text);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .dachhaut-info-box p {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--info-blue-text);
+  }
+
+  .dachhaut-warning-box {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    background: var(--info-blue-bg);
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 0;
+  }
+
+  .dachhaut-warning-icon {
+    color: var(--info-blue-text);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .dachhaut-warning-box p {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--info-blue-text);
+    font-weight: 600;
+  }
+  
+  .hint-text {
+    margin: 0 0 15px;
+    font-size: 12px;
+    color: #666;
+    line-height: 1.4;
+  }
+
+  .btn-save-dark { 
+    width: 100%; 
+    padding: 14px; 
+    background: var(--akzent-dark);
+    color: #fff; 
+    border: none; 
+    border-radius: 0; 
+    font-weight: 600; 
+    font-size: 14px;
+    cursor: pointer; 
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .btn-save-dark:hover {
+    background: #2a2d2a;
+  }
+
+  .btn-request-dark {
+    width: 100%;
+    padding: 14px;
+    background: #b91c1c;
+    color: #fff !important;
+    border: none;
+    border-radius: 0;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+  }
+
+  .btn-request-dark:hover {
+    background: #991b1b;
+    color: #fff !important;
+  }
+
+  @keyframes pulseGlow {
+    0% {
+      transform: scale(1);
+      box-shadow: 0 0 0 0 rgba(185, 28, 28, 0.55);
+    }
+    50% {
+      transform: scale(1.02);
+      box-shadow: 0 0 0 10px rgba(185, 28, 28, 0);
+    }
+    100% {
+      transform: scale(1);
+      box-shadow: 0 0 0 0 rgba(185, 28, 28, 0);
+    }
+  }
+
+  .pulse-glow {
+    animation: pulseGlow 1.4s infinite;
+  }
+  
+  .zuschnitte-summary-box { 
+    background: #f4f4f4;
+    border: 1px solid var(--akzent-dark); 
+    padding: 15px; 
+    border-radius: 0; 
+    margin-top: 10px;
+  }
+  
+  .summary-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  
+  .summary-title { color: var(--akzent-dark); font-size: 13px; text-transform: uppercase; }
+  
+  .edit-btn {
+    font-size: 11px;
+    background: transparent;
+    border: 1px solid var(--akzent-dark);
+    padding: 3px 8px;
+    border-radius: 0;
+    cursor: pointer;
+    text-transform: uppercase;
+  }
+  
+  .summary-content { font-size: 13px; color: #444; }
+
+  @media (max-width: 640px) { 
+    .dachhaut-radio-text {
+      font-size: 13px;
+    }
+  } 
+</style> 
+
+<script> 
+(function() { 
+  const root = document.getElementById('DachhautRoot'); 
+  if (!root) return;
+
+  // Maximalwerte aus Varianten (aus Liquid)
+  const MAX_DACHBREITE = {{ max_dachbreite | default: 0 }};
+  const MAX_DACHTIEFE = {{ max_dachtiefe | default: 0 }};
+
+  // Button-Referenzen
+  const dachhautRequestBtn = document.getElementById('dachhaut-anfrage-btn');
+  const saveDachhautBtn = document.getElementById('save-dachhaut-btn');
+  
+  function findProductForm() { 
+    return root.closest('form[action*="/cart/add"]') || document.querySelector('form[action*="/cart/add"]'); 
+  }
+
+  function toggleDachhautRequestButton(show) {
+    if (dachhautRequestBtn) {
+      dachhautRequestBtn.style.display = show ? 'block' : 'none';
+    }
+    if (saveDachhautBtn) {
+      saveDachhautBtn.style.display = show ? 'none' : 'block';
+    }
+  }
+
+  function showFieldError(input, message) {
+    input.classList.add('is-error');
+    const errorEl = input.parentElement.querySelector('.dachhaut-field-error');
+    if (errorEl) errorEl.textContent = message;
+  }
+
+  function clearFieldError(input) {
+    input.classList.remove('is-error');
+    const errorEl = input.parentElement.querySelector('.dachhaut-field-error');
+    if (errorEl) errorEl.textContent = '';
+  }
+
+  function checkAnyExceeded() {
+    const dachbreiteVal = Number(document.getElementById('dachhaut-dachbreite').value || 0);
+    const dachtiefeVal = Number(document.getElementById('dachhaut-dachtiefe').value || 0);
+    
+    const breiteExceeded = MAX_DACHBREITE > 0 && dachbreiteVal > MAX_DACHBREITE;
+    const tiefeExceeded = MAX_DACHTIEFE > 0 && dachtiefeVal > MAX_DACHTIEFE;
+    
+    return breiteExceeded || tiefeExceeded;
+  }
+
+  function validateDachhautInput(inp) {
+    const fieldId = inp.id;
+    const raw = (inp.value || '').trim();
+
+    // Prüfe ob Feld leer oder ungültig
+    if (!raw || Number(raw) <= 0) {
+      showFieldError(inp, fieldId === 'dachhaut-dachbreite' 
+        ? 'Bitte eine gültige Dachbreite eingeben.' 
+        : 'Bitte eine gültige Dachtiefe eingeben.');
+      return false;
+    }
+
+    const numericValue = Number(raw);
+
+    // Prüfe Dachbreite gegen Maximum
+    if (fieldId === 'dachhaut-dachbreite' && MAX_DACHBREITE > 0 && numericValue > MAX_DACHBREITE) {
+      showFieldError(inp, `Die eingegebene Dachbreite überschreitet die maximal verfügbare Variante (${MAX_DACHBREITE} mm). Für Sondermaße nutzen Sie bitte die individuelle Anfrage.`);
+      toggleDachhautRequestButton(true);
+      return false;
+    }
+
+    // Prüfe Dachtiefe gegen Maximum
+    if (fieldId === 'dachhaut-dachtiefe' && MAX_DACHTIEFE > 0 && numericValue > MAX_DACHTIEFE) {
+      showFieldError(inp, `Die eingegebene Dachtiefe überschreitet die maximal verfügbare Variante (${MAX_DACHTIEFE} mm). Für Sondermaße nutzen Sie bitte die individuelle Anfrage.`);
+      toggleDachhautRequestButton(true);
+      return false;
+    }
+
+    // Feld ist OK - lösche Fehler
+    clearFieldError(inp);
+
+    // Prüfe ob irgendein anderes Feld noch überschritten ist
+    toggleDachhautRequestButton(checkAnyExceeded());
+
+    return true;
+  }
+
+  function validateAllDachhautInputs() {
+    const dachbreite = document.getElementById('dachhaut-dachbreite');
+    const dachtiefe = document.getElementById('dachhaut-dachtiefe');
+    let hasError = false;
+
+    if (!validateDachhautInput(dachbreite)) {
+      hasError = true;
+    }
+
+    if (!validateDachhautInput(dachtiefe)) {
+      hasError = true;
+    }
+
+    return !hasError;
+  }
+
+  // Live-Validierung
+  const dachbreiteInput = document.getElementById('dachhaut-dachbreite');
+  const dachtiefeInput = document.getElementById('dachhaut-dachtiefe');
+
+  if (dachbreiteInput) {
+    dachbreiteInput.addEventListener('input', () => validateDachhautInput(dachbreiteInput));
+    dachbreiteInput.addEventListener('blur', () => validateDachhautInput(dachbreiteInput));
+  }
+
+  if (dachtiefeInput) {
+    dachtiefeInput.addEventListener('input', () => validateDachhautInput(dachtiefeInput));
+    dachtiefeInput.addEventListener('blur', () => validateDachhautInput(dachtiefeInput));
+  }
+  
+  document.getElementById('open-dachhaut-btn').onclick = () => { 
+    document.getElementById('dachhaut-form').style.display = 'block'; 
+    document.getElementById('open-dachhaut-btn').style.display = 'none'; 
+  }; 
+  
+  document.getElementById('close-dachhaut-btn').onclick = () => { 
+    document.getElementById('dachhaut-form').style.display = 'none'; 
+    document.getElementById('open-dachhaut-btn').style.display = 'flex'; 
+  }; 
+  
+  document.getElementById('save-dachhaut-btn').onclick = () => { 
+    const productForm = findProductForm(); 
+    if (!productForm) return; 
+
+    if (!validateAllDachhautInputs()) {
+      return;
+    }
+
+    // Falls noch Überschreitungen vorhanden sind, nicht speichern
+    if (checkAnyExceeded()) {
+      toggleDachhautRequestButton(true);
+      return;
+    }
+  
+    // Entferne alte Properties
+    productForm.querySelectorAll('.generated-dachhaut-prop').forEach(p => p.remove()); 
+
+    // Hole Werte
+    const schraubentyp = root.querySelector('input[name="dachhaut_schraubentyp"]:checked').value;
+    const dachbreite = document.getElementById('dachhaut-dachbreite').value;
+    const dachtiefe = document.getElementById('dachhaut-dachtiefe').value;
+    const symmetrie = root.querySelector('input[name="dachhaut_symmetrie"]:checked').value;
+
+    // Erstelle hidden inputs für Cart Properties
+    const props = [
+      { name: 'properties[Schraubentyp]', value: schraubentyp },
+      { name: 'properties[Dachbreite]', value: dachbreite + ' mm' },
+      { name: 'properties[Dachtiefe]', value: dachtiefe + ' mm' },
+      { name: 'properties[Symmetrie]', value: symmetrie }
+    ];
+
+    props.forEach(prop => {
+      const hiddenInp = document.createElement('input'); 
+      hiddenInp.type = 'hidden'; 
+      hiddenInp.name = prop.name; 
+      hiddenInp.value = prop.value; 
+      hiddenInp.className = 'generated-dachhaut-prop'; 
+      productForm.appendChild(hiddenInp);
+    });
+
+    // Summary erstellen
+    let summaryHTML = `
+      <div><strong>Schraubentyp:</strong> ${schraubentyp}</div>
+      <div><strong>Dachbreite:</strong> ${dachbreite} mm</div>
+      <div><strong>Dachtiefe:</strong> ${dachtiefe} mm</div>
+      <div><strong>Symmetrie:</strong> ${symmetrie}</div>
+    `;
+
+    toggleDachhautRequestButton(false);
+  
+    document.getElementById('dachhaut-form').style.display = 'none'; 
+    document.getElementById('dachhaut-summary').style.display = 'block'; 
+    document.getElementById('dachhaut-summary-text').innerHTML = summaryHTML; 
+  }; 
+  
+  document.getElementById('edit-dachhaut-btn').onclick = () => { 
+    document.getElementById('dachhaut-summary').style.display = 'none'; 
+    document.getElementById('dachhaut-form').style.display = 'block'; 
+  }; 
+})(); 
+</script>
+{%- endif -%}
+
+{%- comment -%}
+  =====================================================
+  ZUSCHNITT-KONFIGURATOR (PRIORITÄT 3)
+  =====================================================
+{%- endcomment -%}
+{%- if show_zuschnitte -%}
+<div class="custom-zuschnitte-wrapper" id="ZuschnitteRoot"> 
+  <button type="button" id="open-zuschnitte-btn" class="btn-open-zuschnitte"> 
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="margin-right:10px;"> 
+      <path d="M3 3h18v18H3zM9 3v18M15 3v18"/> 
+    </svg> 
+    Individuelle Zuschnitte hinzufügen 
+  </button> 
+  
+  <div id="zuschnitte-form" class="zuschnitte-form-container" style="display: none;"> 
+    <div class="zuschnitte-header"> 
+      <span style="font-weight:600; color: #171917; text-transform: uppercase; letter-spacing: 0.05em; font-size: 13px;">Zuschnitt-Konfigurator</span> 
+      <button type="button" id="close-zuschnitte-btn" class="close-btn" aria-label="Schließen">✕</button> 
+    </div> 
+  
+    <p class="hint-text">Die Produktmenge wird automatisch aus der Summe der Zuschnitt-Anzahlen berechnet.</p>
+
+    {%- if max_breite > 0 or max_laenge > 0 -%}
+      <p class="hint-text">
+        Maximal zulässig:
+        {%- if max_breite > 0 -%} Breite {{ max_breite }} mm{%- endif -%}
+        {%- if max_breite > 0 and max_laenge > 0 -%} / {%- endif -%}
+        {%- if max_laenge > 0 -%} Länge {{ max_laenge }} mm{%- endif -%}
+      </p>
+    {%- endif -%}
+  
+    <div id="zuschnitte-list"> 
+      <div class="z-card" data-index="1"> 
+        <div class="z-card-header">
+          <div class="z-card-title">Zuschnitt 1</div>
+          <button type="button" class="remove-z-btn" aria-label="Zuschnitt entfernen">✕</button>
+        </div>
+        <div class="z-grid"> 
+          <div class="z-field"> 
+            <label>Anzahl</label> 
+            <input type="number" class="z-input" data-field="Anzahl" value="1" min="1">
+            <div class="z-field-error"></div>
+          </div> 
+          <div class="z-field"> 
+            <label>Breite (mm)</label> 
+            <input type="number" class="z-input" data-field="Breite" placeholder="mm" min="1" {% if max_breite > 0 %}max="{{ max_breite }}"{% endif %}>
+            <div class="z-field-error"></div>
+          </div> 
+          <div class="z-field"> 
+            <label>Länge (mm)</label> 
+            <input type="number" class="z-input" data-field="Länge" placeholder="mm" min="1" {% if max_laenge > 0 %}max="{{ max_laenge }}"{% endif %}>
+            <div class="z-field-error"></div>
+          </div> 
+        </div> 
+      </div> 
+    </div> 
+
+    <button type="button" id="add-more-z-btn" class="btn-add-dashed">+ Weiteren Zuschnitt hinzufügen</button>
+  
+    <div style="margin-top:15px;"> 
+      <button type="button" id="save-z-btn" class="btn-save-dark">Zuschnitte übernehmen</button>
+      <a href="https://e-stegplatten.de/pages/contact" id="zuschnitt-anfrage-btn" class="btn-request-dark pulse-glow" style="display:none;">Individuelle Anfrage stellen</a>
+    </div>
+  </div> 
+  
+  <div id="zuschnitte-summary" class="zuschnitte-summary-box" style="display: none;"> 
+    <div class="summary-header"> 
+      <strong class="summary-title">Maße gespeichert</strong> 
+      <button type="button" id="edit-z-btn" class="edit-btn">Bearbeiten</button> 
+    </div> 
+    <div id="zuschnitte-summary-text" class="summary-content"></div> 
+  </div> 
+</div> 
+  
+<style> 
+  :root {
+    --akzent-dark: #171917;
+    --border-color: #e5e5e5;
+    --red-delete: #dc2626;
+  }
+
+  .custom-zuschnitte-wrapper { 
+    margin: 20px 0; 
+    width: 100%; 
+  } 
+  
+  .btn-open-zuschnitte { 
+    width: 100%; 
+    padding: 14px 20px; 
+    background: transparent;
+    border: 1px solid var(--akzent-dark); 
+    color: var(--akzent-dark); 
+    border-radius: 0;
+    font-weight: 600; 
+    font-size: 14px;
+    cursor: pointer; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    transition: all 0.2s ease; 
+    text-transform: uppercase; 
+    letter-spacing: 0.05em;
+  } 
+  .btn-open-zuschnitte:hover { 
+    background: var(--akzent-dark);
+    color: #fff;
+  }
+  
+  .zuschnitte-form-container { 
+    background: #fff; 
+    padding: 20px; 
+    border-radius: 0; 
+    border: 1px solid var(--border-color); 
+    margin-top: -1px;
+  }
+  
+  .zuschnitte-header { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center;
+    margin-bottom: 15px; 
+    border-bottom: 1px solid #f0f0f0; 
+    padding-bottom: 10px; 
+  }
+  
+  .close-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #999;
+    font-size: 18px;
+  }
+  
+  .hint-text {
+    margin: 0 0 15px;
+    font-size: 12px;
+    color: #666;
+    line-height: 1.4;
+  }
+  
+  .z-card { 
+    background: #f9f9f9; 
+    padding: 15px; 
+    border-radius: 0; 
+    border: 1px solid #eee; 
+    margin-bottom: 10px;
+    position: relative;
+  }
+  
+  .z-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .z-card-title { 
+    font-size: 10px; 
+    font-weight: 700; 
+    text-transform: uppercase; 
+    color: #999;
+    letter-spacing: 0.1em;
+  } 
+  
+  .remove-z-btn {
+    background: none;
+    border: none;
+    color: var(--red-delete);
+    font-size: 18px;
+    cursor: pointer;
+    padding: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+  }
+  
+  .remove-z-btn:hover {
+    color: #b91c1c;
+    transform: scale(1.1);
+  }
+  
+  .z-grid { 
+    display: grid; 
+    grid-template-columns: 1fr 1fr 1fr; 
+    gap: 10px; 
+  } 
+  
+  .z-field label { 
+    display: block; 
+    font-size: 11px; 
+    margin-bottom: 4px; 
+    color: #171917; 
+    font-weight: 600;
+    text-transform: uppercase;
+  } 
+  
+  .z-field input { 
+    width: 100%; 
+    padding: 8px; 
+    border: 1px solid #ccc; 
+    border-radius: 0; 
+    font-size: 14px; 
+    outline: none;
+  } 
+  .z-field input:focus { 
+    border-color: var(--akzent-dark);
+  }
+
+  .z-field input.is-error {
+    border-color: #e53e3e !important;
+  }
+
+  .z-field-error {
+    min-height: 16px;
+    margin-top: 4px;
+    font-size: 11px;
+    color: #e53e3e;
+    line-height: 1.3;
+  }
+  
+  .btn-add-dashed { 
+    width: 100%; 
+    padding: 10px; 
+    background: #fff; 
+    border: 1px dashed #ccc; 
+    border-radius: 0; 
+    cursor: pointer; 
+    margin: 10px 0; 
+    font-size: 12px; 
+    color: #666;
+    text-transform: uppercase;
+  } 
+  
+  .btn-save-dark { 
+    width: 100%; 
+    padding: 14px; 
+    background: var(--akzent-dark);
+    color: #fff; 
+    border: none; 
+    border-radius: 0; 
+    font-weight: 600; 
+    font-size: 14px;
+    cursor: pointer; 
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  } 
+
+  .btn-request-dark {
+    width: 100%;
+    padding: 14px;
+    background: #b91c1c;
+    color: #fff !important;
+    border: none;
+    border-radius: 0;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+  }
+
+  .btn-request-dark:hover {
+    background: #991b1b;
+    color: #fff !important;
+  }
+
+  @keyframes pulseGlow {
+    0% {
+      transform: scale(1);
+      box-shadow: 0 0 0 0 rgba(185, 28, 28, 0.55);
+    }
+    50% {
+      transform: scale(1.02);
+      box-shadow: 0 0 0 10px rgba(185, 28, 28, 0);
+    }
+    100% {
+      transform: scale(1);
+      box-shadow: 0 0 0 0 rgba(185, 28, 28, 0);
+    }
+  }
+
+  .pulse-glow {
+    animation: pulseGlow 1.4s infinite;
+  }
+  
+  .zuschnitte-summary-box { 
+    background: #f4f4f4;
+    border: 1px solid var(--akzent-dark); 
+    padding: 15px; 
+    border-radius: 0; 
+    margin-top: 10px;
+  }
+  
+  .summary-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  
+  .summary-title { color: var(--akzent-dark); font-size: 13px; text-transform: uppercase; }
+  
+  .edit-btn {
+    font-size: 11px;
+    background: transparent;
+    border: 1px solid var(--akzent-dark);
+    padding: 3px 8px;
+    border-radius: 0;
+    cursor: pointer;
+    text-transform: uppercase;
+  }
+  
+  .summary-content { font-size: 13px; color: #444; }
+  
+  @media (max-width: 640px) { 
+    .z-grid { grid-template-columns: 1fr; }
+  } 
+</style> 
+  
+<script> 
+(function() { 
+  const MAX_BREITE = {{ max_breite | default: 0 }};
+  const MAX_LAENGE = {{ max_laenge | default: 0 }};
+
+  const root = document.getElementById('ZuschnitteRoot'); 
+  if (!root) return;
+
+  const list = document.getElementById('zuschnitte-list'); 
+  let zCount = 1;
+  const zuschnittRequestBtn = document.getElementById('zuschnitt-anfrage-btn');
+  const saveZuschnittBtn = document.getElementById('save-z-btn');
+
+  function toggleZuschnittRequestButton(show) {
+    if (zuschnittRequestBtn) {
+      zuschnittRequestBtn.style.display = show ? 'block' : 'none';
+    }
+    if (saveZuschnittBtn) {
+      saveZuschnittBtn.style.display = show ? 'none' : 'block';
+    }
+  }
+  
+  function findProductForm() { 
+    return root.closest('form[action*="/cart/add"]') || document.querySelector('form[action*="/cart/add"]'); 
+  } 
+  
+  function setProductQuantity(productForm, qty) { 
+    let qtyInput = productForm.querySelector('input[name="quantity"]'); 
+    if (!qtyInput) { 
+      qtyInput = productForm.querySelector('input.generated-qty'); 
+      if (!qtyInput) { 
+        qtyInput = document.createElement('input'); 
+        qtyInput.type = 'hidden'; 
+        qtyInput.name = 'quantity'; 
+        qtyInput.className = 'generated-qty'; 
+        productForm.appendChild(qtyInput); 
+      } 
+    } 
+    qtyInput.value = String(qty); 
+    qtyInput.dispatchEvent(new Event('input', { bubbles: true })); 
+    qtyInput.dispatchEvent(new Event('change', { bubbles: true })); 
+  }
+  
+  function updateCardTitles() {
+    const cards = list.querySelectorAll('.z-card');
+    cards.forEach((card, index) => {
+      const title = card.querySelector('.z-card-title');
+      if (title) {
+        title.textContent = `Zuschnitt ${index + 1}`;
+      }
+    });
+  }
+
+  function getErrorElement(input) {
+    const wrapper = input.closest('.z-field');
+    return wrapper ? wrapper.querySelector('.z-field-error') : null;
+  }
+
+  function showFieldError(input, message) {
+    input.classList.add('is-error');
+    input.style.borderColor = '#e53e3e';
+    const errorEl = getErrorElement(input);
+    if (errorEl) errorEl.textContent = message;
+  }
+
+  function clearFieldError(input) {
+    input.classList.remove('is-error');
+    input.style.borderColor = '#ccc';
+    const errorEl = getErrorElement(input);
+    if (errorEl) errorEl.textContent = '';
+  }
+
+  function validateInput(inp) {
+    const field = inp.dataset.field;
+    const raw = (inp.value || '').trim();
+
+    if (!raw || Number(raw) <= 0) {
+      showFieldError(inp, 'Bitte alle Felder korrekt ausfüllen.');
+      return false;
+    }
+
+    const numericValue = Number(raw);
+
+    if (field === 'Breite' && MAX_BREITE > 0 && numericValue > MAX_BREITE) {
+      showFieldError(inp, `Die eingegebene Breite überschreitet die maximal verfügbare Variante (${MAX_BREITE} mm). Für Sondermaße nutzen Sie bitte die individuelle Anfrage.`);
+      toggleZuschnittRequestButton(true);
+      return false;
+    }
+
+    if (field === 'Länge' && MAX_LAENGE > 0 && numericValue > MAX_LAENGE) {
+      showFieldError(inp, `Die eingegebene Länge überschreitet die maximal verfügbare Variante (${MAX_LAENGE} mm). Für Sondermaße nutzen Sie bitte die individuelle Anfrage.`);
+      toggleZuschnittRequestButton(true);
+      return false;
+    }
+
+    const hasExceededValue = Array.from(root.querySelectorAll('.z-input[data-field="Breite"], .z-input[data-field="Länge"]')).some(input => {
+      const value = Number((input.value || '').trim());
+      if (!value) return false;
+      return (input.dataset.field === 'Breite' && MAX_BREITE > 0 && value > MAX_BREITE) ||
+             (input.dataset.field === 'Länge' && MAX_LAENGE > 0 && value > MAX_LAENGE);
+    });
+
+    toggleZuschnittRequestButton(hasExceededValue);
+
+    clearFieldError(inp);
+    return true;
+  }
+
+  function attachLiveValidation(card) {
+    const inputs = card.querySelectorAll('.z-input');
+    inputs.forEach(inp => {
+      inp.addEventListener('input', () => validateInput(inp));
+      inp.addEventListener('blur', () => validateInput(inp));
+    });
+  }
+  
+  function attachRemoveHandler(card) {
+    const removeBtn = card.querySelector('.remove-z-btn');
+    if (removeBtn) {
+      removeBtn.onclick = () => {
+        const cards = list.querySelectorAll('.z-card');
+        if (cards.length > 1) {
+          card.remove();
+          updateCardTitles();
+          const remainingExceeded = Array.from(root.querySelectorAll('.z-input[data-field="Breite"], .z-input[data-field="Länge"]')).some(input => {
+            const value = Number((input.value || '').trim());
+            if (!value) return false;
+            return (input.dataset.field === 'Breite' && MAX_BREITE > 0 && value > MAX_BREITE) ||
+                   (input.dataset.field === 'Länge' && MAX_LAENGE > 0 && value > MAX_LAENGE);
+          });
+          toggleZuschnittRequestButton(remainingExceeded);
+        } else {
+          alert('Mindestens ein Zuschnitt muss vorhanden sein.');
+        }
+      };
+    }
+  }
+  
+  const initialCard = list.querySelector('.z-card');
+  if (initialCard) {
+    attachRemoveHandler(initialCard);
+    attachLiveValidation(initialCard);
+  }
+  
+  document.getElementById('open-zuschnitte-btn').onclick = () => { 
+    document.getElementById('zuschnitte-form').style.display = 'block'; 
+    document.getElementById('open-zuschnitte-btn').style.display = 'none'; 
+  }; 
+  
+  document.getElementById('close-zuschnitte-btn').onclick = () => { 
+    document.getElementById('zuschnitte-form').style.display = 'none'; 
+    document.getElementById('open-zuschnitte-btn').style.display = 'flex'; 
+  }; 
+  
+  document.getElementById('add-more-z-btn').onclick = () => { 
+    zCount++; 
+    const card = document.createElement('div'); 
+    card.className = 'z-card'; 
+    card.innerHTML = ` 
+      <div class="z-card-header">
+        <div class="z-card-title">Zuschnitt ${zCount}</div>
+        <button type="button" class="remove-z-btn" aria-label="Zuschnitt entfernen">✕</button>
+      </div>
+      <div class="z-grid"> 
+        <div class="z-field">
+          <label>Anzahl</label>
+          <input type="number" class="z-input" data-field="Anzahl" value="1" min="1">
+          <div class="z-field-error"></div>
+        </div> 
+        <div class="z-field">
+          <label>Breite (mm)</label>
+          <input type="number" class="z-input" data-field="Breite" placeholder="mm" min="1" ${MAX_BREITE > 0 ? `max="${MAX_BREITE}"` : ''}>
+          <div class="z-field-error"></div>
+        </div> 
+        <div class="z-field">
+          <label>Länge (mm)</label>
+          <input type="number" class="z-input" data-field="Länge" placeholder="mm" min="1" ${MAX_LAENGE > 0 ? `max="${MAX_LAENGE}"` : ''}>
+          <div class="z-field-error"></div>
+        </div> 
+      </div>`; 
+    list.appendChild(card);
+    attachRemoveHandler(card);
+    attachLiveValidation(card);
+  }; 
+  
+  document.getElementById('save-z-btn').onclick = () => { 
+    const productForm = findProductForm(); 
+    if (!productForm) return; 
+  
+    const cards = list.querySelectorAll('.z-card'); 
+    let summaryHTML = ''; 
+    let hasError = false; 
+    let totalQty = 0; 
+  
+    productForm.querySelectorAll('.generated-prop').forEach(p => p.remove()); 
+  
+    cards.forEach((card, i) => { 
+      const inputs = card.querySelectorAll('.z-input'); 
+      const idx = i + 1; 
+      let rowData = {}; 
+  
+      inputs.forEach(inp => { 
+        const field = inp.dataset.field; 
+        const raw = (inp.value || '').trim(); 
+        const valid = validateInput(inp);
+
+        if (!valid) {
+          hasError = true;
+        } else {
+          rowData[field] = raw; 
+        }
+  
+        const hiddenInp = document.createElement('input'); 
+        hiddenInp.type = 'hidden'; 
+        hiddenInp.name = `properties[Zuschnitt ${idx} - ${field}]`; 
+        hiddenInp.value = raw; 
+        hiddenInp.className = 'generated-prop'; 
+        productForm.appendChild(hiddenInp); 
+      }); 
+  
+      totalQty += Number(rowData.Anzahl || 0); 
+      summaryHTML += `<div>Zuschnitt ${idx}: ${rowData.Anzahl || ''}x (${rowData.Breite || ''}x${rowData.Länge || ''}mm)</div>`; 
+    }); 
+  
+    if (hasError) { 
+      productForm.querySelectorAll('.generated-prop').forEach(p => p.remove()); 
+      toggleZuschnittRequestButton(true);
+      return; 
+    }
+
+    toggleZuschnittRequestButton(false);
+    setProductQuantity(productForm, totalQty);
+  
+    document.getElementById('zuschnitte-form').style.display = 'none'; 
+    document.getElementById('zuschnitte-summary').style.display = 'block'; 
+    document.getElementById('zuschnitte-summary-text').innerHTML = summaryHTML; 
+  }; 
+  
+  document.getElementById('edit-z-btn').onclick = () => { 
+    document.getElementById('zuschnitte-summary').style.display = 'none'; 
+    document.getElementById('zuschnitte-form').style.display = 'block'; 
+  }; 
+})(); 
+</script>
+{%- endif -%}
+
+{%- comment -%}
+  =====================================================
+  TERRASSEN-KONFIGURATOR (PRIORITÄT 2)
+  =====================================================
+{%- endcomment -%}
+{%- if show_terrassen_konfigurator -%}
+<div class="custom-zuschnitte-wrapper" id="TerrassenRoot"> 
+  <button type="button" id="open-terrassen-btn" class="btn-open-zuschnitte"> 
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="margin-right:10px;"> 
+      <path d="M3 3h18v18H3zM9 3v18M15 3v18"/> 
+    </svg> 
+    Terrassenüberdachung Wunschmaß
+  </button> 
+  
+  <div id="terrassen-form" class="zuschnitte-form-container" style="display: none;"> 
+    <div class="zuschnitte-header"> 
+      <span style="font-weight:600; color: #171917; text-transform: uppercase; letter-spacing: 0.05em; font-size: 13px;">Terrassenüberdachung Wunschmaß</span> 
+      <button type="button" id="close-terrassen-btn" class="close-btn" aria-label="Schließen">✕</button> 
+    </div> 
+  
+    <p class="hint-text">Wir können Ihre Terrassenüberdachung gemäß Ihren individuellen Wünschen und Maßen präzise zuschneiden.</p>
+
+    {%- if max_breite > 0 or max_tiefe > 0 -%}
+      <p class="hint-text">
+        Maximal zulässig:
+        {%- if max_breite > 0 -%} Breite {{ max_breite | divided_by: 1000.0 }} m{%- endif -%}
+        {%- if max_breite > 0 and max_tiefe > 0 -%} / {%- endif -%}
+        {%- if max_tiefe > 0 -%} Tiefe {{ max_tiefe | divided_by: 1000.0 }} m{%- endif -%}
+      </p>
+    {%- endif -%}
+  
+    <div class="z-card"> 
+      <div class="z-card-title">Maße eingeben</div>
+      
+      <div class="t-field-full"> 
+        <label>Durchgangshöhe (Rinne Unterkante)</label> 
+        <input type="number" class="z-input" data-field="Durchgangshöhe" placeholder="min: 2000mm - max: 2500mm" min="2000" max="2500" step="1"> 
+        <div class="z-field-error"></div>
+      </div>
+      
+      <div class="z-grid-2col"> 
+        <div class="z-field"> 
+          <label>Breite (m)</label> 
+          <input type="number" class="z-input" data-field="Breite" placeholder="m" min="0.01" step="0.01"> 
+          <div class="z-field-error"></div>
+        </div> 
+        <div class="z-field"> 
+          <label>Tiefe (m)</label> 
+          <input type="number" class="z-input" data-field="Tiefe" placeholder="m" min="0.01" step="0.01"> 
+          <div class="z-field-error"></div>
+        </div> 
+      </div>
+    </div> 
+  
+    <div style="margin-top:15px;"> 
+      <button type="button" id="save-terrassen-btn" class="btn-save-dark">Maße übernehmen</button>
+      <a href="https://e-stegplatten.de/pages/contact" id="terrassen-anfrage-btn" class="btn-request-dark pulse-glow" style="display:none;">Individuelle Anfrage stellen</a>
+    </div>
+  </div> 
+  
+  <div id="terrassen-summary" class="zuschnitte-summary-box" style="display: none;"> 
+    <div class="summary-header"> 
+      <strong class="summary-title">Maße gespeichert</strong> 
+      <button type="button" id="edit-terrassen-btn" class="edit-btn">Bearbeiten</button> 
+    </div> 
+    <div id="terrassen-summary-text" class="summary-content"></div> 
+  </div> 
+</div> 
+  
+<style> 
+  :root {
+    --akzent-dark: #171917;
+    --border-color: #e5e5e5;
+  }
+
+  .custom-zuschnitte-wrapper { 
+    margin: 20px 0; 
+    width: 100%; 
+  } 
+  
+  .btn-open-zuschnitte { 
+    width: 100%; 
+    padding: 14px 20px; 
+    background: transparent;
+    border: 1px solid var(--akzent-dark); 
+    color: var(--akzent-dark); 
+    border-radius: 0;
+    font-weight: 600; 
+    font-size: 14px;
+    cursor: pointer; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    transition: all 0.2s ease; 
+    text-transform: uppercase; 
+    letter-spacing: 0.05em;
+  } 
+  .btn-open-zuschnitte:hover { 
+    background: var(--akzent-dark);
+    color: #fff;
+  }
+  
+  .zuschnitte-form-container { 
+    background: #fff; 
+    padding: 20px; 
+    border-radius: 0; 
+    border: 1px solid var(--border-color); 
+    margin-top: -1px;
+  }
+  
+  .zuschnitte-header { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center;
+    margin-bottom: 15px; 
+    border-bottom: 1px solid #f0f0f0; 
+    padding-bottom: 10px; 
+  }
+  
+  .close-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #999;
+    font-size: 18px;
+  }
+  
+  .hint-text {
+    margin: 0 0 15px;
+    font-size: 12px;
+    color: #666;
+    line-height: 1.4;
+  }
+  
+  .z-card { 
+    background: #f9f9f9; 
+    padding: 15px; 
+    border-radius: 0; 
+    border: 1px solid #eee; 
+    margin-bottom: 10px;
+  }
+  
+  .z-card-title { 
+    font-size: 10px; 
+    font-weight: 700; 
+    text-transform: uppercase; 
+    color: #999;
+    margin-bottom: 15px;
+    letter-spacing: 0.1em;
+  } 
+  
+  .t-field-full {
+    margin-bottom: 15px;
+  }
+  
+  .z-grid-2col { 
+    display: grid; 
+    grid-template-columns: 1fr 1fr; 
+    gap: 10px; 
+  } 
+  
+  .z-field label { 
+    display: block; 
+    font-size: 11px; 
+    margin-bottom: 4px; 
+    color: #171917; 
+    font-weight: 600;
+    text-transform: uppercase;
+  } 
+  
+  .z-field input,
+  .t-field-full input { 
+    width: 100%; 
+    padding: 8px; 
+    border: 1px solid #ccc; 
+    border-radius: 0; 
+    font-size: 14px; 
+    outline: none;
+  } 
+  .z-field input:focus,
+  .t-field-full input:focus { 
+    border-color: var(--akzent-dark);
+  }
+  
+  .t-field-full label {
+    display: block; 
+    font-size: 11px; 
+    margin-bottom: 4px; 
+    color: #171917; 
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  .z-field input.is-error,
+  .t-field-full input.is-error {
+    border-color: #e53e3e !important;
+  }
+
+  .z-field-error {
+    min-height: 16px;
+    margin-top: 4px;
+    font-size: 11px;
+    color: #e53e3e;
+    line-height: 1.3;
+  }
+  
+  .btn-save-dark { 
+    width: 100%; 
+    padding: 14px; 
+    background: var(--akzent-dark);
+    color: #fff; 
+    border: none; 
+    border-radius: 0; 
+    font-weight: 600; 
+    font-size: 14px;
+    cursor: pointer; 
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  } 
+  
+  .btn-request-dark {
+    width: 100%;
+    padding: 14px;
+    background: #b91c1c;
+    color: #fff !important;
+    border: none;
+    border-radius: 0;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+  }
+
+  .btn-request-dark:hover {
+    background: #991b1b;
+    color: #fff !important;
+  }
+
+  @keyframes pulseGlow {
+    0% {
+      transform: scale(1);
+      box-shadow: 0 0 0 0 rgba(185, 28, 28, 0.55);
+    }
+    50% {
+      transform: scale(1.02);
+      box-shadow: 0 0 0 10px rgba(185, 28, 28, 0);
+    }
+    100% {
+      transform: scale(1);
+      box-shadow: 0 0 0 0 rgba(185, 28, 28, 0);
+    }
+  }
+
+  .pulse-glow {
+    animation: pulseGlow 1.4s infinite;
+  }
+  
+  .zuschnitte-summary-box { 
+    background: #f4f4f4;
+    border: 1px solid var(--akzent-dark); 
+    padding: 15px; 
+    border-radius: 0; 
+    margin-top: 10px;
+  }
+  
+  .summary-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  
+  .summary-title { color: var(--akzent-dark); font-size: 13px; text-transform: uppercase; }
+  
+  .edit-btn {
+    font-size: 11px;
+    background: transparent;
+    border: 1px solid var(--akzent-dark);
+    padding: 3px 8px;
+    border-radius: 0;
+    cursor: pointer;
+    text-transform: uppercase;
+  }
+  
+  .summary-content { font-size: 13px; color: #444; }
+  
+  @media (max-width: 640px) { 
+    .z-grid-2col { grid-template-columns: 1fr; }
+  } 
+</style> 
+  
+<script> 
+(function() { 
+  const root = document.getElementById('TerrassenRoot'); 
+  if (!root) return;
+
+  const MAX_BREITE_MM = {{ max_breite | default: 0 }};
+  const MAX_TIEFE_MM = {{ max_tiefe | default: 0 }};
+  const terrassenRequestBtn = document.getElementById('terrassen-anfrage-btn');
+  const saveTerrassenBtn = document.getElementById('save-terrassen-btn');
+
+  function toggleTerrassenRequestButton(show) {
+    if (terrassenRequestBtn) {
+      terrassenRequestBtn.style.display = show ? 'block' : 'none';
+    }
+    if (saveTerrassenBtn) {
+      saveTerrassenBtn.style.display = show ? 'none' : 'block';
+    }
+  }
+  
+  function findProductForm() { 
+    return root.closest('form[action*="/cart/add"]') || document.querySelector('form[action*="/cart/add"]'); 
+  }
+
+  function getErrorElement(input) {
+    const wrapper = input.closest('.z-field, .t-field-full');
+    return wrapper ? wrapper.querySelector('.z-field-error') : null;
+  }
+
+  function showFieldError(input, message) {
+    input.classList.add('is-error');
+    const errorEl = getErrorElement(input);
+    if (errorEl) errorEl.textContent = message;
+  }
+
+  function clearFieldError(input) {
+    input.classList.remove('is-error');
+    const errorEl = getErrorElement(input);
+    if (errorEl) errorEl.textContent = '';
+  }
+
+  function parseMeterToMm(value) {
+    const normalized = String(value || '').replace(',', '.').trim();
+    const num = Number(normalized);
+    if (!num || num <= 0) return 0;
+    return Math.round(num * 1000);
+  }
+
+  function validateTerrassenInput(inp) {
+    const field = inp.dataset.field;
+    const raw = (inp.value || '').trim();
+
+    if (!raw) {
+      showFieldError(inp, 'Bitte alle Felder korrekt ausfüllen.');
+      return false;
+    }
+
+    if (field === 'Durchgangshöhe') {
+      const numericHeight = Number(raw);
+
+      if (!numericHeight || numericHeight < 2000 || numericHeight > 2500) {
+        showFieldError(inp, 'Die Durchgangshöhe liegt außerhalb des zulässigen Bereichs. Für Sondermaße nutzen Sie bitte die individuelle Anfrage.');
+        toggleTerrassenRequestButton(true);
+        return false;
+      }
+
+      const allInputsHeightCheck = root.querySelectorAll('.z-input');
+      const hasExceededHeightCheck = Array.from(allInputsHeightCheck).some(input => {
+        const fieldName = input.dataset.field;
+        const rawValue = (input.value || '').trim();
+
+        if (!rawValue) return false;
+
+        if (fieldName === 'Durchgangshöhe') {
+          const h = Number(rawValue);
+          return h < 2000 || h > 2500;
+        }
+
+        if (fieldName === 'Breite') {
+          const mm = parseMeterToMm(rawValue);
+          return MAX_BREITE_MM > 0 && mm > MAX_BREITE_MM;
+        }
+
+        if (fieldName === 'Tiefe') {
+          const mm = parseMeterToMm(rawValue);
+          return MAX_TIEFE_MM > 0 && mm > MAX_TIEFE_MM;
+        }
+
+        return false;
+      });
+
+      toggleTerrassenRequestButton(hasExceededHeightCheck);
+      clearFieldError(inp);
+      return true;
+    }
+
+    const numericMm = parseMeterToMm(raw);
+
+    if (!numericMm) {
+      showFieldError(inp, 'Bitte einen gültigen Wert eingeben.');
+      return false;
+    }
+
+    if (field === 'Breite' && MAX_BREITE_MM > 0 && numericMm > MAX_BREITE_MM) {
+      showFieldError(inp, `Die Breite überschreitet das maximal verfügbare Maß von ${(MAX_BREITE_MM / 1000).toFixed(2)} m. Für Sondermaße nutzen Sie bitte die individuelle Anfrage.`);
+      toggleTerrassenRequestButton(true);
+      return false;
+    }
+
+    if (field === 'Tiefe' && MAX_TIEFE_MM > 0 && numericMm > MAX_TIEFE_MM) {
+      showFieldError(inp, `Die Tiefe überschreitet das maximal verfügbare Maß von ${(MAX_TIEFE_MM / 1000).toFixed(2)} m. Für Sondermaße nutzen Sie bitte die individuelle Anfrage.`);
+      toggleTerrassenRequestButton(true);
+      return false;
+    }
+
+    const allInputs = root.querySelectorAll('.z-input');
+    const hasExceededValue = Array.from(allInputs).some(input => {
+      const fieldName = input.dataset.field;
+      const rawValue = (input.value || '').trim();
+
+      if (!rawValue) return false;
+
+      if (fieldName === 'Durchgangshöhe') {
+        const h = Number(rawValue);
+        return h < 2000 || h > 2500;
+      }
+
+      if (fieldName === 'Breite') {
+        const mm = parseMeterToMm(rawValue);
+        return MAX_BREITE_MM > 0 && mm > MAX_BREITE_MM;
+      }
+
+      if (fieldName === 'Tiefe') {
+        const mm = parseMeterToMm(rawValue);
+        return MAX_TIEFE_MM > 0 && mm > MAX_TIEFE_MM;
+      }
+
+      return false;
+    });
+
+    toggleTerrassenRequestButton(hasExceededValue);
+
+    clearFieldError(inp);
+    return true;
+  }
+
+  root.querySelectorAll('.z-input').forEach(inp => {
+    inp.addEventListener('input', () => validateTerrassenInput(inp));
+    inp.addEventListener('blur', () => validateTerrassenInput(inp));
+  });
+  
+  document.getElementById('open-terrassen-btn').onclick = () => { 
+    document.getElementById('terrassen-form').style.display = 'block'; 
+    document.getElementById('open-terrassen-btn').style.display = 'none'; 
+  }; 
+  
+  document.getElementById('close-terrassen-btn').onclick = () => { 
+    document.getElementById('terrassen-form').style.display = 'none'; 
+    document.getElementById('open-terrassen-btn').style.display = 'flex'; 
+  }; 
+  
+  document.getElementById('save-terrassen-btn').onclick = () => { 
+    const productForm = findProductForm(); 
+    if (!productForm) return; 
+  
+    const inputs = root.querySelectorAll('.z-input'); 
+    let summaryHTML = ''; 
+    let hasError = false; 
+  
+    productForm.querySelectorAll('.generated-terrassen-prop').forEach(p => p.remove()); 
+  
+    inputs.forEach(inp => { 
+      const field = inp.dataset.field; 
+      const raw = (inp.value || '').trim(); 
+      const valid = validateTerrassenInput(inp);
+
+      if (!valid) {
+        hasError = true;
+        return;
+      }
+
+      const hiddenInp = document.createElement('input'); 
+      hiddenInp.type = 'hidden'; 
+      hiddenInp.name = `properties[${field}]`; 
+      hiddenInp.value = raw; 
+      hiddenInp.className = 'generated-terrassen-prop'; 
+      productForm.appendChild(hiddenInp); 
+
+      let displayValue = raw;
+      if (field === 'Breite' || field === 'Tiefe') {
+        displayValue = `${raw} m`;
+      } else if (field === 'Durchgangshöhe') {
+        displayValue = `${raw} mm`;
+      }
+
+      summaryHTML += `<div><strong>${field}:</strong> ${displayValue}</div>`; 
+    }); 
+  
+    if (hasError) { 
+      productForm.querySelectorAll('.generated-terrassen-prop').forEach(p => p.remove()); 
+      toggleTerrassenRequestButton(true);
+      return; 
+    }
+
+    toggleTerrassenRequestButton(false);
+  
+    document.getElementById('terrassen-form').style.display = 'none'; 
+    document.getElementById('terrassen-summary').style.display = 'block'; 
+    document.getElementById('terrassen-summary-text').innerHTML = summaryHTML; 
+  }; 
+  
+  document.getElementById('edit-terrassen-btn').onclick = () => { 
+    document.getElementById('terrassen-summary').style.display = 'none'; 
+    document.getElementById('terrassen-form').style.display = 'block'; 
+  }; 
+})(); 
+</script>
+{%- endif -%}
+
+{%- comment -%}
+  =====================================================
+  PRODUKTEIGENSCHAFTEN (METAFIELDS)
+  =====================================================
+{%- endcomment -%}
+{% assign has_metafields = false %}
+{% if product.metafields.custom.material != blank %}{% assign has_metafields = true %}{% endif %}
+{% if product.metafields.custom.breite != blank %}{% assign has_metafields = true %}{% endif %}
+{% if product.metafields.custom.lange != blank %}{% assign has_metafields = true %}{% endif %}
+{% if product.metafields.custom.pfosten_anzahl != blank %}{% assign has_metafields = true %}{% endif %}
+{% if product.metafields.custom.dachneigung != blank %}{% assign has_metafields = true %}{% endif %}
+{% if product.metafields.custom.wandanschluss != blank %}{% assign has_metafields = true %}{% endif %}
+{% if product.metafields.custom.durchgangshohe_rinne_unterkante != blank %}{% assign has_metafields = true %}{% endif %}
+{% if product.metafields.custom.farbe_aluminium != blank %}{% assign has_metafields = true %}{% endif %}
+{% if product.metafields.custom.oberflache_aluminium != blank %}{% assign has_metafields = true %}{% endif %}
+{% if product.metafields.custom.farbe_stegplatten != blank %}{% assign has_metafields = true %}{% endif %}
+{% if product.metafields.custom.struktur_stegplatten != blank %}{% assign has_metafields = true %}{% endif %}
+{% if product.metafields.custom.garantie_aluminium != blank %}{% assign has_metafields = true %}{% endif %}
+{% if product.metafields.custom.garantie_stegplatten != blank %}{% assign has_metafields = true %}{% endif %}
+{% if product.metafields.custom.kaltbiegeradius_mm_mind != blank %}{% assign has_metafields = true %}{% endif %}
+{% if product.metafields.custom.warmedurchgang_u_wert_w_m_k != blank %}{% assign has_metafields = true %}{% endif %}
+{% if product.metafields.custom.brandverhalten_din_4102 != blank %}{% assign has_metafields = true %}{% endif %}
+{% if product.metafields.custom.temperaturbestandigkeit != blank %}{% assign has_metafields = true %}{% endif %}
+{% if product.metafields.custom.lichtdurchlassigkeit != blank %}{% assign has_metafields = true %}{% endif %}
+{% if product.metafields.custom.uv_schutz != blank %}{% assign has_metafields = true %}{% endif %}
+{% if product.metafields.custom.flachengewicht != blank %}{% assign has_metafields = true %}{% endif %}
+{% if product.metafields.custom.struktur != blank %}{% assign has_metafields = true %}{% endif %}
+{% if product.metafields.custom.stegabstand != blank %}{% assign has_metafields = true %}{% endif %}
+{% if product.metafields.custom.plattenstarke != blank %}{% assign has_metafields = true %}{% endif %}
+
+{% if has_metafields %}
+<div class="pe-wrap">
+  <h4>Produkteigenschaften</h4>
+  <table class="pe-table">
+    {% if product.metafields.custom.material != blank %}<tr><td>Material</td><td>{{ product.metafields.custom.material.value }}</td></tr>{% endif %}
+    {% if product.metafields.custom.breite != blank %}<tr><td>Breite</td><td>{{ product.metafields.custom.breite.value }}</td></tr>{% endif %}
+    {% if product.metafields.custom.lange != blank %}<tr><td>Länge</td><td>{{ product.metafields.custom.lange.value }}</td></tr>{% endif %}
+    {% if product.metafields.custom.plattenstarke != blank %}<tr><td>Plattenstärke</td><td>{{ product.metafields.custom.plattenstarke.value }}</td></tr>{% endif %}
+    {% if product.metafields.custom.stegabstand != blank %}<tr><td>Stegabstand</td><td>{{ product.metafields.custom.stegabstand.value }}</td></tr>{% endif %}
+    {% if product.metafields.custom.struktur != blank %}<tr><td>Struktur</td><td>{{ product.metafields.custom.struktur.value }}</td></tr>{% endif %}
+    {% if product.metafields.custom.flachengewicht != blank %}<tr><td>Flächengewicht</td><td>{{ product.metafields.custom.flachengewicht.value }}</td></tr>{% endif %}
+    {% if product.metafields.custom.pfosten_anzahl != blank %}<tr><td>Pfosten Anzahl</td><td>{{ product.metafields.custom.pfosten_anzahl.value }}</td></tr>{% endif %}
+    {% if product.metafields.custom.dachneigung != blank %}<tr><td>Dachneigung</td><td>{{ product.metafields.custom.dachneigung.value }}</td></tr>{% endif %}
+    {% if product.metafields.custom.wandanschluss != blank %}<tr><td>Wandanschluss</td><td>{{ product.metafields.custom.wandanschluss.value }}</td></tr>{% endif %}
+    {% if product.metafields.custom.durchgangshohe_rinne_unterkante != blank %}<tr><td>Durchgangshöhe</td><td>{{ product.metafields.custom.durchgangshohe_rinne_unterkante.value }}</td></tr>{% endif %}
+    {% if product.metafields.custom.farbe_aluminium != blank %}<tr><td>Farbe Aluminium</td><td>{{ product.metafields.custom.farbe_aluminium.value }}</td></tr>{% endif %}
+    {% if product.metafields.custom.oberflache_aluminium != blank %}<tr><td>Oberfläche Alu</td><td>{{ product.metafields.custom.oberflache_aluminium.value }}</td></tr>{% endif %}
+    {% if product.metafields.custom.farbe_stegplatten != blank %}<tr><td>Farbe Stegplatten</td><td>{{ product.metafields.custom.farbe_stegplatten.value }}</td></tr>{% endif %}
+    {% if product.metafields.custom.struktur_stegplatten != blank %}<tr><td>Struktur Stegplatten</td><td>{{ product.metafields.custom.struktur_stegplatten.value }}</td></tr>{% endif %}
+    {% if product.metafields.custom.lichtdurchlassigkeit != blank %}<tr><td>Lichtdurchlässigkeit</td><td>{{ product.metafields.custom.lichtdurchlassigkeit.value }}</td></tr>{% endif %}
+    {% if product.metafields.custom.uv_schutz != blank %}<tr><td>UV-Schutz</td><td>{{ product.metafields.custom.uv_schutz.value }}</td></tr>{% endif %}
+    {% if product.metafields.custom.kaltbiegeradius_mm_mind != blank %}<tr><td>Kaltbiegeradius (mind.)</td><td>{{ product.metafields.custom.kaltbiegeradius_mm_mind.value }}</td></tr>{% endif %}
+    {% if product.metafields.custom.warmedurchgang_u_wert_w_m_k != blank %}<tr><td>U-Wert (W/m²K)</td><td>{{ product.metafields.custom.warmedurchgang_u_wert_w_m_k.value }}</td></tr>{% endif %}
+    {% if product.metafields.custom.brandverhalten_din_4102 != blank %}<tr><td>Brandverhalten (DIN 4102)</td><td>{{ product.metafields.custom.brandverhalten_din_4102.value }}</td></tr>{% endif %}
+    {% if product.metafields.custom.temperaturbestandigkeit != blank %}<tr><td>Temperaturbeständigkeit</td><td>{{ product.metafields.custom.temperaturbestandigkeit.value }}</td></tr>{% endif %}
+    {% if product.metafields.custom.garantie_aluminium != blank %}<tr><td>Garantie Alu</td><td>{{ product.metafields.custom.garantie_aluminium.value }}</td></tr>{% endif %}
+    {% if product.metafields.custom.garantie_stegplatten != blank %}<tr><td>Garantie Stegplatten</td><td>{{ product.metafields.custom.garantie_stegplatten.value }}</td></tr>{% endif %}
+  </table>
+</div>
+<style>
+.pe-wrap{margin:20px 0}
+.pe-wrap h4{font-size:16px;margin-bottom:10px;color:#333}
+.pe-table{width:100%;border-collapse:collapse;border:1px solid #ddd;font-size:12px}
+.pe-table tr{border-bottom:1px solid #eee}
+.pe-table td{padding:6px 10px}
+.pe-table td:first-child{background:#f8f8f8;width:40%;font-weight:600;color:#555}
+</style>
+{% endif %}
