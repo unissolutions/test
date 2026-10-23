@@ -5,7 +5,7 @@ import json, pathlib, re, shutil
 
 B = pathlib.Path('/tmp/claude-0/-home-user-test/beef7815-2c55-57f0-9ec2-48630e491a1b/scratchpad/theme/v3')
 FILES = ['sections/es-pdp-terrasse.liquid', 'sections/es-landing.liquid', 'snippets/es-pdp-js.liquid',
-         'snippets/es-pdp-css.liquid', 'snippets/es-hero-konfig.liquid', 'snippets/es-led-guard.liquid', 'snippets/es-landing-css.liquid', 'templates/index.json']
+         'snippets/es-pdp-css.liquid', 'snippets/es-hero-konfig.liquid', 'snippets/es-led-guard.liquid', 'snippets/es-landing-css.liquid', 'templates/index.json', 'snippets/es-overrides.liquid']
 for f in FILES:
     shutil.copy(B / 'orig' / f, B / 'new' / f)
 
@@ -420,6 +420,60 @@ patch('snippets/es-landing-css.liquid', [
 .esl .cat h3{font-size:16px}
 .esl .cat .l{margin-top:0;padding-top:2px;font-size:14px}
 }"""),
+])
+
+
+# ---------------------------------------------------------------- Globale Overrides: Produktkarten (Preis einzeilig, Sterne auf gleicher Höhe), Icon-Leiste in einer Reihe
+patch('snippets/es-overrides.liquid', [
+    ("""html body .product-item__info:not(#_){padding:12px 16px 4px!important;text-align:left!important;display:flex;flex-direction:column;gap:6px}
+html body .product-item__vendor:not(#_){display:none!important}
+html body .product-item__title:not(#_){font-size:var(--es-fs-card,15px)!important;font-weight:700!important;line-height:1.3!important;color:#1B1F1D!important;margin:0!important;min-height:3.9em;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+html body .product-item__price-list:not(#_){margin:2px 0 0!important;display:flex;gap:6px;align-items:baseline;flex-wrap:wrap;justify-content:flex-start}
+html body .product-item .price:not(#_){font-size:20px!important;font-weight:800!important;color:#1B1F1D!important}
+html body .product-item .price--highlight:not(#_){color:#C93F3F!important}
+html body .product-item .price--compare:not(#_){font-size:13px!important;font-weight:500!important;color:#5E6863!important}
+html body .product-item .jdgm-prev-badge__text:not(#_){display:none!important}""",
+     """/* Bildbox immer 4:3 (Renderings werden eingepasst), damit Titel, Preis und Sterne in allen Karten auf gleicher Höhe liegen */
+html body .product-item__image-wrapper .aspect-ratio:not(#_){padding-bottom:75%!important;background:#fff}
+html body .product-item__image-wrapper img:not(#_){object-fit:contain!important;object-position:center!important}
+html body .product-item__info:not(#_){padding:12px 16px 4px!important;text-align:left!important;display:flex;flex-direction:column;flex:1 0 auto}
+html body .product-item__info-inner:not(#_){display:flex;flex-direction:column;flex:1 0 auto}
+html body .product-item__vendor:not(#_){display:none!important}
+/* Titel: feste 3 Zeilen */
+html body .product-item__title:not(#_){font-size:var(--es-fs-card,15px)!important;font-weight:700!important;line-height:1.3!important;color:#1B1F1D!important;margin:0 0 8px!important;height:3.9em;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+/* Preis: „ab 989,90 €“ in einer Zeile, Streichpreis daneben; Sterne direkt darunter, immer auf gleicher Höhe */
+html body .product-item__price-list:not(#_){margin:0!important;display:flex;flex-direction:column;align-items:flex-start;gap:2px;justify-content:flex-start;line-height:1.2;min-height:42px}
+html body .product-item .price:not(#_){display:block!important;margin:0!important;font-size:20px!important;font-weight:800!important;line-height:1.2!important;color:#1B1F1D!important;white-space:nowrap}
+html body .product-item .price--highlight:not(#_){color:#C93F3F!important;margin-right:0!important}
+html body .product-item .price--compare:not(#_){font-size:13px!important;font-weight:500!important;line-height:1.2!important;color:#5E6863!important;top:0!important}
+html body .product-item__reviews-badge:not(#_){display:flex!important;align-items:center;min-height:20px;margin:6px 0 0!important}
+html body .product-item .rating:not(#_){display:flex!important;align-items:center;gap:6px;line-height:1}
+html body .product-item .rating__stars:not(#_){display:grid;grid-auto-flow:column;column-gap:2px}
+html body .product-item .rating__star:not(#_){width:14px!important;height:14px!important}
+html body .product-item .rating__caption:not(#_){font-size:13px!important;color:#5E6863!important;margin:0!important;top:0!important;white-space:nowrap}
+html body .product-item .jdgm-prev-badge__text:not(#_){display:none!important}"""),
+    ("html body .product-item .price:not(#_){font-size:18px!important}",
+     "html body .product-item .price:not(#_){font-size:18px!important}html body .product-item__price-list:not(#_){min-height:38px}\nhtml body .product-item__title:not(#_){font-size:13px!important;overflow-wrap:anywhere}\nhtml body .product-item .rating__star:not(#_){width:11px!important;height:11px!important}html body .product-item .rating__caption:not(#_){font-size:12px!important}"),
+    # alte, wirkungslose Regeln (es gibt keine .text-with-icons__list) entfernen
+    ("""html body .text-with-icons__list:not(#_){display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:20px 12px!important;overflow:visible!important;transform:none!important;scroll-snap-type:none!important;margin:0!important;padding:0!important}
+html body .text-with-icons__item:not(#_){width:auto!important;min-width:0!important;flex:none!important;max-width:none!important;margin:0!important;padding:0 4px!important;opacity:1!important;visibility:visible!important;transform:none!important;position:static!important}
+html body .text-with-icons__dots:not(#_),html body .text-with-icons__dot-list:not(#_),html body .text-with-icons .flickity-page-dots:not(#_),html body .text-with-icons .dots-nav:not(#_){display:none!important}
+html body .text-with-icons__title:not(#_){font-size:14px!important;margin-bottom:4px!important}
+html body .text-with-icons__content:not(#_){font-size:13px!important;line-height:1.4!important}
+""", ""),
+    ("</style>",
+     """/* Icon-Leiste (Warehouse text-with-icons): ab 1000 px alle Elemente in einer Reihe, darunter 2 pro Reihe; kein Karussell auf Handys */
+html body .text-with-icons:not(#_)::after{content:""!important}
+html body .text-with-icons:not(#_){display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:20px 16px!important;margin:0!important;padding:0!important;text-align:left!important;justify-content:stretch!important}
+html body .text-with-icons__item:not(#_){display:flex!important;align-items:flex-start!important;gap:14px;width:auto!important;flex:none!important;margin:0!important;padding:0!important;max-width:none!important;text-align:left!important;line-height:1.5}
+html body .text-with-icons__icon-wrapper:not(#_){margin:2px 0 0!important;flex:none}
+html body .text-with-icons__icon-wrapper svg:not(#_){width:30px;height:30px}
+html body .text-with-icons__title:not(#_){font-size:15px!important;font-weight:700!important;margin:0 0 2px!important;color:#1B1F1D!important}
+html body .text-with-icons__content:not(#_){font-size:14px!important;line-height:1.45!important;color:#5E6863!important}
+html body .text-with-icons__dots:not(#_),html body .text-with-icons .flickity-page-dots:not(#_){display:none!important}
+@media(min-width:1000px){html body .text-with-icons:not(#_){grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:24px!important}}
+@media(max-width:480px){html body .text-with-icons:not(#_){gap:16px 12px!important}html body .text-with-icons__item:not(#_){gap:10px}html body .text-with-icons__icon-wrapper svg:not(#_){width:24px;height:24px}html body .text-with-icons__title:not(#_){font-size:14px!important}html body .text-with-icons__content:not(#_){font-size:13px!important}}
+</style>"""),
 ])
 
 # ---------------------------------------------------------------- index.json: Trust-Text, Farbmuster

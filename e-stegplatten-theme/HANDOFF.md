@@ -20,9 +20,9 @@ Stand: 23.10.2026. Dieser Ordner sichert die Arbeitsdateien. Maßgeblich ist der
 3. **Kategorieseiten:** SEO-Titel/-Beschreibung **live** für 9 Kollektionen; Metafelder `custom.intro`, `custom.seo_text`, `custom.seo_faq`; Section `es-collection-seo` in `collection.json` + `collection.stegplatten.json` (`theme/cat`). Texte: `content/kategorien`.
 4. **Ratgeber:** 6 Artikel als **Entwurf** mit SEO-Feldern, FAQ/HowTo-Metafeldern (`custom.seo_faq`, `custom.howto`); Section `es-article-faq` in `article.json` (`theme/art`). Alle 6 gemeinsam veröffentlichen (verlinken sich gegenseitig). Offene Fachfragen: `content/ratgeber/README.md`.
 
-## Lokal fertig, noch NICHT hochgeladen: `theme/v3` (8 Dateien)
+## Lokal fertig, noch NICHT hochgeladen: `theme/v3` (9 Dateien)
 
-Shopify-Verbindung war weg (Shop-Wechsel beim Lesen der TerrassenPost-Preise hat den Zugang zurückgesetzt; Connector muss neu verbunden werden). Tests grün: `tools/pdp_test.js` 61/61, `tools/guard_test.js` 12/12, `tools/led_test.js` 26/26, `tools/shoot_home.js` 12/12 (Startseite: Hero beginnt mit dem Bild; alle Überschriften von 320 bis 1280 px einzeilig). Screenshots: `screenshots/pdp-390-*.png`, `pdp-1280-montage-offer.png`, `hero-390.png`, `screenshots/v3/home-*.png`.
+Shopify-Verbindung war weg (Shop-Wechsel beim Lesen der TerrassenPost-Preise hat den Zugang zurückgesetzt; Connector muss neu verbunden werden). Tests grün: `tools/pdp_test.js` 61/61, `tools/guard_test.js` 12/12, `tools/led_test.js` 26/26, `tools/shoot_home.js` 12/12 (Startseite: Hero beginnt mit dem Bild; alle Überschriften von 320 bis 1280 px einzeilig), `tools/shoot_cards.js` 35/35 (Produktkarten + Icon-Leiste im Mock `tools/render_cards.py`). Screenshots: `screenshots/pdp-390-*.png`, `pdp-1280-montage-offer.png`, `hero-390.png`, `screenshots/v3/home-*.png`.
 
 | Datei | Änderung |
 |---|---|
@@ -33,12 +33,13 @@ Shopify-Verbindung war weg (Shop-Wechsel beim Lesen der TerrassenPost-Preise hat
 | `snippets/es-hero-konfig.liquid` | Zeile „Farbmuster bestellen · Angebot anfordern“ (Link übergibt Variante/LED + `angebot=1`). Neuer Parameter `mu`. |
 | `sections/es-landing.liquid` | **Hero beginnt mit dem Bild** (Kicker + H1 + Lead liegen auf dem Bild, Konfigurator rechts daneben, Belege darunter; mobil Bild → Konfigurator → Belege; `<picture>` mit eigener Handy-Quelle über die neue Einstellung `hero_image_m`, `fetchpriority=high`). Beleg 3 = Judge.me-Gesamtwertung („4,9 ★ aus 212 Bewertungen“ aus `shop.metafields.judgeme.all_reviews_*`, Fallback Text); Belege als Zeilen mit Haken. Kategorie-Titel ohne weiche Trennstriche. Einstellung `muster_url`. |
 | `snippets/es-landing-css.liquid` | Hero-Raster (Bild/Konfigurator/Belege), Bildüberlagerung; **Überschriften möglichst einzeilig:** Kachel-Titel/-Links skalieren mit der Kachelbreite (`cqi`), keine Silbentrennung; Belege als Zeilen (Titel `nowrap`, Zusatz rückt darunter); Hero-Tabs verteilen die Breite nach Beschriftung; Trust-Leiste ≤ 480 px einspaltig; H2 ≤ 380 px 22 px; Kacheln ≤ 359 px als Liste (Bild links). |
+| `snippets/es-overrides.liquid` | **Produktkarten (Warehouse `product-item`):** Bildbox immer 4:3, Titel feste 3 Zeilen, Preis einzeilig 20 px (mobil 18 px) mit Streichpreis darunter in festem Block, Bewertungssterne direkt darunter – Preis und Sterne liegen in allen Karten auf gleicher Höhe, nichts wird abgeschnitten. **Icon-Leiste (`text-with-icons`):** ab 1000 px alle Elemente in einer Reihe, darunter 2 pro Reihe, auf Handys 2 Spalten statt Karussell (alte, wirkungslose `__list`-Regeln entfernt). |
 | `templates/index.json` | Hero-Bilder `hero_image` = `shopify://shop_images/hero-terrassendach-stegplatten.jpg`, `hero_image_m` = `…-mobil.jpg` (siehe unten); Trust-Leiste: „Zuschnitt millimetergenau – rechtwinklig, Kanten entgratet, Kammern staubfrei“; Kacheln „Stegplatten“ / „Terrassendächer“, CTA „Nach Stärke“; Farbmuster-Link im Finder; `muster_url`. |
 
-**Vor dem Theme-Upload – Hero-Bilder in Shopify anlegen (Inhalte → Dateien):** `content/hero/hero-desktop.jpg` (1600×1063, Desktop/Tablet) und `content/hero/hero-mobile.jpg` (1200×896, 4:3 für Handys: Dach oben, ruhige Fläche unten für die Überschrift). Beide mit Higgsfield (GPT Image 2.5) generiert; die Originale (PNG 2048×1360 bzw. 2336×1744) liegen unter
-`https://d8j0ntlcm91z4.cloudfront.net/user_38rBUK7GWLxdZvf7m1Da0aQIqoE/hf_20261023_070336_13a26f0e-ef76-40c8-9784-e1fb1d86400c.png` (Desktop) und
-`https://d8j0ntlcm91z4.cloudfront.net/user_38rBUK7GWLxdZvf7m1Da0aQIqoE/hf_20261023_070337_cff4e2fa-b146-4bcc-954c-b85a34e27416.png` (mobil).
-Anlegen per `fileCreate` (`originalSource` = die CDN-URL oder Staged Upload der JPEGs, `contentType: IMAGE`, `filename` = `hero-terrassendach-stegplatten.jpg` / `hero-terrassendach-stegplatten-mobil.jpg`, Alt-Text „Alu-Terrassenüberdachung anthrazit mit 16 mm Stegplatten“). Vergibt Shopify einen anderen Dateinamen, vorher `hero_image`/`hero_image_m` in `theme/v3/new/templates/index.json` anpassen – sonst zeigt der Hero kein Bild. Zwei weitere Varianten (Jobs `b2b7f4a1…`, `f8048db1…`) liegen in der Higgsfield-Bibliothek.
+**Vor dem Theme-Upload – Hero-Bilder in Shopify anlegen (Inhalte → Dateien):** `content/hero/hero-desktop.jpg` (1600×1063, Desktop/Tablet) und `content/hero/hero-mobile.jpg` (1200×896, 4:3 für Handys: Dach oben, ruhige Fläche unten für die Überschrift). Beide mit Higgsfield (GPT Image 2.5) generiert – Konstruktion nach den echten Produktfotos als Referenz (Pfosten bündig unter dem Rinnenprofil), Bildstil wie bei Tuinmaximaal (erhöhte Gartenperspektive, bewohnte Terrasse). Die Originale (PNG 2048×1360 bzw. 2336×1744) liegen unter
+`https://d8j0ntlcm91z4.cloudfront.net/user_38rBUK7GWLxdZvf7m1Da0aQIqoE/hf_20261023_091917_c38e2fb6-8ff4-4ae7-a7e3-413ad4db5a98.png` (Desktop) und
+`https://d8j0ntlcm91z4.cloudfront.net/user_38rBUK7GWLxdZvf7m1Da0aQIqoE/hf_20261023_091918_faad351d-093b-48c5-8356-691a31a58856.png` (mobil). Abendstimmungs-Variante (Jobs `c909d147…` Desktop, `eba34077…` mobil) liegt in der Higgsfield-Bibliothek.
+Anlegen per `fileCreate` (`originalSource` = die CDN-URL oder Staged Upload der JPEGs, `contentType: IMAGE`, `filename` = `hero-terrassendach-stegplatten.jpg` / `hero-terrassendach-stegplatten-mobil.jpg`, Alt-Text „Alu-Terrassenüberdachung anthrazit mit 16 mm Stegplatten“). Vergibt Shopify einen anderen Dateinamen, vorher `hero_image`/`hero_image_m` in `theme/v3/new/templates/index.json` anpassen – sonst zeigt der Hero kein Bild. Ältere Varianten ohne Produktreferenz sind verworfen.
 
 **Upload:** `python3 tools/upload.py stage theme/v3` → stagedUploadsCreate → `put` → `upsert` → Job abwarten → `verify` (Manifest aus `theme/v3/new` erzeugen).
 
@@ -50,6 +51,7 @@ Anlegen per `fileCreate` (`originalSource` = die CDN-URL oder Staged Upload der 
 2. **Farbmuster-Produkt:** `productSet` mit `content/farbmuster/productset.json` (0 €, Tag `Farbmuster`, Handle `farbmuster`), veröffentlichen. Versand 6,90 € per Regel in Advanced Shipping Rules (Tag `Farbmuster`).
 3. **LocalBusiness + Breadcrumb-Fix:** `snippets/microdata-schema.liquid` aus dem Theme laden, `python3 tools/localbusiness_patch.py <orig> <neu>` ausführen, hochladen. Maps-Link (`hasMap`) ergänzen, sobald er vorliegt. Straßenschreibweise prüfen („Magdeburger Straße 37“).
 4. **og:image:** `snippets/social-meta-tags.liquid` prüfen (Fallback-Bild für Startseite setzen).
+5. **Wunschmaß-Bestätigung (Zuschnitt-Konfigurator):** Theme-Datei mit `id="save-z-btn"` („Zuschnitte übernehmen“, vermutlich `snippets/es-zuschnitt.liquid`) laden und `python3 tools/zuschnitt_patch.py <orig> <neu>` ausführen, hochladen. Ergebnis: Pflicht-Checkbox „Ich habe alle Maße selbst geprüft …“, ohne Häkchen ist „Zuschnitte übernehmen“ gesperrt, Warenkorb-Eigenschaft „Maße bestätigt: Ja – vom Kunden geprüft (Datum)“, nach „Bearbeiten“ muss neu bestätigt werden. Das Skript wurde gegen die gerenderte Live-Produktseite getestet (alle 6 Fundstellen eindeutig).
 
 ## Danach
 
@@ -73,6 +75,8 @@ Anlegen per `fileCreate` (`originalSource` = die CDN-URL oder Staged Upload der 
 - `v3_patch.py` – erzeugt `theme/v3/new` reproduzierbar aus `theme/v3/orig`.
 - `mockdata.py` – Beispieldaten + Liquid-Umgebung (python-liquid) für das lokale Rendern.
 - `render_v3.py` – rendert Produktseite + Hero; `render_home.py` – rendert die Startseite (Hero, Trust-Leiste, Kategorien aus `index.json`) nach `design-review/v3/`.
+- `render_cards.py` + `shoot_cards.js` – Mock der Warehouse-Produktkarten und der Icon-Leiste mit den Overrides (Preis einzeilig, Sterne/Preis auf gleicher Höhe, nichts abgeschnitten, Icon-Reihe).
+- `zuschnitt_patch.py` – Wunschmaß-Bestätigung in den Zuschnitt-Konfigurator patchen (siehe oben).
 - `pdp_test.js`, `guard_test.js <snippets/es-led-guard.liquid>`, `led_test.js theme/v3/flat` – Playwright-Funktionstests; `shoot_home.js` – Startseiten-Geometrie + Umbruch-Report aller Überschriften (320–1280 px) + Screenshots; `measure_home.js` – misst einzeilige Textbreite gegen verfügbaren Platz.
 
 Aufruf (Playwright aus `/tmp`): `NODE_PATH=/opt/node-tools/node_modules node tools/<test>.js`.
